@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "GastoAdicional.findByDescripcion", query = "SELECT g FROM GastoAdicional g WHERE g.descripcion = :descripcion"),
     @NamedQuery(name = "GastoAdicional.findByValorgasto", query = "SELECT g FROM GastoAdicional g WHERE g.valorgasto = :valorgasto")})
 public class GastoAdicional implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,11 +95,14 @@ public class GastoAdicional implements Serializable {
     }
 
     public String getDescripcion() {
+        if (null != descripcion) {
+            return descripcion.toUpperCase();
+        }
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.toUpperCase();
     }
 
     public int getValorgasto() {
@@ -141,5 +145,5 @@ public class GastoAdicional implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.GastoAdicional[ idgastoadicional=" + idgastoadicional + " ]";
     }
-    
+
 }

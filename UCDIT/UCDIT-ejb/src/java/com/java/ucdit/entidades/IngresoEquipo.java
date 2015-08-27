@@ -100,11 +100,14 @@ public class IngresoEquipo implements Serializable {
     }
 
     public String getDescripcion() {
+        if(null != descripcion){
+            return descripcion.toUpperCase();
+        }
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.toUpperCase();
     }
 
     public EquipoTecnologico getEquipotecnologico() {

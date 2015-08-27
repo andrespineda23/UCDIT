@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TipoEquipo.findByIdtipoequipo", query = "SELECT t FROM TipoEquipo t WHERE t.idtipoequipo = :idtipoequipo"),
     @NamedQuery(name = "TipoEquipo.findByNombretipoequipo", query = "SELECT t FROM TipoEquipo t WHERE t.nombretipoequipo = :nombretipoequipo")})
 public class TipoEquipo implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,11 +66,14 @@ public class TipoEquipo implements Serializable {
     }
 
     public String getNombretipoequipo() {
+        if (null != nombretipoequipo) {
+            return nombretipoequipo.toUpperCase();
+        }
         return nombretipoequipo;
     }
 
     public void setNombretipoequipo(String nombretipoequipo) {
-        this.nombretipoequipo = nombretipoequipo;
+        this.nombretipoequipo = nombretipoequipo.toUpperCase();
     }
 
     @Override
@@ -96,5 +100,5 @@ public class TipoEquipo implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.TipoEquipo[ idtipoequipo=" + idtipoequipo + " ]";
     }
-    
+
 }

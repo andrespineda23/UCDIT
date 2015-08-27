@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ActaReunion.findByResultadoreunion", query = "SELECT a FROM ActaReunion a WHERE a.resultadoreunion = :resultadoreunion"),
     @NamedQuery(name = "ActaReunion.findByPersonalinvolucrado", query = "SELECT a FROM ActaReunion a WHERE a.personalinvolucrado = :personalinvolucrado")})
 public class ActaReunion implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,27 +100,36 @@ public class ActaReunion implements Serializable {
     }
 
     public String getObjetivosacumplir() {
+        if (null != objetivosacumplir) {
+            return objetivosacumplir.toUpperCase();
+        }
         return objetivosacumplir;
     }
 
     public void setObjetivosacumplir(String objetivosacumplir) {
-        this.objetivosacumplir = objetivosacumplir;
+        this.objetivosacumplir = objetivosacumplir.toUpperCase();
     }
 
     public String getResultadoreunion() {
+        if (null != resultadoreunion) {
+            return resultadoreunion.toUpperCase();
+        }
         return resultadoreunion;
     }
 
     public void setResultadoreunion(String resultadoreunion) {
-        this.resultadoreunion = resultadoreunion;
+        this.resultadoreunion = resultadoreunion.toUpperCase();
     }
 
     public String getPersonalinvolucrado() {
+        if (null != personalinvolucrado) {
+            return personalinvolucrado.toUpperCase();
+        }
         return personalinvolucrado;
     }
 
     public void setPersonalinvolucrado(String personalinvolucrado) {
-        this.personalinvolucrado = personalinvolucrado;
+        this.personalinvolucrado = personalinvolucrado.toUpperCase();
     }
 
     public Proyecto getProyecto() {
@@ -154,5 +164,5 @@ public class ActaReunion implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.ActaReunion[ idactareunion=" + idactareunion + " ]";
     }
-    
+
 }

@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Insumo.findByCostocompra", query = "SELECT i FROM Insumo i WHERE i.costocompra = :costocompra"),
     @NamedQuery(name = "Insumo.findByDescripcion", query = "SELECT i FROM Insumo i WHERE i.descripcion = :descripcion")})
 public class Insumo implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -107,19 +108,25 @@ public class Insumo implements Serializable {
     }
 
     public String getNombreinsumo() {
+        if (null != nombreinsumo) {
+            return nombreinsumo.toUpperCase();
+        }
         return nombreinsumo;
     }
 
     public void setNombreinsumo(String nombreinsumo) {
-        this.nombreinsumo = nombreinsumo;
+        this.nombreinsumo = nombreinsumo.toUpperCase();
     }
 
     public String getCodigoinsumo() {
+        if (null != codigoinsumo) {
+            return codigoinsumo.toUpperCase();
+        }
         return codigoinsumo;
     }
 
     public void setCodigoinsumo(String codigoinsumo) {
-        this.codigoinsumo = codigoinsumo;
+        this.codigoinsumo = codigoinsumo.toUpperCase();
     }
 
     public int getCantidadminima() {
@@ -147,11 +154,14 @@ public class Insumo implements Serializable {
     }
 
     public String getDescripcion() {
+        if (null != descripcion) {
+            return descripcion.toUpperCase();
+        }
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.toUpperCase();
     }
 
     @XmlTransient
@@ -212,5 +222,5 @@ public class Insumo implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.Insumo[ idinsumo=" + idinsumo + " ]";
     }
-    
+
 }

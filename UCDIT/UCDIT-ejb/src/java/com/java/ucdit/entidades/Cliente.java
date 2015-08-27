@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cliente.findByTelefonofijo", query = "SELECT c FROM Cliente c WHERE c.telefonofijo = :telefonofijo"),
     @NamedQuery(name = "Cliente.findByCorreoelectronico", query = "SELECT c FROM Cliente c WHERE c.correoelectronico = :correoelectronico")})
 public class Cliente implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,19 +101,25 @@ public class Cliente implements Serializable {
     }
 
     public String getNombrecliente() {
+        if (null != nombrecliente) {
+            return nombrecliente.toUpperCase();
+        }
         return nombrecliente;
     }
 
     public void setNombrecliente(String nombrecliente) {
-        this.nombrecliente = nombrecliente;
+        this.nombrecliente = nombrecliente.toUpperCase();
     }
 
     public String getCiudad() {
+        if(null != ciudad){
+            return ciudad.toUpperCase();
+        }
         return ciudad;
     }
 
     public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+        this.ciudad = ciudad.toUpperCase();
     }
 
     public String getDireccion() {
@@ -180,5 +187,5 @@ public class Cliente implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.Cliente[ idcliente=" + idcliente + " ]";
     }
-    
+
 }

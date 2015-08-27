@@ -91,27 +91,36 @@ public class ManualEquipo implements Serializable {
     }
 
     public String getTipomanual() {
+        if (null != tipomanual) {
+            return tipomanual.toUpperCase();
+        }
         return tipomanual;
     }
 
     public void setTipomanual(String tipomanual) {
-        this.tipomanual = tipomanual;
+        this.tipomanual = tipomanual.toUpperCase();
     }
 
     public String getNombremanual() {
+        if (null != nombremanual) {
+            return nombremanual.toUpperCase();
+        }
         return nombremanual;
     }
 
     public void setNombremanual(String nombremanual) {
-        this.nombremanual = nombremanual;
+        this.nombremanual = nombremanual.toUpperCase();
     }
 
     public String getCodigomanual() {
+        if (null != codigomanual) {
+            return codigomanual.toUpperCase();
+        }
         return codigomanual;
     }
 
     public void setCodigomanual(String codigomanual) {
-        this.codigomanual = codigomanual;
+        this.codigomanual = codigomanual.toUpperCase();
     }
 
     public String getUbicacionmanual() {

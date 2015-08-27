@@ -47,6 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EquipoTecnologico.findByDescripcion", query = "SELECT e FROM EquipoTecnologico e WHERE e.descripcion = :descripcion"),
     @NamedQuery(name = "EquipoTecnologico.findByEstadoequipo", query = "SELECT e FROM EquipoTecnologico e WHERE e.estadoequipo = :estadoequipo")})
 public class EquipoTecnologico implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -120,19 +121,25 @@ public class EquipoTecnologico implements Serializable {
     }
 
     public String getNombreequipo() {
+        if (null != nombreequipo) {
+            return nombreequipo.toUpperCase();
+        }
         return nombreequipo;
     }
 
     public void setNombreequipo(String nombreequipo) {
-        this.nombreequipo = nombreequipo;
+        this.nombreequipo = nombreequipo.toUpperCase();
     }
 
     public String getCodigoequipo() {
+        if (null != codigoequipo) {
+            return codigoequipo.toUpperCase();
+        }
         return codigoequipo;
     }
 
     public void setCodigoequipo(String codigoequipo) {
-        this.codigoequipo = codigoequipo;
+        this.codigoequipo = codigoequipo.toUpperCase();
     }
 
     public Date getFechaadquisicion() {
@@ -160,11 +167,14 @@ public class EquipoTecnologico implements Serializable {
     }
 
     public String getDescripcion() {
+        if (null != descripcion) {
+            return descripcion.toUpperCase();
+        }
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.toUpperCase();
     }
 
     public Boolean getEstadoequipo() {
@@ -252,5 +262,5 @@ public class EquipoTecnologico implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.EquipoTecnologico[ idequipotecnologico=" + idequipotecnologico + " ]";
     }
-    
+
 }

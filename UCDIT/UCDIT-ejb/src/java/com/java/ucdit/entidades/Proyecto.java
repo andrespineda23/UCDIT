@@ -47,6 +47,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Proyecto.findByCostoinversion", query = "SELECT p FROM Proyecto p WHERE p.costoinversion = :costoinversion"),
     @NamedQuery(name = "Proyecto.findByEstadoproyecto", query = "SELECT p FROM Proyecto p WHERE p.estadoproyecto = :estadoproyecto")})
 public class Proyecto implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -140,11 +141,14 @@ public class Proyecto implements Serializable {
     }
 
     public String getDescripcionproyecto() {
+        if (null != descripcionproyecto) {
+            return descripcionproyecto.toUpperCase();
+        }
         return descripcionproyecto;
     }
 
     public void setDescripcionproyecto(String descripcionproyecto) {
-        this.descripcionproyecto = descripcionproyecto;
+        this.descripcionproyecto = descripcionproyecto.toUpperCase();
     }
 
     public Integer getCostoproyecto() {
@@ -265,5 +269,5 @@ public class Proyecto implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.Proyecto[ idproyecto=" + idproyecto + " ]";
     }
-    
+
 }

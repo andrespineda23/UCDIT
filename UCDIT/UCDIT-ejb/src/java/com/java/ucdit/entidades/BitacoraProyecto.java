@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BitacoraProyecto.findByDetalleevento", query = "SELECT b FROM BitacoraProyecto b WHERE b.detalleevento = :detalleevento"),
     @NamedQuery(name = "BitacoraProyecto.findByFecharegistro", query = "SELECT b FROM BitacoraProyecto b WHERE b.fecharegistro = :fecharegistro")})
 public class BitacoraProyecto implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,11 +81,14 @@ public class BitacoraProyecto implements Serializable {
     }
 
     public String getDetalleevento() {
+        if (null != detalleevento) {
+            return detalleevento.toUpperCase();
+        }
         return detalleevento;
     }
 
     public void setDetalleevento(String detalleevento) {
-        this.detalleevento = detalleevento;
+        this.detalleevento = detalleevento.toUpperCase();
     }
 
     public Date getFecharegistro() {
@@ -127,5 +131,5 @@ public class BitacoraProyecto implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.BitacoraProyecto[ idbitacoraproyecto=" + idbitacoraproyecto + " ]";
     }
-    
+
 }

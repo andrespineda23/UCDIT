@@ -9,6 +9,7 @@ import com.java.ucdit.entidades.Proveedor;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ProveedorFacade extends AbstractFacade<Proveedor> {
+
     @PersistenceContext(unitName = "UCDIT-ejbPU")
     private EntityManager em;
 
@@ -27,5 +29,18 @@ public class ProveedorFacade extends AbstractFacade<Proveedor> {
     public ProveedorFacade() {
         super(Proveedor.class);
     }
-    
+
+    public Proveedor obtenerProveedorPorNit(String nit) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Proveedor p WHERE p.identificacionproveedor=:nit");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("nit", nit);
+            Proveedor registro = (Proveedor) query.getSingleResult();
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error ProveedorFacade obtenerProveedorPorNit: " + e.toString());
+            return null;
+        }
+    }
 }

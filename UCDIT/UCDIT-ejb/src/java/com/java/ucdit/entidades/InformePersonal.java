@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "InformePersonal.findByNombrearchivo", query = "SELECT i FROM InformePersonal i WHERE i.nombrearchivo = :nombrearchivo"),
     @NamedQuery(name = "InformePersonal.findByUbicacion", query = "SELECT i FROM InformePersonal i WHERE i.ubicacion = :ubicacion")})
 public class InformePersonal implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -102,19 +103,25 @@ public class InformePersonal implements Serializable {
     }
 
     public String getMesinforme() {
+        if (null != mesinforme) {
+            return mesinforme.toUpperCase();
+        }
         return mesinforme;
     }
 
     public void setMesinforme(String mesinforme) {
-        this.mesinforme = mesinforme;
+        this.mesinforme = mesinforme.toUpperCase();
     }
 
     public String getNombrearchivo() {
+        if (null != nombrearchivo) {
+            return nombrearchivo.toUpperCase();
+        }
         return nombrearchivo;
     }
 
     public void setNombrearchivo(String nombrearchivo) {
-        this.nombrearchivo = nombrearchivo;
+        this.nombrearchivo = nombrearchivo.toUpperCase();
     }
 
     public String getUbicacion() {
@@ -157,5 +164,5 @@ public class InformePersonal implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.InformePersonal[ idinformepersonal=" + idinformepersonal + " ]";
     }
-    
+
 }

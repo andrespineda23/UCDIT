@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Supervisor.findByIdsupervisor", query = "SELECT s FROM Supervisor s WHERE s.idsupervisor = :idsupervisor"),
     @NamedQuery(name = "Supervisor.findByAreaenfoque", query = "SELECT s FROM Supervisor s WHERE s.areaenfoque = :areaenfoque")})
 public class Supervisor implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,11 +77,14 @@ public class Supervisor implements Serializable {
     }
 
     public String getAreaenfoque() {
+        if (null != areaenfoque) {
+            return areaenfoque.toUpperCase();
+        }
         return areaenfoque;
     }
 
     public void setAreaenfoque(String areaenfoque) {
-        this.areaenfoque = areaenfoque;
+        this.areaenfoque = areaenfoque.toUpperCase();
     }
 
     @XmlTransient
@@ -124,5 +128,5 @@ public class Supervisor implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.Supervisor[ idsupervisor=" + idsupervisor + " ]";
     }
-    
+
 }

@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "HojaDeVida.findByFecharegistro", query = "SELECT h FROM HojaDeVida h WHERE h.fecharegistro = :fecharegistro"),
     @NamedQuery(name = "HojaDeVida.findByDescripcion", query = "SELECT h FROM HojaDeVida h WHERE h.descripcion = :descripcion")})
 public class HojaDeVida implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,11 +89,14 @@ public class HojaDeVida implements Serializable {
     }
 
     public String getDescripcion() {
+        if (null != descripcion) {
+            return descripcion.toUpperCase();
+        }
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.toUpperCase();
     }
 
     public EquipoTecnologico getEquipotecnologico() {
@@ -127,5 +131,5 @@ public class HojaDeVida implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.HojaDeVida[ idhojadevida=" + idhojadevida + " ]";
     }
-    
+
 }

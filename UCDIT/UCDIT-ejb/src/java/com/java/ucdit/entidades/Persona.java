@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Persona.findByNumerofijo", query = "SELECT p FROM Persona p WHERE p.numerofijo = :numerofijo"),
     @NamedQuery(name = "Persona.findByValorhoratrabajo", query = "SELECT p FROM Persona p WHERE p.valorhoratrabajo = :valorhoratrabajo")})
 public class Persona implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -113,27 +114,36 @@ public class Persona implements Serializable {
     }
 
     public String getNombrepersona() {
+        if (null != nombrepersona) {
+            return nombrepersona.toUpperCase();
+        }
         return nombrepersona;
     }
 
     public void setNombrepersona(String nombrepersona) {
-        this.nombrepersona = nombrepersona;
+        this.nombrepersona = nombrepersona.toUpperCase();
     }
 
     public String getApellidopersona() {
+        if (null != apellidopersona) {
+            return apellidopersona.toUpperCase();
+        }
         return apellidopersona;
     }
 
     public void setApellidopersona(String apellidopersona) {
-        this.apellidopersona = apellidopersona;
+        this.apellidopersona = apellidopersona.toUpperCase();
     }
 
     public String getNumerodocumento() {
+        if (null != numerodocumento) {
+            return numerodocumento.toUpperCase();
+        }
         return numerodocumento;
     }
 
     public void setNumerodocumento(String numerodocumento) {
-        this.numerodocumento = numerodocumento;
+        this.numerodocumento = numerodocumento.toUpperCase();
     }
 
     public String getCorreoelectronico() {
@@ -218,5 +228,5 @@ public class Persona implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.Persona[ idpersona=" + idpersona + " ]";
     }
-    
+
 }

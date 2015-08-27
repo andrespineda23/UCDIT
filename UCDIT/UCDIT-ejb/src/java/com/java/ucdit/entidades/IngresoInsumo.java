@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "IngresoInsumo.findByDescripcion", query = "SELECT i FROM IngresoInsumo i WHERE i.descripcion = :descripcion"),
     @NamedQuery(name = "IngresoInsumo.findByValorcompra", query = "SELECT i FROM IngresoInsumo i WHERE i.valorcompra = :valorcompra")})
 public class IngresoInsumo implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,11 +104,14 @@ public class IngresoInsumo implements Serializable {
     }
 
     public String getDescripcion() {
+        if (null != descripcion) {
+            return descripcion.toUpperCase();
+        }
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.toUpperCase();
     }
 
     public Integer getValorcompra() {
@@ -150,5 +154,5 @@ public class IngresoInsumo implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.IngresoInsumo[ idingresoinsumo=" + idingresoinsumo + " ]";
     }
-    
+
 }

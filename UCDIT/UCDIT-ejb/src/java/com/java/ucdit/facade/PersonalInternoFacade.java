@@ -6,9 +6,11 @@
 package com.java.ucdit.facade;
 
 import com.java.ucdit.entidades.PersonalInterno;
+import java.math.BigInteger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,6 +18,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class PersonalInternoFacade extends AbstractFacade<PersonalInterno> {
+
     @PersistenceContext(unitName = "UCDIT-ejbPU")
     private EntityManager em;
 
@@ -27,5 +30,17 @@ public class PersonalInternoFacade extends AbstractFacade<PersonalInterno> {
     public PersonalInternoFacade() {
         super(PersonalInterno.class);
     }
-    
+
+    public PersonalInterno obtenerPersonalInternoPorIdPersona(BigInteger idPersona) {
+        try {
+            Query query = em.createQuery("SELECT p FROM PersonalInterno p WHERE p.persona.idpersona=:idPersona");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idPersona", idPersona);
+            PersonalInterno personal = (PersonalInterno) query.getSingleResult();
+            return personal;
+        } catch (Exception e) {
+            System.out.println("Error PersonalInternoFacade obtenerPersonalInternoPorIdPersona: " + e.toString());
+            return null;
+        }
+    }
 }

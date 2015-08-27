@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ObjetivoTrabajo.findByFechacreacion", query = "SELECT o FROM ObjetivoTrabajo o WHERE o.fechacreacion = :fechacreacion"),
     @NamedQuery(name = "ObjetivoTrabajo.findByEstadoobjetivo", query = "SELECT o FROM ObjetivoTrabajo o WHERE o.estadoobjetivo = :estadoobjetivo")})
 public class ObjetivoTrabajo implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,11 +88,14 @@ public class ObjetivoTrabajo implements Serializable {
     }
 
     public String getNombreobjetivo() {
+        if (null != nombreobjetivo) {
+            return nombreobjetivo.toUpperCase();
+        }
         return nombreobjetivo;
     }
 
     public void setNombreobjetivo(String nombreobjetivo) {
-        this.nombreobjetivo = nombreobjetivo;
+        this.nombreobjetivo = nombreobjetivo.toUpperCase();
     }
 
     public Date getFechacreacion() {
@@ -143,5 +147,5 @@ public class ObjetivoTrabajo implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.ObjetivoTrabajo[ idobjetivotrabajo=" + idobjetivotrabajo + " ]";
     }
-    
+
 }

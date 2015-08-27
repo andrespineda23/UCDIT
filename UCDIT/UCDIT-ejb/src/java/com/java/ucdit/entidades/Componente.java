@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Componente.findByModelocomponente", query = "SELECT c FROM Componente c WHERE c.modelocomponente = :modelocomponente"),
     @NamedQuery(name = "Componente.findByEstadocomponente", query = "SELECT c FROM Componente c WHERE c.estadocomponente = :estadocomponente")})
 public class Componente implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,43 +93,58 @@ public class Componente implements Serializable {
     }
 
     public String getNombrecomponente() {
+        if (null != nombrecomponente) {
+            return nombrecomponente.toUpperCase();
+        }
         return nombrecomponente;
     }
 
     public void setNombrecomponente(String nombrecomponente) {
-        this.nombrecomponente = nombrecomponente;
+        this.nombrecomponente = nombrecomponente.toUpperCase();;
     }
 
     public String getCodigocomponente() {
+        if (null != codigocomponente) {
+            return codigocomponente.toUpperCase();
+        }
         return codigocomponente;
     }
 
     public void setCodigocomponente(String codigocomponente) {
-        this.codigocomponente = codigocomponente;
+        this.codigocomponente = codigocomponente.toUpperCase();;
     }
 
     public String getMarcacomponente() {
+        if (null != marcacomponente) {
+            return marcacomponente.toUpperCase();
+        }
         return marcacomponente;
     }
 
     public void setMarcacomponente(String marcacomponente) {
-        this.marcacomponente = marcacomponente;
+        this.marcacomponente = marcacomponente.toUpperCase();;
     }
 
     public String getSeriecomponente() {
+        if (null != seriecomponente) {
+            return seriecomponente.toUpperCase();
+        }
         return seriecomponente;
     }
 
     public void setSeriecomponente(String seriecomponente) {
-        this.seriecomponente = seriecomponente;
+        this.seriecomponente = seriecomponente.toUpperCase();;
     }
 
     public String getModelocomponente() {
+        if (null != modelocomponente) {
+            return modelocomponente.toUpperCase();
+        }
         return modelocomponente;
     }
 
     public void setModelocomponente(String modelocomponente) {
-        this.modelocomponente = modelocomponente;
+        this.modelocomponente = modelocomponente.toUpperCase();;
     }
 
     public Boolean getEstadocomponente() {
@@ -171,5 +187,5 @@ public class Componente implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.Componente[ idcomponente=" + idcomponente + " ]";
     }
-    
+
 }

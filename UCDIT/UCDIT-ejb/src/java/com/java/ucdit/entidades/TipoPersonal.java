@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoPersonal.findByIdtipopersonal", query = "SELECT t FROM TipoPersonal t WHERE t.idtipopersonal = :idtipopersonal"),
     @NamedQuery(name = "TipoPersonal.findByNombretipopersonal", query = "SELECT t FROM TipoPersonal t WHERE t.nombretipopersonal = :nombretipopersonal")})
 public class TipoPersonal implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,11 +72,14 @@ public class TipoPersonal implements Serializable {
     }
 
     public String getNombretipopersonal() {
+        if (null != nombretipopersonal) {
+            return nombretipopersonal.toUpperCase();
+        }
         return nombretipopersonal;
     }
 
     public void setNombretipopersonal(String nombretipopersonal) {
-        this.nombretipopersonal = nombretipopersonal;
+        this.nombretipopersonal = nombretipopersonal.toUpperCase();
     }
 
     @XmlTransient
@@ -111,5 +115,5 @@ public class TipoPersonal implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.TipoPersonal[ idtipopersonal=" + idtipopersonal + " ]";
     }
-    
+
 }

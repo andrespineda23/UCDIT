@@ -71,11 +71,14 @@ public class TipouUnidad implements Serializable {
     }
 
     public String getNombretipounidad() {
+        if(null != nombretipounidad){
+            return nombretipounidad.toUpperCase();
+        }
         return nombretipounidad;
     }
 
     public void setNombretipounidad(String nombretipounidad) {
-        this.nombretipounidad = nombretipounidad;
+        this.nombretipounidad = nombretipounidad.toUpperCase();
     }
 
     @XmlTransient

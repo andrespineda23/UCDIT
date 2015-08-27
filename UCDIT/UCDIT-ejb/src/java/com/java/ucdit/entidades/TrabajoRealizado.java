@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TrabajoRealizado.findByDescripcion", query = "SELECT t FROM TrabajoRealizado t WHERE t.descripcion = :descripcion"),
     @NamedQuery(name = "TrabajoRealizado.findByValornumerico", query = "SELECT t FROM TrabajoRealizado t WHERE t.valornumerico = :valornumerico")})
 public class TrabajoRealizado implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -105,11 +106,14 @@ public class TrabajoRealizado implements Serializable {
     }
 
     public String getDescripcion() {
+        if (null != descripcion) {
+            return descripcion.toUpperCase();
+        }
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        this.descripcion = descripcion.toUpperCase();
     }
 
     public Integer getValornumerico() {
@@ -152,5 +156,5 @@ public class TrabajoRealizado implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.TrabajoRealizado[ idtrabajorealizado=" + idtrabajorealizado + " ]";
     }
-    
+
 }

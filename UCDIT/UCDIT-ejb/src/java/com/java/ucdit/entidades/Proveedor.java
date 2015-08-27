@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Proveedor.findByTelefonomovil", query = "SELECT p FROM Proveedor p WHERE p.telefonomovil = :telefonomovil"),
     @NamedQuery(name = "Proveedor.findByTelefonofijo", query = "SELECT p FROM Proveedor p WHERE p.telefonofijo = :telefonofijo")})
 public class Proveedor implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -109,27 +110,36 @@ public class Proveedor implements Serializable {
     }
 
     public String getNombreproveedor() {
+        if (null != ciudad) {
+            return nombreproveedor.toUpperCase();
+        }
         return nombreproveedor;
     }
 
     public void setNombreproveedor(String nombreproveedor) {
-        this.nombreproveedor = nombreproveedor;
+        this.nombreproveedor = nombreproveedor.toUpperCase();
     }
 
     public String getIdentificacionproveedor() {
+        if (null != ciudad) {
+            return identificacionproveedor.toUpperCase();
+        }
         return identificacionproveedor;
     }
 
     public void setIdentificacionproveedor(String identificacionproveedor) {
-        this.identificacionproveedor = identificacionproveedor;
+        this.identificacionproveedor = identificacionproveedor.toUpperCase();
     }
 
     public String getCiudad() {
+        if (null != ciudad) {
+            return ciudad.toUpperCase();
+        }
         return ciudad;
     }
 
     public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+        this.ciudad = ciudad.toUpperCase();
     }
 
     public String getDireccion() {
@@ -206,5 +216,5 @@ public class Proveedor implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.Proveedor[ idproveedor=" + idproveedor + " ]";
     }
-    
+
 }
