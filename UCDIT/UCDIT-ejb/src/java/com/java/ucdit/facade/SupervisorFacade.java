@@ -43,4 +43,30 @@ public class SupervisorFacade extends AbstractFacade<Supervisor> {
             return null;
         }
     }
+    
+    public Supervisor obtenerSupervisorPorCorreo(String correo) {
+        try {
+            Query query = em.createQuery("SELECT p FROM Supervisor p WHERE p.persona.correoelectronico=:correo");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("correo", correo);
+            Supervisor personal = (Supervisor) query.getSingleResult();
+            return personal;
+        } catch (Exception e) {
+            System.out.println("Error SupervisorFacade obtenerSupervisorPorCorreo: " + e.toString());
+            return null;
+        }
+    }
+
+    public Supervisor obtenerSupervisorPorDocumento(String documento) {
+        try {
+            Query query = em.createQuery("SELECT p FROM Supervisor p WHERE p.persona.numerodocumento=:documento");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("documento", documento);
+            Supervisor personal = (Supervisor) query.getSingleResult();
+            return personal;
+        } catch (Exception e) {
+            System.out.println("Error SupervisorFacade obtenerSupervisorPorDocumento: " + e.toString());
+            return null;
+        }
+    }
 }

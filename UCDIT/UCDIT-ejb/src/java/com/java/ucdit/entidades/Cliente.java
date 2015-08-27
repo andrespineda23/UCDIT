@@ -112,7 +112,7 @@ public class Cliente implements Serializable {
     }
 
     public String getCiudad() {
-        if(null != ciudad){
+        if (null != ciudad) {
             return ciudad.toUpperCase();
         }
         return ciudad;
@@ -123,11 +123,14 @@ public class Cliente implements Serializable {
     }
 
     public String getDireccion() {
+        if (null != direccion) {
+            return direccion.toUpperCase();
+        }
         return direccion;
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        this.direccion = direccion.toUpperCase();
     }
 
     public String getTelefonomovil() {

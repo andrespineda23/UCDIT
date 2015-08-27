@@ -301,12 +301,41 @@ margin-top:-10px;
     background-size: cover;
     -moz-background-size: cover;    
 }
+    #usuario {
+    background: url(../img/bogota2.jpg) no-repeat center center; 
+    padding: 0;
+    -webkit-background-size: cover;
+    background-size: cover;
+    -moz-background-size: cover;    
+}
 
     #contact .overlay {
         background-color: rgba(36, 36, 36, 0.8);
         min-height: 350px;
     }
      #contact .social a, #contact .social a:hover, #contact .social a:focus {
+            margin: 2px;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.36);
+            color: #fff;
+            font-size: 25px;
+        }
+    #proveedor .overlay {
+        background-color: rgba(36, 36, 36, 0.8);
+        min-height: 350px;
+    }
+     #proveedor .social a, #proveedor .social a:hover, #proveedor .social a:focus {
+            margin: 2px;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.36);
+            color: #fff;
+            font-size: 25px;
+        }
+    #usuario .overlay {
+        background-color: rgba(36, 36, 36, 0.8);
+        min-height: 350px;
+    }
+     #usuario .social a, #usuario .social a:hover, #usuario .social a:focus {
             margin: 2px;
             padding: 10px 20px;
             background-color: rgba(0, 0, 0, 0.36);

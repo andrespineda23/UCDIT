@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.java.ucdit.controller.inventario;
+package com.java.ucdit.controller.usuario;
 
-import com.java.ucdit.bo.interfaces.inventario.AdministrarProveedoresBOInterface;
-import com.java.ucdit.entidades.Proveedor;
+import com.java.ucdit.bo.interfaces.usuario.AdministrarPersonalInternoBOInterface;
+import com.java.ucdit.entidades.PersonalInterno;
+import com.java.ucdit.entidades.TipoPersonal;
 import com.java.ucdit.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -23,24 +25,26 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerDetallesProveedor implements Serializable {
+public class ControllerDetallesPersonalInterno implements Serializable {
 
     @EJB
-    AdministrarProveedoresBOInterface administrarProveedoresBO;
+    AdministrarPersonalInternoBOInterface administrarPersonalInternoBO;
     //
-    private Proveedor proveedorDetalle;
-    private BigInteger idProveedor;
+    private PersonalInterno personalInternoDetalles;
+    private BigInteger idPersonalInterno;
     //
-    private String editarNombre, editarIdentificacion, editarCiudad, editarDireccion;
+    private String editarNombre, editarIdentificacion, editarApellido, editarValorHora;
     private String editarTelFijo, editarTelCelular, editarCorreo;
+    private List<TipoPersonal> listaTipoPersonal;
+    private TipoPersonal editarTipoPersonal;
     //
-    private boolean validacionesNombre, validacionesIdentificacion, validacionesCiudad, validacionesDireccion;
-    private boolean validacionesTelFijo, validacionesTelCelular, validacionesCorreo;
+    private boolean validacionesNombre, validacionesIdentificacion, validacionesApellido, validacionesValorHora;
+    private boolean validacionesTelFijo, validacionesTelCelular, validacionesCorreo, validacionesTipoPersonal;
     private String mensajeFormulario;
     private String colorMensaje;
     private boolean modificacionRegistro;
 
-    public ControllerDetallesProveedor() {
+    public ControllerDetallesPersonalInterno() {
     }
 
     @PostConstruct
@@ -49,29 +53,32 @@ public class ControllerDetallesProveedor implements Serializable {
         mensajeFormulario = "N/A";
     }
 
-    public void recibirIdProveedorDetalle(BigInteger idProveedor) {
-        this.idProveedor = idProveedor;
-        proveedorDetalle = administrarProveedoresBO.obtenerProveedorPorId(this.idProveedor);
+    public void recibirIdPersonalInternoDetalle(BigInteger idPersonalInterno) {
+        this.idPersonalInterno = idPersonalInterno;
+        personalInternoDetalles = administrarPersonalInternoBO.obtenerPersonalInternoPorId(this.idPersonalInterno);
         modificacionRegistro = false;
+        listaTipoPersonal = administrarPersonalInternoBO.obtenerTipoPersonalRegistrado();
         cargarInformacionRegistro();
     }
 
     private void cargarInformacionRegistro() {
-        if (Utilidades.validarNulo(proveedorDetalle)) {
-            editarDireccion = proveedorDetalle.getDireccion();
-            editarIdentificacion = proveedorDetalle.getIdentificacionproveedor();
-            editarNombre = proveedorDetalle.getNombreproveedor();
-            editarCorreo = proveedorDetalle.getCorreoelectronico();
-            editarTelCelular = proveedorDetalle.getTelefonomovil();
-            editarCiudad = proveedorDetalle.getCiudad();
-            editarTelFijo = proveedorDetalle.getTelefonofijo();
+        if (Utilidades.validarNulo(personalInternoDetalles)) {
+            editarValorHora = String.valueOf(personalInternoDetalles.getPersona().getValorhoratrabajo());
+            editarIdentificacion = personalInternoDetalles.getPersona().getNumerodocumento();
+            editarNombre = personalInternoDetalles.getPersona().getNombrepersona();
+            editarCorreo = personalInternoDetalles.getPersona().getCorreoelectronico();
+            editarTelCelular = personalInternoDetalles.getPersona().getNumerocelular();
+            editarTipoPersonal = personalInternoDetalles.getTipopersonal();
+            editarApellido = personalInternoDetalles.getPersona().getApellidopersona();
+            editarTelFijo = personalInternoDetalles.getPersona().getNumerofijo();
             //
-            validacionesDireccion = true;
+            validacionesValorHora = true;
             validacionesIdentificacion = true;
             validacionesNombre = true;
             validacionesCorreo = true;
             validacionesTelCelular = true;
-            validacionesCiudad = true;
+            validacionesApellido = true;
+            validacionesTipoPersonal = true;
             validacionesTelFijo = true;
         }
     }
@@ -80,12 +87,12 @@ public class ControllerDetallesProveedor implements Serializable {
         colorMensaje = "black";
         mensajeFormulario = "N/A";
         modificacionRegistro = false;
-        proveedorDetalle = null;
-        proveedorDetalle = administrarProveedoresBO.obtenerProveedorPorId(this.idProveedor);
+        personalInternoDetalles = null;
+        personalInternoDetalles = administrarPersonalInternoBO.obtenerPersonalInternoPorId(this.idPersonalInterno);
         cargarInformacionRegistro();
     }
 
-    public void validarNombreProveedor() {
+    public void validarNombrePersonalInterno() {
         if (Utilidades.validarNulo(editarNombre) && (!editarNombre.isEmpty()) && (editarNombre.trim().length() > 0)) {
             int tam = editarNombre.length();
             if (tam >= 4) {
@@ -106,16 +113,37 @@ public class ControllerDetallesProveedor implements Serializable {
         modificacionRegistro = true;
     }
 
-    public void validarIdentificacionProveedor() {
+    public void validarApellidoPersonalInterno() {
+        if (Utilidades.validarNulo(editarApellido) && (!editarApellido.isEmpty()) && (editarApellido.trim().length() > 0)) {
+            int tam = editarApellido.length();
+            if (tam >= 4) {
+                if ((Utilidades.validarCaracterString(editarApellido)) == false) {
+                    validacionesApellido = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarApellido", new FacesMessage("El apellido ingresado es incorrecto."));
+                } else {
+                    validacionesApellido = true;
+                }
+            } else {
+                validacionesApellido = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarApellido", new FacesMessage("La tamaño minimo permitido es 4 caracteres."));
+            }
+        } else {
+            validacionesApellido = false;
+            FacesContext.getCurrentInstance().addMessage("form:editarApellido", new FacesMessage("El apellido es obligatorio."));
+        }
+        modificacionRegistro = true;
+    }
+
+    public void validarIdentificacionPersonalInterno() {
         if (Utilidades.validarNulo(editarIdentificacion) && (!editarIdentificacion.isEmpty()) && (editarIdentificacion.trim().length() > 0)) {
             int tam = editarIdentificacion.length();
             if (tam >= 8) {
                 if (Utilidades.validarCaracteresAlfaNumericos(editarIdentificacion)) {
-                    Proveedor registro = administrarProveedoresBO.obtenerProveedorPorNit(editarIdentificacion);
+                    PersonalInterno registro = administrarPersonalInternoBO.obtenerPersonalInternoPorDocumento(editarIdentificacion);
                     if (registro == null) {
                         validacionesIdentificacion = true;
                     } else {
-                        if (!proveedorDetalle.getIdproveedor().equals(registro.getIdproveedor())) {
+                        if (!personalInternoDetalles.getIdpersonalinterno().equals(registro.getIdpersonalinterno())) {
                             validacionesIdentificacion = false;
                             FacesContext.getCurrentInstance().addMessage("form:editarIdentificacion", new FacesMessage("La identificación ingresada ya esta registrada."));
                         } else {
@@ -137,12 +165,22 @@ public class ControllerDetallesProveedor implements Serializable {
         modificacionRegistro = true;
     }
 
-    public void validarCorreoProveedor() {
+    public void validarCorreoPersonalInterno() {
         if (Utilidades.validarNulo(editarCorreo) && (!editarCorreo.isEmpty()) && (editarCorreo.trim().length() > 0)) {
             int tam = editarCorreo.length();
             if (tam >= 15) {
                 if (Utilidades.validarCorreoElectronico(editarCorreo)) {
-                    validacionesCorreo = true;
+                    PersonalInterno registro = administrarPersonalInternoBO.obtenerPersonalInternoPorCorreo(editarCorreo);
+                    if (registro == null) {
+                        validacionesCorreo = true;
+                    } else {
+                        if (!personalInternoDetalles.getIdpersonalinterno().equals(registro.getIdpersonalinterno())) {
+                            validacionesCorreo = false;
+                            FacesContext.getCurrentInstance().addMessage("form:editarCorreo", new FacesMessage("El correo ingresado ya esta registrado."));
+                        } else {
+                            validacionesCorreo = true;
+                        }
+                    }
                 } else {
                     validacionesCorreo = false;
                     FacesContext.getCurrentInstance().addMessage("form:editarCorreo", new FacesMessage("El correo ingresado es incorrecto."));
@@ -158,44 +196,23 @@ public class ControllerDetallesProveedor implements Serializable {
         modificacionRegistro = true;
     }
 
-    public void validarCiudadProveedor() {
-        if (Utilidades.validarNulo(editarCiudad) && (!editarCiudad.isEmpty()) && (editarCiudad.trim().length() > 0)) {
-            int tam = editarCiudad.length();
-            if (tam >= 4) {
-                if ((Utilidades.validarCaracterString(editarCiudad)) == false) {
-                    validacionesCiudad = false;
-                    FacesContext.getCurrentInstance().addMessage("form:editarCiudad", new FacesMessage("La ciudad ingresada es incorrecta."));
-                } else {
-                    validacionesCiudad = true;
-                }
-            } else {
-                validacionesCiudad = false;
-                FacesContext.getCurrentInstance().addMessage("form:editarCiudad", new FacesMessage("La tamaño minimo permitido es 4 caracteres."));
-            }
-        } else {
-            validacionesCiudad = false;
-            FacesContext.getCurrentInstance().addMessage("form:editarCiudad", new FacesMessage("La ciudad es obligatoria."));
-        }
-        modificacionRegistro = true;
-    }
-
-    public void validarDireccionProveedor() {
-        if ((Utilidades.validarNulo(editarDireccion)) && (!editarDireccion.isEmpty()) && (editarDireccion.trim().length() > 0)) {
-            int tam = editarDireccion.length();
+    public void validarValorHoraPersonalInterno() {
+        if ((Utilidades.validarNulo(editarValorHora)) && (!editarValorHora.isEmpty()) && (editarValorHora.trim().length() > 0)) {
+            int tam = editarValorHora.length();
             if (tam >= 8) {
-                if (Utilidades.validarDirecciones(editarDireccion)) {
-                    validacionesDireccion = true;
+                if (Utilidades.isNumber(editarValorHora)) {
+                    validacionesValorHora = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
-                    validacionesDireccion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarValorHora", new FacesMessage("La dirección se encuentra incorrecta."));
+                    validacionesValorHora = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
-                validacionesDireccion = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarValorHora", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                validacionesValorHora = false;
             }
         } else {
-            FacesContext.getCurrentInstance().addMessage("form:editarDireccion", new FacesMessage("La dirección es obligatoria."));
-            validacionesDireccion = false;
+            FacesContext.getCurrentInstance().addMessage("form:editarValorHora", new FacesMessage("El valor hora es obligatorio."));
+            validacionesValorHora = false;
         }
         modificacionRegistro = true;
     }
@@ -235,12 +252,25 @@ public class ControllerDetallesProveedor implements Serializable {
         modificacionRegistro = true;
     }
 
+    public void validarTipoPersonal() {
+        if (Utilidades.validarNulo(editarTipoPersonal)) {
+            validacionesTipoPersonal = true;
+        } else {
+            validacionesTipoPersonal = false;
+            FacesContext.getCurrentInstance().addMessage("form:editarTipoPersonal", new FacesMessage("El tipo personal es obligatorio."));
+        }
+        modificacionRegistro = true;
+    }
+
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        if (validacionesTipoPersonal == false) {
+            retorno = false;
+        }
         if (validacionesIdentificacion == false) {
             retorno = false;
         }
-        if (validacionesDireccion == false) {
+        if (validacionesValorHora == false) {
             retorno = false;
         }
         if (validacionesCorreo == false) {
@@ -249,7 +279,7 @@ public class ControllerDetallesProveedor implements Serializable {
         if (validacionesNombre == false) {
             retorno = false;
         }
-        if (validacionesCiudad == false) {
+        if (validacionesApellido == false) {
             retorno = false;
         }
         if (validacionesTelFijo == false) {
@@ -265,10 +295,10 @@ public class ControllerDetallesProveedor implements Serializable {
      * Metodo encargado de realizar el registro y validaciones de la información
      * del editar docente
      */
-    public void registrarModificacionProveedor() {
+    public void registrarModificacionPersonalInterno() {
         if (modificacionRegistro == true) {
             if (validarResultadosValidacion() == true) {
-                almacenarModificacionProveedorEnSistema();
+                almacenarModificacionPersonalInternoEnSistema();
                 restaurarRegistro();
                 colorMensaje = "green";
                 mensajeFormulario = "El formulario ha sido ingresado con exito.";
@@ -282,52 +312,54 @@ public class ControllerDetallesProveedor implements Serializable {
         }
     }
 
-    public void almacenarModificacionProveedorEnSistema() {
+    public void almacenarModificacionPersonalInternoEnSistema() {
         try {
-            proveedorDetalle.setIdentificacionproveedor(editarIdentificacion);
-            proveedorDetalle.setNombreproveedor(editarNombre);
-            proveedorDetalle.setDireccion(editarDireccion);
-            proveedorDetalle.setCiudad(editarCiudad);
-            proveedorDetalle.setCorreoelectronico(editarCorreo);
+            personalInternoDetalles.getPersona().setNumerodocumento(editarIdentificacion);
+            personalInternoDetalles.getPersona().setNombrepersona(editarNombre);
+            personalInternoDetalles.getPersona().setValorhoratrabajo(Integer.valueOf(editarValorHora));
+            personalInternoDetalles.getPersona().setApellidopersona(editarApellido);
+            personalInternoDetalles.getPersona().setCorreoelectronico(editarCorreo);
             if (Utilidades.validarNulo(editarTelFijo)) {
-                proveedorDetalle.setTelefonofijo(editarTelFijo);
+                personalInternoDetalles.getPersona().setNumerofijo(editarTelFijo);
             } else {
-                proveedorDetalle.setTelefonofijo("");
+                personalInternoDetalles.getPersona().setNumerofijo("");
             }
             if (Utilidades.validarNulo(editarTelCelular)) {
-                proveedorDetalle.setTelefonomovil(editarTelCelular);
+                personalInternoDetalles.getPersona().setNumerocelular(editarTelCelular);
             } else {
-                proveedorDetalle.setTelefonomovil("");
+                personalInternoDetalles.getPersona().setNumerocelular("");
             }
-            administrarProveedoresBO.editarProveedor(proveedorDetalle);
+            administrarPersonalInternoBO.editarPersonalInterno(personalInternoDetalles);
         } catch (Exception e) {
-            System.out.println("Error ControllerDetallesProveedor almacenarModificacionProveedorEnSistema : " + e.toString());
+            System.out.println("Error ControllerRegistrarPersonalInterno almacenarModificacionPersonalInternoEnSistema : " + e.toString());
         }
     }
 
-    public String cancelarRegistroProveedor() {
-        editarDireccion = null;
+    public String cancelarRegistroPersonalInterno() {
+        editarValorHora = null;
         editarIdentificacion = null;
         editarNombre = null;
         editarTelCelular = null;
-        editarCiudad = null;
+        editarApellido = null;
         editarCorreo = null;
+        editarTipoPersonal = null;
         editarTelFijo = null;
         //
-        validacionesDireccion = false;
+        validacionesValorHora = false;
         validacionesIdentificacion = false;
         validacionesNombre = false;
         validacionesTelCelular = true;
         validacionesCorreo = false;
-        validacionesCiudad = false;
+        validacionesApellido = false;
+        validacionesTipoPersonal = false;
         validacionesTelFijo = true;
+        listaTipoPersonal = null;
+        personalInternoDetalles = null;
+        idPersonalInterno = null;
+        modificacionRegistro = false;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
-
-        proveedorDetalle = null;
-        idProveedor = null;
-        modificacionRegistro = false;
-        return "administrarproveedor";
+        return "administrarpersonalinterno";
     }
 
     //GET-SET
@@ -347,20 +379,20 @@ public class ControllerDetallesProveedor implements Serializable {
         this.editarIdentificacion = editarIdentificacion;
     }
 
-    public String getEditarCiudad() {
-        return editarCiudad;
+    public String getEditarApellido() {
+        return editarApellido;
     }
 
-    public void setEditarCiudad(String editarCiudad) {
-        this.editarCiudad = editarCiudad;
+    public void setEditarApellido(String editarApellido) {
+        this.editarApellido = editarApellido;
     }
 
-    public String getEditarDireccion() {
-        return editarDireccion;
+    public String getEditarValorHora() {
+        return editarValorHora;
     }
 
-    public void setEditarDireccion(String editarDireccion) {
-        this.editarDireccion = editarDireccion;
+    public void setEditarValorHora(String editarValorHora) {
+        this.editarValorHora = editarValorHora;
     }
 
     public String getEditarTelFijo() {
@@ -387,6 +419,22 @@ public class ControllerDetallesProveedor implements Serializable {
         this.editarCorreo = editarCorreo;
     }
 
+    public List<TipoPersonal> getListaTipoPersonal() {
+        return listaTipoPersonal;
+    }
+
+    public void setListaTipoPersonal(List<TipoPersonal> listaTipoPersonal) {
+        this.listaTipoPersonal = listaTipoPersonal;
+    }
+
+    public TipoPersonal getEditarTipoPersonal() {
+        return editarTipoPersonal;
+    }
+
+    public void setEditarTipoPersonal(TipoPersonal editarTipoPersonal) {
+        this.editarTipoPersonal = editarTipoPersonal;
+    }
+
     public String getMensajeFormulario() {
         return mensajeFormulario;
     }
@@ -401,6 +449,14 @@ public class ControllerDetallesProveedor implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public boolean isModificacionRegistro() {
+        return modificacionRegistro;
+    }
+
+    public void setModificacionRegistro(boolean modificacionRegistro) {
+        this.modificacionRegistro = modificacionRegistro;
     }
 
 }

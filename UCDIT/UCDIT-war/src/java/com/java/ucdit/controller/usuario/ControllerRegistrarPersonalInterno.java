@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.java.ucdit.controller.inventario;
+package com.java.ucdit.controller.usuario;
 
-import com.java.ucdit.bo.interfaces.inventario.AdministrarProveedoresBOInterface;
-import com.java.ucdit.entidades.Proveedor;
+import com.java.ucdit.bo.interfaces.usuario.AdministrarPersonalInternoBOInterface;
+import com.java.ucdit.entidades.Persona;
+import com.java.ucdit.entidades.PersonalInterno;
+import com.java.ucdit.entidades.TipoPersonal;
 import com.java.ucdit.utilidades.Utilidades;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -22,41 +25,45 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class ControllerRegistrarProveedor implements Serializable {
+public class ControllerRegistrarPersonalInterno implements Serializable {
 
     @EJB
-    AdministrarProveedoresBOInterface administrarProveedoresBO;
+    AdministrarPersonalInternoBOInterface administrarPersonalInternoBO;
     //
-    private String nuevoNombre, nuevoIdentificacion, nuevoCiudad, nuevoDireccion;
+    private String nuevoNombre, nuevoIdentificacion, nuevoApellido, nuevoValorHora;
     private String nuevoTelFijo, nuevoTelCelular, nuevoCorreo;
+    private List<TipoPersonal> listaTipoPersonal;
+    private TipoPersonal nuevoTipoPersonal;
     //
-    private boolean validacionesNombre, validacionesIdentificacion, validacionesCiudad, validacionesDireccion;
-    private boolean validacionesTelFijo, validacionesTelCelular, validacionesCorreo;
+    private boolean validacionesNombre, validacionesIdentificacion, validacionesApellido, validacionesValorHora;
+    private boolean validacionesTelFijo, validacionesTelCelular, validacionesCorreo, validacionesTipoPersonal;
     private String mensajeFormulario;
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
 
-    public ControllerRegistrarProveedor() {
+    public ControllerRegistrarPersonalInterno() {
     }
 
     @PostConstruct
     public void init() {
-        nuevoDireccion = null;
+        nuevoValorHora = null;
         nuevoIdentificacion = null;
         nuevoNombre = null;
         nuevoCorreo = null;
         nuevoTelCelular = null;
-        nuevoCiudad = null;
+        nuevoTipoPersonal = null;
+        nuevoApellido = null;
         nuevoTelFijo = null;
         //
-        validacionesDireccion = false;
+        validacionesValorHora = false;
         validacionesIdentificacion = false;
         validacionesNombre = false;
         validacionesCorreo = false;
         validacionesTelCelular = true;
-        validacionesCiudad = false;
+        validacionesApellido = false;
+        validacionesTipoPersonal = false;
         validacionesTelFijo = true;
         activarLimpiar = true;
         colorMensaje = "black";
@@ -65,7 +72,7 @@ public class ControllerRegistrarProveedor implements Serializable {
         mensajeFormulario = "N/A";
     }
 
-    public void validarNombreProveedor() {
+    public void validarNombrePersonalInterno() {
         if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
             int tam = nuevoNombre.length();
             if (tam >= 4) {
@@ -85,12 +92,32 @@ public class ControllerRegistrarProveedor implements Serializable {
         }
     }
 
-    public void validarIdentificacionProveedor() {
+    public void validarApellidoPersonalInterno() {
+        if (Utilidades.validarNulo(nuevoApellido) && (!nuevoApellido.isEmpty()) && (nuevoApellido.trim().length() > 0)) {
+            int tam = nuevoApellido.length();
+            if (tam >= 4) {
+                if ((Utilidades.validarCaracterString(nuevoApellido)) == false) {
+                    validacionesApellido = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El apellido ingresado es incorrecto."));
+                } else {
+                    validacionesApellido = true;
+                }
+            } else {
+                validacionesApellido = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("La tamaño minimo permitido es 4 caracteres."));
+            }
+        } else {
+            validacionesApellido = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoApellido", new FacesMessage("El apellido es obligatorio."));
+        }
+    }
+
+    public void validarIdentificacionPersonalInterno() {
         if (Utilidades.validarNulo(nuevoIdentificacion) && (!nuevoIdentificacion.isEmpty()) && (nuevoIdentificacion.trim().length() > 0)) {
             int tam = nuevoIdentificacion.length();
             if (tam >= 8) {
                 if (Utilidades.validarCaracteresAlfaNumericos(nuevoIdentificacion)) {
-                    Proveedor registro = administrarProveedoresBO.obtenerProveedorPorNit(nuevoIdentificacion);
+                    PersonalInterno registro = administrarPersonalInternoBO.obtenerPersonalInternoPorDocumento(nuevoIdentificacion);
                     if (registro == null) {
                         validacionesIdentificacion = true;
                     } else {
@@ -111,12 +138,18 @@ public class ControllerRegistrarProveedor implements Serializable {
         }
     }
 
-    public void validarCorreoProveedor() {
+    public void validarCorreoPersonalInterno() {
         if (Utilidades.validarNulo(nuevoCorreo) && (!nuevoCorreo.isEmpty()) && (nuevoCorreo.trim().length() > 0)) {
             int tam = nuevoCorreo.length();
             if (tam >= 15) {
                 if (Utilidades.validarCorreoElectronico(nuevoCorreo)) {
-                    validacionesCorreo = true;
+                    PersonalInterno registro = administrarPersonalInternoBO.obtenerPersonalInternoPorCorreo(nuevoCorreo);
+                    if (registro == null) {
+                        validacionesCorreo = true;
+                    } else {
+                        validacionesCorreo = false;
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El correo ingresado ya esta registrado."));
+                    }
                 } else {
                     validacionesCorreo = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoCorreo", new FacesMessage("El correo ingresado es incorrecto."));
@@ -131,43 +164,23 @@ public class ControllerRegistrarProveedor implements Serializable {
         }
     }
 
-    public void validarCiudadProveedor() {
-        if (Utilidades.validarNulo(nuevoCiudad) && (!nuevoCiudad.isEmpty()) && (nuevoCiudad.trim().length() > 0)) {
-            int tam = nuevoCiudad.length();
-            if (tam >= 4) {
-                if ((Utilidades.validarCaracterString(nuevoCiudad)) == false) {
-                    validacionesCiudad = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCiudad", new FacesMessage("La ciudad ingresada es incorrecta."));
-                } else {
-                    validacionesCiudad = true;
-                }
-            } else {
-                validacionesCiudad = false;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoCiudad", new FacesMessage("La tamaño minimo permitido es 4 caracteres."));
-            }
-        } else {
-            validacionesCiudad = false;
-            FacesContext.getCurrentInstance().addMessage("form:nuevoCiudad", new FacesMessage("La ciudad es obligatoria."));
-        }
-    }
-
-    public void validarDireccionProveedor() {
-        if ((Utilidades.validarNulo(nuevoDireccion)) && (!nuevoDireccion.isEmpty()) && (nuevoDireccion.trim().length() > 0)) {
-            int tam = nuevoDireccion.length();
+    public void validarValorHoraPersonalInterno() {
+        if ((Utilidades.validarNulo(nuevoValorHora)) && (!nuevoValorHora.isEmpty()) && (nuevoValorHora.trim().length() > 0)) {
+            int tam = nuevoValorHora.length();
             if (tam >= 8) {
-                if (Utilidades.validarDirecciones(nuevoDireccion)) {
-                    validacionesDireccion = true;
+                if (Utilidades.isNumber(nuevoValorHora)) {
+                    validacionesValorHora = true;
                 } else {
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección se encuentra incorrecta."));
-                    validacionesDireccion = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoValorHora", new FacesMessage("La dirección se encuentra incorrecta."));
+                    validacionesValorHora = false;
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
-                validacionesDireccion = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoValorHora", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                validacionesValorHora = false;
             }
         } else {
-            FacesContext.getCurrentInstance().addMessage("form:nuevoDireccion", new FacesMessage("La dirección es obligatoria."));
-            validacionesDireccion = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoValorHora", new FacesMessage("El valor hora es obligatorio."));
+            validacionesValorHora = false;
         }
     }
 
@@ -203,15 +216,26 @@ public class ControllerRegistrarProveedor implements Serializable {
                 }
             }
         }
+    }
 
+    public void validarTipoPersonal() {
+        if (Utilidades.validarNulo(nuevoTipoPersonal)) {
+            validacionesTipoPersonal = true;
+        } else {
+            validacionesTipoPersonal = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoTipoPersonal", new FacesMessage("El tipo personal es obligatorio."));
+        }
     }
 
     private boolean validarResultadosValidacion() {
         boolean retorno = true;
+        if (validacionesTipoPersonal == false) {
+            retorno = false;
+        }
         if (validacionesIdentificacion == false) {
             retorno = false;
         }
-        if (validacionesDireccion == false) {
+        if (validacionesValorHora == false) {
             retorno = false;
         }
         if (validacionesCorreo == false) {
@@ -220,7 +244,7 @@ public class ControllerRegistrarProveedor implements Serializable {
         if (validacionesNombre == false) {
             retorno = false;
         }
-        if (validacionesCiudad == false) {
+        if (validacionesApellido == false) {
             retorno = false;
         }
         if (validacionesTelFijo == false) {
@@ -236,9 +260,9 @@ public class ControllerRegistrarProveedor implements Serializable {
      * Metodo encargado de realizar el registro y validaciones de la información
      * del nuevo docente
      */
-    public void registrarNuevoProveedor() {
+    public void registrarNuevoPersonalInterno() {
         if (validarResultadosValidacion() == true) {
-            almacenarNuevoProveedorEnSistema();
+            almacenarNuevoPersonalInternoEnSistema();
             limpiarFormulario();
             activarLimpiar = false;
             activarAceptar = true;
@@ -251,71 +275,78 @@ public class ControllerRegistrarProveedor implements Serializable {
         }
     }
 
-    public void almacenarNuevoProveedorEnSistema() {
+    public void almacenarNuevoPersonalInternoEnSistema() {
         try {
-            Proveedor nuevaProveedor = new Proveedor();
-            nuevaProveedor.setIdentificacionproveedor(nuevoIdentificacion);
-            nuevaProveedor.setNombreproveedor(nuevoNombre);
-            nuevaProveedor.setDireccion(nuevoDireccion);
-            nuevaProveedor.setCiudad(nuevoCiudad);
-            nuevaProveedor.setCorreoelectronico(nuevoCorreo);
+            Persona nuevaPersona = new Persona();
+            PersonalInterno nuevaPersonalInterno = new PersonalInterno();
+            nuevaPersona.setNumerodocumento(nuevoIdentificacion);
+            nuevaPersona.setNombrepersona(nuevoNombre);
+            nuevaPersona.setValorhoratrabajo(Integer.valueOf(nuevoValorHora));
+            nuevaPersona.setApellidopersona(nuevoApellido);
+            nuevaPersona.setCorreoelectronico(nuevoCorreo);
             if (Utilidades.validarNulo(nuevoTelFijo)) {
-                nuevaProveedor.setTelefonofijo(nuevoTelFijo);
+                nuevaPersona.setNumerofijo(nuevoTelFijo);
             } else {
-                nuevaProveedor.setTelefonofijo("");
+                nuevaPersona.setNumerofijo("");
             }
             if (Utilidades.validarNulo(nuevoTelCelular)) {
-                nuevaProveedor.setTelefonomovil(nuevoTelCelular);
+                nuevaPersona.setNumerocelular(nuevoTelCelular);
             } else {
-                nuevaProveedor.setTelefonomovil("");
+                nuevaPersona.setNumerocelular("");
             }
-            administrarProveedoresBO.crearProveedor(nuevaProveedor);
+            nuevaPersonalInterno.setTipopersonal(nuevoTipoPersonal);
+            administrarPersonalInternoBO.crearPersonalInterno(nuevaPersona, nuevaPersonalInterno);
         } catch (Exception e) {
-            System.out.println("Error ControllerRegistrarProveedor almacenarNuevoProveedorEnSistema : " + e.toString());
+            System.out.println("Error ControllerRegistrarPersonalInterno almacenarNuevoPersonalInternoEnSistema : " + e.toString());
         }
     }
 
     public void limpiarFormulario() {
-        nuevoDireccion = null;
+        nuevoValorHora = null;
         nuevoIdentificacion = null;
         nuevoNombre = null;
         nuevoTelCelular = null;
-        nuevoCiudad = null;
+        nuevoApellido = null;
+        nuevoTipoPersonal = null;
         nuevoCorreo = null;
         nuevoTelFijo = null;
         //
-        validacionesDireccion = false;
+        validacionesValorHora = false;
         validacionesIdentificacion = false;
         validacionesNombre = false;
         validacionesTelCelular = true;
-        validacionesCiudad = false;
+        validacionesTipoPersonal = false;
+        validacionesApellido = false;
         validacionesCorreo = false;
         validacionesTelFijo = true;
         mensajeFormulario = "";
     }
 
-    public String cancelarRegistroProveedor() {
-        nuevoDireccion = null;
+    public String cancelarRegistroPersonalInterno() {
+        nuevoValorHora = null;
         nuevoIdentificacion = null;
         nuevoNombre = null;
         nuevoTelCelular = null;
-        nuevoCiudad = null;
+        nuevoApellido = null;
         nuevoCorreo = null;
+        nuevoTipoPersonal = null;
         nuevoTelFijo = null;
         //
-        validacionesDireccion = false;
+        validacionesValorHora = false;
         validacionesIdentificacion = false;
         validacionesNombre = false;
         validacionesTelCelular = true;
         validacionesCorreo = false;
-        validacionesCiudad = false;
+        validacionesApellido = false;
+        validacionesTipoPersonal = false;
         validacionesTelFijo = true;
+        listaTipoPersonal = null;
         activarAceptar = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
-        return "administrarproveedor";
+        return "administrarpersonalinterno";
     }
 
     public void cambiarActivarCasillas() {
@@ -345,20 +376,20 @@ public class ControllerRegistrarProveedor implements Serializable {
         this.nuevoIdentificacion = nuevoIdentificacion;
     }
 
-    public String getNuevoCiudad() {
-        return nuevoCiudad;
+    public String getNuevoApellido() {
+        return nuevoApellido;
     }
 
-    public void setNuevoCiudad(String nuevoCiudad) {
-        this.nuevoCiudad = nuevoCiudad;
+    public void setNuevoApellido(String nuevoApellido) {
+        this.nuevoApellido = nuevoApellido;
     }
 
-    public String getNuevoDireccion() {
-        return nuevoDireccion;
+    public String getNuevoValorHora() {
+        return nuevoValorHora;
     }
 
-    public void setNuevoDireccion(String nuevoDireccion) {
-        this.nuevoDireccion = nuevoDireccion;
+    public void setNuevoValorHora(String nuevoValorHora) {
+        this.nuevoValorHora = nuevoValorHora;
     }
 
     public String getNuevoTelFijo() {
@@ -383,6 +414,25 @@ public class ControllerRegistrarProveedor implements Serializable {
 
     public void setNuevoCorreo(String nuevoCorreo) {
         this.nuevoCorreo = nuevoCorreo;
+    }
+
+    public List<TipoPersonal> getListaTipoPersonal() {
+        if (null == listaTipoPersonal) {
+            listaTipoPersonal = administrarPersonalInternoBO.obtenerTipoPersonalRegistrado();
+        }
+        return listaTipoPersonal;
+    }
+
+    public void setListaTipoPersonal(List<TipoPersonal> listaTipoPersonal) {
+        this.listaTipoPersonal = listaTipoPersonal;
+    }
+
+    public TipoPersonal getNuevoTipoPersonal() {
+        return nuevoTipoPersonal;
+    }
+
+    public void setNuevoTipoPersonal(TipoPersonal nuevoTipoPersonal) {
+        this.nuevoTipoPersonal = nuevoTipoPersonal;
     }
 
     public String getMensajeFormulario() {

@@ -92,4 +92,58 @@
         </navigation-case>
     </navigation-rule>
     
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarpersonalinterno</from-outcome>
+            <to-view-id>/xhtml/usuario/administrarpersonalinterno.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/usuario/administrarpersonalinterno.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciosupervisor</from-outcome>
+            <to-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/usuario/administrarpersonalinterno.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarpersonalinterno</from-outcome>
+            <to-view-id>/xhtml/usuario/registarpersonalinterno.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/usuario/registarpersonalinterno.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarpersonalinterno</from-outcome>
+            <to-view-id>/xhtml/usuario/administrarpersonalinterno.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/usuario/administrarpersonalinterno.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallespersonalinterno</from-outcome>
+            <to-view-id>/xhtml/usuario/detallespersonalinterno.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/usuario/detallespersonalinterno.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarpersonalinterno</from-outcome>
+            <to-view-id>/xhtml/usuario/administrarpersonalinterno.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
 </faces-config>

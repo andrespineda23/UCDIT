@@ -6,6 +6,7 @@
 package com.java.ucdit.facade;
 
 import com.java.ucdit.entidades.Persona;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,6 +59,7 @@ public class PersonaFacade extends AbstractFacade<Persona> {
             return null;
         }
     }
+
     public Persona obtenerPersonaPorDocumento(String documento) {
         try {
             em.clear();
@@ -71,4 +73,24 @@ public class PersonaFacade extends AbstractFacade<Persona> {
             return null;
         }
     }
+
+    public Persona obtenerUltimaPersonaRegistrada() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM Persona p");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<Persona> registros = query.getResultList();
+            if (registros != null) {
+                int tam = registros.size();
+                Persona ultimoRegistro = registros.get(tam - 1);
+                return ultimoRegistro;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error PersonaFacade obtenerUltimaPersonaRegistrada: " + e.toString());
+            return null;
+        }
+    }
+
 }

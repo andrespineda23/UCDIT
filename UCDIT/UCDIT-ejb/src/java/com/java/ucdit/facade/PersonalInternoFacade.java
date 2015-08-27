@@ -43,4 +43,30 @@ public class PersonalInternoFacade extends AbstractFacade<PersonalInterno> {
             return null;
         }
     }
+
+    public PersonalInterno obtenerPersonalInternoPorCorreo(String correo) {
+        try {
+            Query query = em.createQuery("SELECT p FROM PersonalInterno p WHERE p.persona.correoelectronico=:correo");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("correo", correo);
+            PersonalInterno personal = (PersonalInterno) query.getSingleResult();
+            return personal;
+        } catch (Exception e) {
+            System.out.println("Error PersonalInternoFacade obtenerPersonalInternoPorCorreo: " + e.toString());
+            return null;
+        }
+    }
+
+    public PersonalInterno obtenerPersonalInternoPorDocumento(String documento) {
+        try {
+            Query query = em.createQuery("SELECT p FROM PersonalInterno p WHERE p.persona.numerodocumento=:documento");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("documento", documento);
+            PersonalInterno personal = (PersonalInterno) query.getSingleResult();
+            return personal;
+        } catch (Exception e) {
+            System.out.println("Error PersonalInternoFacade obtenerPersonalInternoPorDocumento: " + e.toString());
+            return null;
+        }
+    }
 }

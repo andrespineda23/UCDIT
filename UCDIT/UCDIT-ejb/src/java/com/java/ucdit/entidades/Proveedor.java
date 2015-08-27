@@ -143,11 +143,14 @@ public class Proveedor implements Serializable {
     }
 
     public String getDireccion() {
+        if (null != direccion) {
+            return direccion.toUpperCase();
+        }
         return direccion;
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        this.direccion = direccion.toUpperCase();
     }
 
     public String getCorreoelectronico() {
