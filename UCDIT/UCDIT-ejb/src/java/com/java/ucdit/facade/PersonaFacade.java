@@ -77,12 +77,12 @@ public class PersonaFacade extends AbstractFacade<Persona> {
     public Persona obtenerUltimaPersonaRegistrada() {
         try {
             em.clear();
-            Query query = em.createQuery("SELECT p FROM Persona p");
+            Query query = em.createQuery("SELECT p FROM Persona p ORDER BY p.idpersona DESC");
             query.setHint("javax.persistence.cache.storeMode", "REFRESH");
             List<Persona> registros = query.getResultList();
             if (registros != null) {
-                int tam = registros.size();
-                Persona ultimoRegistro = registros.get(tam - 1);
+                System.out.println("registros : " + registros.size());
+                Persona ultimoRegistro = registros.get(0);
                 return ultimoRegistro;
             } else {
                 return null;

@@ -96,23 +96,27 @@ public class ControllerIndex implements Serializable {
             usuario = null;
             contrasenia = null;
             if (null != personaLogin) {
-                BigInteger idTipoUsuario = personaLogin.getUsuario().getTipousuario().getIdtipousuario();
-                usuarioLoginSistema = new UsuarioLogin();
-                BigInteger secuenciaLogin = new BigInteger("1");
-                if (secuenciaLogin.equals(idTipoUsuario)) {
-                    Supervisor registro = administrarIndexBO.obtenerSupervisorPorIdPersona(personaLogin.getIdpersona());
-                    usuarioLoginSistema.setNombreTipoUsuario("SUPERVISOR");
-                    usuarioLoginSistema.setIdUsuarioLogin(registro.getIdsupervisor());
-                    usuarioLoginSistema.setUserUsuario(personaLogin.getUsuario().getUsuario());
-                    paginaSiguiente = "iniciosupervisor";
+                if (personaLogin.getUsuario().getEstado() == true) {
+                    BigInteger idTipoUsuario = personaLogin.getUsuario().getTipousuario().getIdtipousuario();
+                    usuarioLoginSistema = new UsuarioLogin();
+                    BigInteger secuenciaLogin = new BigInteger("1");
+                    if (secuenciaLogin.equals(idTipoUsuario)) {
+                        Supervisor registro = administrarIndexBO.obtenerSupervisorPorIdPersona(personaLogin.getIdpersona());
+                        usuarioLoginSistema.setNombreTipoUsuario("SUPERVISOR");
+                        usuarioLoginSistema.setIdUsuarioLogin(registro.getIdsupervisor());
+                        usuarioLoginSistema.setUserUsuario(personaLogin.getUsuario().getUsuario());
+                        paginaSiguiente = "iniciosupervisor";
+                    } else {
+                        PersonalInterno registro = administrarIndexBO.obtenerPersonalInternoPorIdPersona(personaLogin.getIdpersona());
+                        usuarioLoginSistema.setNombreTipoUsuario("PERSONALINTERNO");
+                        usuarioLoginSistema.setIdUsuarioLogin(registro.getIdpersonalinterno());
+                        usuarioLoginSistema.setUserUsuario(personaLogin.getUsuario().getUsuario());
+                        paginaSiguiente = "iniciopersonal";
+                    }
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sessionUsuario", usuarioLoginSistema);
                 } else {
-                    PersonalInterno registro = administrarIndexBO.obtenerPersonalInternoPorIdPersona(personaLogin.getIdpersona());
-                    usuarioLoginSistema.setNombreTipoUsuario("PERSONALINTERNO");
-                    usuarioLoginSistema.setIdUsuarioLogin(registro.getIdpersonalinterno());
-                    usuarioLoginSistema.setUserUsuario(personaLogin.getUsuario().getUsuario());
-                    paginaSiguiente = "iniciopersonal";
+                    mensajeFormulario = "El usuario se encuentra inactivo.";
                 }
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sessionUsuario", usuarioLoginSistema);
             } else {
                 mensajeFormulario = "El usuario ingresado no existe.";
             }

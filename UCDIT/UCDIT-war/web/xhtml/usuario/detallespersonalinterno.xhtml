@@ -17,7 +17,7 @@ and open the template in the editor.
             <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
             <![endif]-->
         <!-- Favicon Icon -->
-        <link rel="icon" href="../../assets/img/favicon.ico" />
+        <link rel="icon" href="../../assets/img/favicon2.ico" />
         <title>UCDIT</title>
         <!-- BOOTSTRAP CORE CSS -->
         <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
@@ -55,7 +55,7 @@ and open the template in the editor.
                     <div class="container">
                         <div class="row text-center">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
-                                <h2>Nuevo Personal Interno</h2>
+                                <h2>Editar Personal Interno</h2>
                                 <h3>Información</h3>
                                 <p>
                                     <strong>A continuación se muestra el formato de ingreso de la información:</strong>
@@ -154,6 +154,16 @@ and open the template in the editor.
                                         <f:ajax event="change" listener="#{controllerDetallesPersonalInterno.validarTipoPersonal()}" execute="editarTipoPersonal" render="msnTipoPersonal"/>
                                     </h:selectOneMenu>
                                     <h6><h:message id="msnTipoPersonal" for="editarTipoPersonal" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Estado Usuario*"/></strong>
+                                    <h:selectOneMenu value="#{controllerDetallesPersonalInterno.editarEstado}"
+                                                     class="form-control" 
+                                                     id="editarEstado">
+                                        <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                        <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                        <f:ajax event="change" listener="#{controllerDetallesPersonalInterno.validarEstado()}" execute="editarEstado" />
+                                    </h:selectOneMenu>
                                 </div>
                                 <fieldset>
                                     <legend class="h5 text-info">Datos Opcionales</legend>

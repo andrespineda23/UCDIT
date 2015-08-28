@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByContrasenia", query = "SELECT u FROM Usuario u WHERE u.contrasenia = :contrasenia"),
     @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado")})
 public class Usuario implements Serializable {
+
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,6 +65,8 @@ public class Usuario implements Serializable {
     private TipoUsuario tipousuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private Collection<Persona> personaCollection;
+    @Transient
+    private String strEstado;
 
     public Usuario() {
     }
@@ -109,6 +113,18 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
+    public String getStrEstado() {
+        getEstado();
+        if(null != estado){
+        if(estado == true){strEstado = "ACTIVO";}else{strEstado = "INACTIVO";}
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
+    }
+
     public TipoUsuario getTipousuario() {
         return tipousuario;
     }
@@ -150,5 +166,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.Usuario[ idusuario=" + idusuario + " ]";
     }
-    
+
 }

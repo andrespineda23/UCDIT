@@ -9,9 +9,14 @@ import com.java.ucdit.bo.interfaces.usuario.AdministrarPersonalInternoBOInterfac
 import com.java.ucdit.entidades.Persona;
 import com.java.ucdit.entidades.PersonalInterno;
 import com.java.ucdit.entidades.TipoPersonal;
+import com.java.ucdit.entidades.TipoUsuario;
+import com.java.ucdit.entidades.Usuario;
 import com.java.ucdit.facade.PersonaFacade;
 import com.java.ucdit.facade.PersonalInternoFacade;
 import com.java.ucdit.facade.TipoPersonalFacade;
+import com.java.ucdit.facade.TipoUsuarioFacade;
+import com.java.ucdit.facade.UsuarioFacade;
+import com.java.ucdit.utilidades.Utilidades;
 import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
@@ -25,11 +30,15 @@ import javax.ejb.Stateful;
 public class AdministrarPersonalInternoBO implements AdministrarPersonalInternoBOInterface {
 
     @EJB
-    private PersonalInternoFacade personalInternoFacade;
+    PersonalInternoFacade personalInternoFacade;
     @EJB
-    private TipoPersonalFacade tipoPersonalFacade;
+    TipoPersonalFacade tipoPersonalFacade;
     @EJB
-    private PersonaFacade personaFacade;
+    PersonaFacade personaFacade;
+    @EJB
+    UsuarioFacade usuarioFacade;
+    @EJB
+    TipoUsuarioFacade tipoUsuarioFacade;
 
     //@Override
     public List<PersonalInterno> consultarPersonalInternoesRegistrados() {
@@ -45,6 +54,15 @@ public class AdministrarPersonalInternoBO implements AdministrarPersonalInternoB
     @Override
     public void crearPersonalInterno(Persona persona, PersonalInterno personalInterno) {
         try {
+            Usuario usuario = new Usuario();
+            usuario.setUsuario(persona.getNumerodocumento());
+            usuario.setContrasenia(Utilidades.codificarString(persona.getNumerodocumento()));
+            usuario.setEstado(true);
+            TipoUsuario tipo = tipoUsuarioFacade.find(new BigInteger("2"));
+            usuario.setTipousuario(tipo);
+            usuarioFacade.create(usuario);
+            Usuario nuevoUsuario = usuarioFacade.obtenerUltimoUsuarioRegistrada();
+            persona.setUsuario(nuevoUsuario);
             personaFacade.create(persona);
             Persona personaNueva = personaFacade.obtenerUltimaPersonaRegistrada();
             personalInterno.setPersona(personaNueva);
@@ -57,6 +75,7 @@ public class AdministrarPersonalInternoBO implements AdministrarPersonalInternoB
     @Override
     public void editarPersonalInterno(PersonalInterno personalInterno) {
         try {
+            usuarioFacade.edit(personalInterno.getPersona().getUsuario());
             personaFacade.edit(personalInterno.getPersona());
             personalInternoFacade.edit(personalInterno);
         } catch (Exception e) {

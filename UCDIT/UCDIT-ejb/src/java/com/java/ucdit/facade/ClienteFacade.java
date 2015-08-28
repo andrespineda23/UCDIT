@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ClienteFacade extends AbstractFacade<Cliente> {
+
     @PersistenceContext(unitName = "UCDIT-ejbPU")
     private EntityManager em;
 
@@ -27,5 +28,5 @@ public class ClienteFacade extends AbstractFacade<Cliente> {
     public ClienteFacade() {
         super(Cliente.class);
     }
-    
+
 }

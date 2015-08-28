@@ -5,7 +5,7 @@
  */
 package com.java.ucdit.facade;
 
-import com.java.ucdit.entidades.TipouUnidad;
+import com.java.ucdit.entidades.TipoUnidad;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,8 @@ import javax.persistence.PersistenceContext;
  * @author ELECTRONICA
  */
 @Stateless
-public class TipouUnidadFacade extends AbstractFacade<TipouUnidad> {
+public class TipoUnidadFacade extends AbstractFacade<TipoUnidad> {
+
     @PersistenceContext(unitName = "UCDIT-ejbPU")
     private EntityManager em;
 
@@ -24,8 +25,8 @@ public class TipouUnidadFacade extends AbstractFacade<TipouUnidad> {
         return em;
     }
 
-    public TipouUnidadFacade() {
-        super(TipouUnidad.class);
+    public TipoUnidadFacade() {
+        super(TipoUnidad.class);
     }
-    
+
 }

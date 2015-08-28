@@ -166,16 +166,10 @@ public class ControllerRegistrarPersonalInterno implements Serializable {
 
     public void validarValorHoraPersonalInterno() {
         if ((Utilidades.validarNulo(nuevoValorHora)) && (!nuevoValorHora.isEmpty()) && (nuevoValorHora.trim().length() > 0)) {
-            int tam = nuevoValorHora.length();
-            if (tam >= 8) {
-                if (Utilidades.isNumber(nuevoValorHora)) {
-                    validacionesValorHora = true;
-                } else {
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoValorHora", new FacesMessage("La dirección se encuentra incorrecta."));
-                    validacionesValorHora = false;
-                }
+            if (Utilidades.isNumber(nuevoValorHora)) {
+                validacionesValorHora = true;
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoValorHora", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:nuevoValorHora", new FacesMessage("El valor hora es incorrecto."));
                 validacionesValorHora = false;
             }
         } else {

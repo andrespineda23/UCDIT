@@ -77,7 +77,7 @@ public class Insumo implements Serializable {
     private Collection<IngresoInsumo> ingresoInsumoCollection;
     @JoinColumn(name = "tipounidad", referencedColumnName = "idtipounidad")
     @ManyToOne(optional = false)
-    private TipouUnidad tipounidad;
+    private TipoUnidad tipounidad;
     @JoinColumn(name = "proveedor", referencedColumnName = "idproveedor")
     @ManyToOne(optional = false)
     private Proveedor proveedor;
@@ -173,11 +173,11 @@ public class Insumo implements Serializable {
         this.ingresoInsumoCollection = ingresoInsumoCollection;
     }
 
-    public TipouUnidad getTipounidad() {
+    public TipoUnidad getTipounidad() {
         return tipounidad;
     }
 
-    public void setTipounidad(TipouUnidad tipounidad) {
+    public void setTipounidad(TipoUnidad tipounidad) {
         this.tipounidad = tipounidad;
     }
 

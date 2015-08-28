@@ -6,10 +6,7 @@
 package com.java.ucdit.entidades;
 
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,12 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,46 +27,45 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "tipounidad")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipouUnidad.findAll", query = "SELECT t FROM TipouUnidad t"),
-    @NamedQuery(name = "TipouUnidad.findByIdtipounidad", query = "SELECT t FROM TipouUnidad t WHERE t.idtipounidad = :idtipounidad"),
-    @NamedQuery(name = "TipouUnidad.findByNombretipounidad", query = "SELECT t FROM TipouUnidad t WHERE t.nombretipounidad = :nombretipounidad")})
-public class TipouUnidad implements Serializable {
-    private static final Long serialVersionUID = 1L;
+    @NamedQuery(name = "TipoUnidad.findAll", query = "SELECT t FROM TipoUnidad t"),
+    @NamedQuery(name = "TipoUnidad.findByIdtipounidad", query = "SELECT t FROM TipoUnidad t WHERE t.idtipounidad = :idtipounidad"),
+    @NamedQuery(name = "TipoUnidad.findByNombretipounidad", query = "SELECT t FROM TipoUnidad t WHERE t.nombretipounidad = :nombretipounidad")})
+public class TipoUnidad implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idtipounidad")
-    private BigInteger idtipounidad;
+    private Long idtipounidad;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "nombretipounidad")
     private String nombretipounidad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipounidad")
-    private Collection<Insumo> insumoCollection;
 
-    public TipouUnidad() {
+    public TipoUnidad() {
     }
 
-    public TipouUnidad(BigInteger idtipounidad) {
+    public TipoUnidad(Long idtipounidad) {
         this.idtipounidad = idtipounidad;
     }
 
-    public TipouUnidad(BigInteger idtipounidad, String nombretipounidad) {
+    public TipoUnidad(Long idtipounidad, String nombretipounidad) {
         this.idtipounidad = idtipounidad;
         this.nombretipounidad = nombretipounidad;
     }
 
-    public BigInteger getIdtipounidad() {
+    public Long getIdtipounidad() {
         return idtipounidad;
     }
 
-    public void setIdtipounidad(BigInteger idtipounidad) {
+    public void setIdtipounidad(Long idtipounidad) {
         this.idtipounidad = idtipounidad;
     }
 
     public String getNombretipounidad() {
-        if(null != nombretipounidad){
+        if (null != nombretipounidad) {
             return nombretipounidad.toUpperCase();
         }
         return nombretipounidad;
@@ -79,15 +73,6 @@ public class TipouUnidad implements Serializable {
 
     public void setNombretipounidad(String nombretipounidad) {
         this.nombretipounidad = nombretipounidad.toUpperCase();
-    }
-
-    @XmlTransient
-    public Collection<Insumo> getInsumoCollection() {
-        return insumoCollection;
-    }
-
-    public void setInsumoCollection(Collection<Insumo> insumoCollection) {
-        this.insumoCollection = insumoCollection;
     }
 
     @Override
@@ -100,10 +85,10 @@ public class TipouUnidad implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipouUnidad)) {
+        if (!(object instanceof TipoUnidad)) {
             return false;
         }
-        TipouUnidad other = (TipouUnidad) object;
+        TipoUnidad other = (TipoUnidad) object;
         if ((this.idtipounidad == null && other.idtipounidad != null) || (this.idtipounidad != null && !this.idtipounidad.equals(other.idtipounidad))) {
             return false;
         }
@@ -112,7 +97,7 @@ public class TipouUnidad implements Serializable {
 
     @Override
     public String toString() {
-        return "com.java.ucdit.entidades.TipouUnidad[ idtipounidad=" + idtipounidad + " ]";
+        return "com.java.ucdit.entidades.TipoUnidad[ idtipounidad=" + idtipounidad + " ]";
     }
-    
+
 }

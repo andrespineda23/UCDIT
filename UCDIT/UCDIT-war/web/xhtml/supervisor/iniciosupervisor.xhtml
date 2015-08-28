@@ -17,7 +17,7 @@ and open the template in the editor.
             <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
             <![endif]-->
         <!-- Favicon Icon -->
-        <link rel="icon" href="../../assets/img/favicon.ico" />
+        <link rel="icon" href="../../assets/img/favicon2.ico" />
         <title>UCDIT</title>
         <!-- BOOTSTRAP CORE CSS -->
         <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
@@ -104,7 +104,7 @@ and open the template in the editor.
                                             <div class="icon-wrapper">
                                                 <i class="ion-tshirt-outline"></i>
                                             </div>                   
-                                            <h4><h:commandLink value="Supervisores"/></h4>
+                                            <h4><h:commandLink value="Supervisores" action="administrarsupervisor" actionListener="#{controllerAdministrarSupervisor.buscarSupervisorRegistrador()}"/></h4>
                                             Usuarios que puede 
                                             controlar la información del sistema en general.
                                         </div>
@@ -112,7 +112,7 @@ and open the template in the editor.
                                             <div class="icon-wrapper">
                                                 <i class="ion-person-stalker"></i>
                                             </div>                   
-                                            <h4><h:commandLink value="Personal Interno" action="administrarpersonalinterno"/></h4> 
+                                            <h4><h:commandLink value="Personal Interno" actionListener="#{controllerAdministrarPersonalInterno.buscarPersonalInternoRegistrador()}" action="administrarpersonalinterno"/></h4> 
                                             Usuarios relacionados con tareas especificas de la UCDIT.
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
@@ -140,7 +140,7 @@ and open the template in the editor.
                             <h2 class="head-line">Control de <strong>Inventario y Equipos</strong></h2>
                             <p>
                                 Por medio de la siguiente funcionalidad usted puede controlar la información de los equipos, proveedores y los insumos de la UCDIT. 
-                                Por medio de la funcionalidad provista en las paginas ustede puede ingresar nuevos elementos, modificarlos o consultar los elementos registrados. 
+                                Por medio de la funcionalidad provista en las paginas usted puede ingresar nuevos elementos, modificarlos o consultar los elementos registrados. 
                                 A su vez puede realizar ingreso de nuevos insumos y equipos adquiridos por la UCDIT para el uso interno.
                             </p>
                             <div class="row text-center">
@@ -150,21 +150,21 @@ and open the template in the editor.
                                             <div class="icon-wrapper">
                                                 <i class="ion-person-stalker"></i>
                                             </div>                   
-                                            <h4><h:commandLink value="Proveedores" action="administrarproveedor"/></h4>
+                                            <h4><h:commandLink value="Proveedores" actionListener="#{controllerAdministrarProveedor.buscarProveedoresRegistrador()}" action="administrarproveedor"/></h4>
                                             Proveedores con los cuales cuenta la UCDIT para sus compras.
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                             <div class="icon-wrapper">
                                                 <i class="ion-bookmark"></i>
                                             </div>                   
-                                            <h4><h:commandLink value="Insumos"/></h4> 
+                                            <h4><h:commandLink value="Insumos" actionListener="#{controllerAdministrarInsumo.buscarInsumosRegistrador()}" action="administrarinsumo"/></h4> 
                                             Insumos de trabajo para la elaboración de proyectos.
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                             <div class="icon-wrapper">
                                                 <i class="ion-mouse"></i>
                                             </div>                   
-                                            <h4><h:commandLink value="Equipo Tecnologico"/></h4> 
+                                            <h4><h:commandLink value="Equipo Tecnologico" actionListener="#{controllerAdministrarEquipo.buscarEquipoTecnologicosRegistrador()}" action="administrarequipo"/></h4> 
                                             Equipo tecnologico base para la realización de tareas internas.
                                         </div>
                                     </div>
@@ -176,6 +176,48 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
+                <br></br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <h2 class="head-line">Control de <strong>Trabajo UCDIT</strong></h2>
+                            <p>
+                                Por medio de la siguiente funcionalidad usted puede controlar el trabajo realizado por parte del personal interno, proyectos realizados y los clientes con los cuales existe contacto.
+                                Por medio de la funcionalidad provista en las paginas usted puede ingresar nuevos elementos, modificarlos o consultar los elementos registrados. 
+                            </p>
+                            <div class="row text-center">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row pad-bottom">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="icon-wrapper">
+                                                <i class="ion-android-archive"></i>
+                                            </div>                   
+                                            <h4><h:commandLink value="Informes de Trabajo" /></h4>
+                                            Informes de trabajo del personal interno
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="icon-wrapper">
+                                                <i class="ion-network"></i>
+                                            </div>                   
+                                            <h4><h:commandLink value="Proyectos" /></h4> 
+                                            Proyectos realizados por parte del personal de la UCDIT
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                            <div class="icon-wrapper">
+                                                <i class="ion-person"></i>
+                                            </div>                   
+                                            <h4><h:commandLink value="Clientes" actionListener="#{controllerAdministrarCliente.buscarClienteRegistrador()}" action="administrarcliente"/></h4> 
+                                            Clientes de la UCDIT.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
+                            <img src="../../assets/img/objetivoclientereporte.jpg" class="img-side" alt="" />
+                        </div>
+                    </div>
+                </div>
             </section>
             <!-- ABOUT SECTION END-->
             <!-- FEATURES SECTION START-->
@@ -184,35 +226,37 @@ and open the template in the editor.
                     <div class="row text-center">
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                             <div class="icon-wrapper">
-                                <i class="ion-chatboxes"></i>
+                                <i class="ion-mouse"></i>
                             </div>
-                            <h4><h:commandLink value="Informes de Trabajo"/></h4>
+                            <h4><h:commandLink value="Tipo Equipo" action="administrartipoequipo" actionListener="#{controllerAdministrarTipoEquipo.buscarTipoEquiposRegistrador()}"/></h4>
                             <p>
-                                Monitoreo del trabajo realizado por el personal interno.
+                                Variable de tipos equipos (Equipo Tecnologico)
                             </p>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
                             <h2 class="head-line">
-                                <h:commandLink value="Objetivos de Trabajo"/>
+                                <strong><h:outputText value="Variables del Sistema"/></strong>
                             </h2>
+                            <div class="icon-wrapper">
+                                <i class="ion-bookmark"></i>
+                            </div>
+                            <h4><h:commandLink value="Tipo Unidad" action="administrartipounidad" actionListener="#{controllerAdministrarTipoUnidad.buscarTipoUnidadsRegistrador()}"/></h4>
                             <p>
-                                Tareas que seran realizadas por el personal interno de la UCDIT
+                                Variable de tipo unidad (Insumo)
                             </p>
-                            <h:commandButton class="btn btn-custom btn-three" value="Proyectos"/>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             <div class="icon-wrapper">
-                                <i class="ion-person-stalker"></i>
+                                <i class="ion-person-add"></i>
                             </div>
-                            <h4><h:commandLink value="Clientes"/></h4>
+                            <h4><h:commandLink value="Tipo Personal" action="administrartipopersonal" actionListener="#{controllerAdministrarTipoPersonal.buscarTipoPersonalsRegistrador()}"/></h4>
                             <p>
-                                Clientes asociados a la UCDIT.
+                                Variable de tipo personal (Personal Interno)
                             </p>
                         </div>
 
                     </div>
                 </div>
-
             </section>
             <!-- FEATURES SECTION END-->     
             <!-- FOOTER SECTION START-->

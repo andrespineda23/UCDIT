@@ -43,6 +43,7 @@ public class ControllerDetallesPersonalInterno implements Serializable {
     private String mensajeFormulario;
     private String colorMensaje;
     private boolean modificacionRegistro;
+    private boolean editarEstado;
 
     public ControllerDetallesPersonalInterno() {
     }
@@ -71,6 +72,7 @@ public class ControllerDetallesPersonalInterno implements Serializable {
             editarTipoPersonal = personalInternoDetalles.getTipopersonal();
             editarApellido = personalInternoDetalles.getPersona().getApellidopersona();
             editarTelFijo = personalInternoDetalles.getPersona().getNumerofijo();
+            editarEstado = personalInternoDetalles.getPersona().getUsuario().getEstado();
             //
             validacionesValorHora = true;
             validacionesIdentificacion = true;
@@ -198,16 +200,10 @@ public class ControllerDetallesPersonalInterno implements Serializable {
 
     public void validarValorHoraPersonalInterno() {
         if ((Utilidades.validarNulo(editarValorHora)) && (!editarValorHora.isEmpty()) && (editarValorHora.trim().length() > 0)) {
-            int tam = editarValorHora.length();
-            if (tam >= 8) {
-                if (Utilidades.isNumber(editarValorHora)) {
-                    validacionesValorHora = true;
-                } else {
-                    FacesContext.getCurrentInstance().addMessage("form:editarValorHora", new FacesMessage("La dirección se encuentra incorrecta."));
-                    validacionesValorHora = false;
-                }
+            if (Utilidades.isNumber(editarValorHora)) {
+                validacionesValorHora = true;
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:editarValorHora", new FacesMessage("El tamaño minimo permitido es 8 caracteres."));
+                FacesContext.getCurrentInstance().addMessage("form:editarValorHora", new FacesMessage("El valor hora es incorrecto."));
                 validacionesValorHora = false;
             }
         } else {
@@ -259,6 +255,10 @@ public class ControllerDetallesPersonalInterno implements Serializable {
             validacionesTipoPersonal = false;
             FacesContext.getCurrentInstance().addMessage("form:editarTipoPersonal", new FacesMessage("El tipo personal es obligatorio."));
         }
+        modificacionRegistro = true;
+    }
+
+    public void validarEstado() {
         modificacionRegistro = true;
     }
 
@@ -314,6 +314,7 @@ public class ControllerDetallesPersonalInterno implements Serializable {
 
     public void almacenarModificacionPersonalInternoEnSistema() {
         try {
+            personalInternoDetalles.getPersona().getUsuario().setEstado(editarEstado);
             personalInternoDetalles.getPersona().setNumerodocumento(editarIdentificacion);
             personalInternoDetalles.getPersona().setNombrepersona(editarNombre);
             personalInternoDetalles.getPersona().setValorhoratrabajo(Integer.valueOf(editarValorHora));
@@ -457,6 +458,14 @@ public class ControllerDetallesPersonalInterno implements Serializable {
 
     public void setModificacionRegistro(boolean modificacionRegistro) {
         this.modificacionRegistro = modificacionRegistro;
+    }
+
+    public boolean isEditarEstado() {
+        return editarEstado;
+    }
+
+    public void setEditarEstado(boolean editarEstado) {
+        this.editarEstado = editarEstado;
     }
 
 }

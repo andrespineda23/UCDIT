@@ -8,8 +8,13 @@ package com.java.ucdit.bo.usuario;
 import com.java.ucdit.bo.interfaces.usuario.AdministrarSupervisorBOInterface;
 import com.java.ucdit.entidades.Persona;
 import com.java.ucdit.entidades.Supervisor;
+import com.java.ucdit.entidades.TipoUsuario;
+import com.java.ucdit.entidades.Usuario;
 import com.java.ucdit.facade.PersonaFacade;
 import com.java.ucdit.facade.SupervisorFacade;
+import com.java.ucdit.facade.TipoUsuarioFacade;
+import com.java.ucdit.facade.UsuarioFacade;
+import com.java.ucdit.utilidades.Utilidades;
 import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,9 +28,13 @@ import javax.ejb.Stateful;
 public class AdministrarSupervisorBO implements AdministrarSupervisorBOInterface {
 
     @EJB
-    private SupervisorFacade supervisorFacade;
+    SupervisorFacade supervisorFacade;
     @EJB
-    private PersonaFacade personaFacade;
+    PersonaFacade personaFacade;
+    @EJB
+    UsuarioFacade usuarioFacade;
+    @EJB
+    TipoUsuarioFacade tipoUsuarioFacade;
 
     //@Override
     public List<Supervisor> consultarSupervisoresRegistrados() {
@@ -41,6 +50,15 @@ public class AdministrarSupervisorBO implements AdministrarSupervisorBOInterface
     @Override
     public void crearSupervisor(Persona persona, Supervisor supervisor) {
         try {
+            Usuario usuario = new Usuario();
+            usuario.setUsuario(persona.getNumerodocumento());
+            usuario.setContrasenia(Utilidades.codificarString(persona.getNumerodocumento()));
+            usuario.setEstado(true);
+            TipoUsuario tipo = tipoUsuarioFacade.find(new BigInteger("1"));
+            usuario.setTipousuario(tipo);
+            usuarioFacade.create(usuario);
+            Usuario nuevoUsuario = usuarioFacade.obtenerUltimoUsuarioRegistrada();
+            persona.setUsuario(nuevoUsuario);
             personaFacade.create(persona);
             Persona personaNueva = personaFacade.obtenerUltimaPersonaRegistrada();
             supervisor.setPersona(personaNueva);
@@ -53,6 +71,7 @@ public class AdministrarSupervisorBO implements AdministrarSupervisorBOInterface
     @Override
     public void editarSupervisor(Supervisor supervisor) {
         try {
+            usuarioFacade.edit(supervisor.getPersona().getUsuario());
             personaFacade.edit(supervisor.getPersona());
             supervisorFacade.edit(supervisor);
         } catch (Exception e) {

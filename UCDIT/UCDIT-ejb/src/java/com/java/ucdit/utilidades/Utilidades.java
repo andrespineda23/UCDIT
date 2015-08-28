@@ -7,6 +7,7 @@ package com.java.ucdit.utilidades;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -161,4 +162,29 @@ public class Utilidades {
         return pswd;
     }
 
+    /**
+     * Metodo encargado de validar si una fecha ingresada es menor o igual a la
+     * fecha actual
+     *
+     * @param fechaValidar Fecha a validar
+     * @return true - fecha correcta / false - fecha incorrecta (fecha mayor)
+     */
+    public static boolean fechaIngresadaCorrecta(Date fechaValidar) {
+        try {
+            boolean retorno = true;
+            Date fechaDia = new Date();
+            if (fechaValidar.getDay() < fechaDia.getDay()) {
+                retorno = false;
+            }
+            if (fechaValidar.getMonth() < fechaDia.getMonth()) {
+                retorno = false;
+            }
+            if (fechaValidar.getYear() < fechaDia.getYear()) {
+                retorno = false;
+            }
+            return retorno;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

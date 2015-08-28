@@ -259,6 +259,10 @@ line-height: 35px;
     background-color:rgba(234, 234, 234, 0.90);
 }
 
+#features2 {
+    background-color:rgb(255,255,255);
+}
+
 /*================================
     EMAIL-SUBSCRIBE STYLES
  ============================  */
@@ -293,9 +297,23 @@ margin-top:-10px;
     background-size: cover;
     -moz-background-size: cover;    
 }
+#cliente {
+    background: url(../img/bogota3.jpg) no-repeat center center; 
+    padding: 0;
+    -webkit-background-size: cover;
+    background-size: cover;
+    -moz-background-size: cover;    
+}
 
-    #proveedor {
+    #inventario {
     background: url(../img/bogota.jpg) no-repeat center center; 
+    padding: 0;
+    -webkit-background-size: cover;
+    background-size: cover;
+    -moz-background-size: cover;    
+}
+    #variable{
+    background: url(../img/bogota4.jpg) no-repeat center center; 
     padding: 0;
     -webkit-background-size: cover;
     background-size: cover;

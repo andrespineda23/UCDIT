@@ -160,7 +160,7 @@ public class ControllerAdministrarPersonalInterno implements Serializable {
 
     public void setListaPersonalInterno(List<PersonalInterno> listaPersonalInterno) {
         this.listaPersonalInterno = listaPersonalInterno;
-    }
+    } 
 
     public List<PersonalInterno> getListaPersonalInternoTabla() {
         return listaPersonalInternoTabla;

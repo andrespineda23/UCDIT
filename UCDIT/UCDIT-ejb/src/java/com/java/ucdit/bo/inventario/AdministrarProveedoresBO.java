@@ -21,7 +21,7 @@ import javax.ejb.Stateful;
 public class AdministrarProveedoresBO implements AdministrarProveedoresBOInterface {
 
     @EJB
-    private ProveedorFacade proveedorFacade;
+    ProveedorFacade proveedorFacade;
 
     @Override
     public List<Proveedor> consultarProveedoresRegistrados() {

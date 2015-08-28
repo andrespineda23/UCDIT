@@ -87,6 +87,9 @@ public class EquipoTecnologico implements Serializable {
     @JoinColumn(name = "proveedor", referencedColumnName = "idproveedor")
     @ManyToOne(optional = false)
     private Proveedor proveedor;
+    @JoinColumn(name = "tipoequipo", referencedColumnName = "idtipoequipo")
+    @ManyToOne(optional = false)
+    private TipoEquipo tipoequipo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipotecnologico")
     private Collection<Componente> componenteCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "equipotecnologico")
@@ -261,6 +264,14 @@ public class EquipoTecnologico implements Serializable {
     @Override
     public String toString() {
         return "com.java.ucdit.entidades.EquipoTecnologico[ idequipotecnologico=" + idequipotecnologico + " ]";
+    }
+
+    public TipoEquipo getTipoequipo() {
+        return tipoequipo;
+    }
+
+    public void setTipoequipo(TipoEquipo tipoequipo) {
+        this.tipoequipo = tipoequipo;
     }
 
 }

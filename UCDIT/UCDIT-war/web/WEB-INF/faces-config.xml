@@ -96,6 +96,168 @@
     <navigation-rule>
         <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
         <navigation-case>
+            <from-outcome>administrarcliente</from-outcome>
+            <to-view-id>/xhtml/cliente/administrarcliente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/cliente/administrarcliente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciosupervisor</from-outcome>
+            <to-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/cliente/administrarcliente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarcliente</from-outcome>
+            <to-view-id>/xhtml/cliente/registrarcliente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/cliente/registrarcliente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarcliente</from-outcome>
+            <to-view-id>/xhtml/cliente/administrarcliente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/cliente/administrarcliente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallescliente</from-outcome>
+            <to-view-id>/xhtml/cliente/detallescliente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/cliente/detallescliente.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarcliente</from-outcome>
+            <to-view-id>/xhtml/cliente/administrarcliente.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarinsumo</from-outcome>
+            <to-view-id>/xhtml/inventario/administrarinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/administrarinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciosupervisor</from-outcome>
+            <to-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/administrarinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarinsumo</from-outcome>
+            <to-view-id>/xhtml/inventario/registrarinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/registrarinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarinsumo</from-outcome>
+            <to-view-id>/xhtml/inventario/administrarinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/administrarinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesinsumo</from-outcome>
+            <to-view-id>/xhtml/inventario/detallesinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/detallesinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarinsumo</from-outcome>
+            <to-view-id>/xhtml/inventario/administrarinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarequipo</from-outcome>
+            <to-view-id>/xhtml/inventario/administrarequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/administrarequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciosupervisor</from-outcome>
+            <to-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/administrarequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarequipo</from-outcome>
+            <to-view-id>/xhtml/inventario/registrarequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/registrarequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarequipo</from-outcome>
+            <to-view-id>/xhtml/inventario/administrarequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/administrarequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesequipo</from-outcome>
+            <to-view-id>/xhtml/inventario/detallesequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/detallesequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarequipo</from-outcome>
+            <to-view-id>/xhtml/inventario/administrarequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
+        <navigation-case>
             <from-outcome>administrarpersonalinterno</from-outcome>
             <to-view-id>/xhtml/usuario/administrarpersonalinterno.xhtml</to-view-id>
             <redirect />
@@ -142,6 +304,222 @@
         <navigation-case>
             <from-outcome>administrarpersonalinterno</from-outcome>
             <to-view-id>/xhtml/usuario/administrarpersonalinterno.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarsupervisor</from-outcome>
+            <to-view-id>/xhtml/usuario/administrarsupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/usuario/administrarsupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciosupervisor</from-outcome>
+            <to-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/usuario/administrarsupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarsupervisor</from-outcome>
+            <to-view-id>/xhtml/usuario/registrarsupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/usuario/registrarsupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarsupervisor</from-outcome>
+            <to-view-id>/xhtml/usuario/administrarsupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/usuario/administrarsupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallessupervisor</from-outcome>
+            <to-view-id>/xhtml/usuario/detallessupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/usuario/detallessupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarsupervisor</from-outcome>
+            <to-view-id>/xhtml/usuario/administrarsupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrartipounidad</from-outcome>
+            <to-view-id>/xhtml/variable/administrartipounidad.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/administrartipounidad.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciosupervisor</from-outcome>
+            <to-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/administrartipounidad.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrartipounidad</from-outcome>
+            <to-view-id>/xhtml/variable/registrartipounidad.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/registrartipounidad.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrartipounidad</from-outcome>
+            <to-view-id>/xhtml/variable/administrartipounidad.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/administrartipounidad.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallestipounidad</from-outcome>
+            <to-view-id>/xhtml/variable/detallestipounidad.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/detallestipounidad.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrartipounidad</from-outcome>
+            <to-view-id>/xhtml/variable/administrartipounidad.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrartipopersonal</from-outcome>
+            <to-view-id>/xhtml/variable/administrartipopersonal.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/administrartipopersonal.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciosupervisor</from-outcome>
+            <to-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/administrartipopersonal.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrartipopersonal</from-outcome>
+            <to-view-id>/xhtml/variable/registrartipopersonal.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/registrartipopersonal.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrartipopersonal</from-outcome>
+            <to-view-id>/xhtml/variable/administrartipopersonal.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/administrartipopersonal.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallestipopersonal</from-outcome>
+            <to-view-id>/xhtml/variable/detallestipopersonal.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/detallestipopersonal.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrartipopersonal</from-outcome>
+            <to-view-id>/xhtml/variable/administrartipopersonal.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrartipoequipo</from-outcome>
+            <to-view-id>/xhtml/variable/administrartipoequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/administrartipoequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciosupervisor</from-outcome>
+            <to-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/administrartipoequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrartipoequipo</from-outcome>
+            <to-view-id>/xhtml/variable/registrartipoequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/registrartipoequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrartipoequipo</from-outcome>
+            <to-view-id>/xhtml/variable/administrartipoequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/administrartipoequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallestipoequipo</from-outcome>
+            <to-view-id>/xhtml/variable/detallestipoequipo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/variable/detallestipoequipo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrartipoequipo</from-outcome>
+            <to-view-id>/xhtml/variable/administrartipoequipo.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
