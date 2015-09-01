@@ -40,6 +40,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "IngresoInsumo.findByDescripcion", query = "SELECT i FROM IngresoInsumo i WHERE i.descripcion = :descripcion"),
     @NamedQuery(name = "IngresoInsumo.findByValorcompra", query = "SELECT i FROM IngresoInsumo i WHERE i.valorcompra = :valorcompra")})
 public class IngresoInsumo implements Serializable {
+    @JoinColumn(name = "proveedor", referencedColumnName = "idproveedor")
+    @ManyToOne(optional = false)
+    private Proveedor proveedor;
 
     private static final Long serialVersionUID = 1L;
     @Id
@@ -153,6 +156,14 @@ public class IngresoInsumo implements Serializable {
     @Override
     public String toString() {
         return "com.java.ucdit.entidades.IngresoInsumo[ idingresoinsumo=" + idingresoinsumo + " ]";
+    }
+
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
 }

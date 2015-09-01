@@ -43,8 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Insumo.findByCostocompra", query = "SELECT i FROM Insumo i WHERE i.costocompra = :costocompra"),
     @NamedQuery(name = "Insumo.findByDescripcion", query = "SELECT i FROM Insumo i WHERE i.descripcion = :descripcion")})
 public class Insumo implements Serializable {
-
-    private static final Long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -78,11 +77,6 @@ public class Insumo implements Serializable {
     @JoinColumn(name = "tipounidad", referencedColumnName = "idtipounidad")
     @ManyToOne(optional = false)
     private TipoUnidad tipounidad;
-    @JoinColumn(name = "proveedor", referencedColumnName = "idproveedor")
-    @ManyToOne(optional = false)
-    private Proveedor proveedor;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
-    private Collection<InsumoPorProyecto> insumoPorProyectoCollection;
 
     public Insumo() {
     }
@@ -181,23 +175,6 @@ public class Insumo implements Serializable {
         this.tipounidad = tipounidad;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    @XmlTransient
-    public Collection<InsumoPorProyecto> getInsumoPorProyectoCollection() {
-        return insumoPorProyectoCollection;
-    }
-
-    public void setInsumoPorProyectoCollection(Collection<InsumoPorProyecto> insumoPorProyectoCollection) {
-        this.insumoPorProyectoCollection = insumoPorProyectoCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -222,5 +199,5 @@ public class Insumo implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.Insumo[ idinsumo=" + idinsumo + " ]";
     }
-
+    
 }

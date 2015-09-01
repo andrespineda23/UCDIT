@@ -36,13 +36,11 @@ public class ControllerDetallesInsumo implements Serializable {
     //
     private String editarNombre, editarCodigo, editarDescripcion, editarCostoCompra;
     private String editarCantMinima, editarCantExistencia;
-    private List<Proveedor> listaProveedor;
-    private Proveedor editarProveedor;
     private List<TipoUnidad> listaTipoUnidad;
     private TipoUnidad editarTipoUnidad;
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesCostoCompra;
-    private boolean validacionesCantMinima, validacionesCantExistencia, validacionesTipoUnidad, validacionesProveedor;
+    private boolean validacionesCantMinima, validacionesCantExistencia, validacionesTipoUnidad;
     private String mensajeFormulario;
     private String colorMensaje;
     private boolean modificacionRegistro;
@@ -72,7 +70,6 @@ public class ControllerDetallesInsumo implements Serializable {
             editarCostoCompra = String.valueOf(insumoDetalle.getCostocompra());
             editarCantMinima = String.valueOf(insumoDetalle.getCantidadminima());
             editarTipoUnidad = insumoDetalle.getTipounidad();
-            editarProveedor = insumoDetalle.getProveedor();
             //
             validacionesCostoCompra = true;
             validacionesDescripcion = true;
@@ -81,8 +78,6 @@ public class ControllerDetallesInsumo implements Serializable {
             validacionesCantExistencia = true;
             validacionesCantMinima = true;
             validacionesTipoUnidad = true;
-            validacionesProveedor = true;
-            listaProveedor = administrarInsumoBO.consultarProveedoresRegistrados();
             listaTipoUnidad = administrarInsumoBO.consultarTipoUnidadRegistrado();
         }
     }
@@ -208,22 +203,12 @@ public class ControllerDetallesInsumo implements Serializable {
         modificacionRegistro = true;
     }
 
-    public void validarProveedorInsumo() {
-        if (Utilidades.validarNulo(editarProveedor)) {
-            validacionesProveedor = true;
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:editarProveedor", new FacesMessage("El proveedor es obligatorio."));
-            validacionesCostoCompra = false;
-        }
-        modificacionRegistro = true;
-    }
-
     public void validarTipoUnidadInsumo() {
         if (Utilidades.validarNulo(editarTipoUnidad)) {
             validacionesTipoUnidad = true;
         } else {
             FacesContext.getCurrentInstance().addMessage("form:editarTipoUnidad", new FacesMessage("El tipo unidad es obligatorio."));
-            validacionesCostoCompra = false;
+            validacionesTipoUnidad = false;
         }
         modificacionRegistro = true;
     }
@@ -249,9 +234,6 @@ public class ControllerDetallesInsumo implements Serializable {
             retorno = false;
         }
         if (validacionesTipoUnidad == false) {
-            retorno = false;
-        }
-        if (validacionesProveedor == false) {
             retorno = false;
         }
         return retorno;
@@ -294,7 +276,6 @@ public class ControllerDetallesInsumo implements Serializable {
             } else {
                 insumoDetalle.setDescripcion("");
             }
-            insumoDetalle.setProveedor(editarProveedor);
             insumoDetalle.setTipounidad(editarTipoUnidad);
             administrarInsumoBO.editarInsumo(insumoDetalle);
         } catch (Exception e) {
@@ -309,7 +290,6 @@ public class ControllerDetallesInsumo implements Serializable {
         editarCantExistencia = null;
         editarDescripcion = null;
         editarCantMinima = null;
-        editarProveedor = null;
         editarTipoUnidad = null;
         //
         validacionesCostoCompra = true;
@@ -319,12 +299,32 @@ public class ControllerDetallesInsumo implements Serializable {
         validacionesCantExistencia = true;
         validacionesCantMinima = true;
         validacionesTipoUnidad = true;
-        validacionesProveedor = true;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
-        listaProveedor = null;
         listaTipoUnidad = null;
         return "administrarinsumo";
+    }
+
+    public String dirigirPaginaIngreso() {
+        editarCostoCompra = null;
+        editarCodigo = null;
+        editarNombre = null;
+        editarCantExistencia = null;
+        editarDescripcion = null;
+        editarCantMinima = null;
+        editarTipoUnidad = null;
+        //
+        validacionesCostoCompra = true;
+        validacionesDescripcion = true;
+        validacionesCodigo = true;
+        validacionesNombre = true;
+        validacionesCantExistencia = true;
+        validacionesCantMinima = true;
+        validacionesTipoUnidad = true;
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+        listaTipoUnidad = null;
+        return "administraringresoinsumo";
     }
 
     //GET-SET
@@ -376,22 +376,6 @@ public class ControllerDetallesInsumo implements Serializable {
         this.editarCantExistencia = editarCantExistencia;
     }
 
-    public List<Proveedor> getListaProveedor() {
-        return listaProveedor;
-    }
-
-    public void setListaProveedor(List<Proveedor> listaProveedor) {
-        this.listaProveedor = listaProveedor;
-    }
-
-    public Proveedor getEditarProveedor() {
-        return editarProveedor;
-    }
-
-    public void setEditarProveedor(Proveedor editarProveedor) {
-        this.editarProveedor = editarProveedor;
-    }
-
     public List<TipoUnidad> getListaTipoUnidad() {
         return listaTipoUnidad;
     }
@@ -422,6 +406,14 @@ public class ControllerDetallesInsumo implements Serializable {
 
     public void setColorMensaje(String colorMensaje) {
         this.colorMensaje = colorMensaje;
+    }
+
+    public BigInteger getIdInsumo() {
+        return idInsumo;
+    }
+
+    public void setIdInsumo(BigInteger idInsumo) {
+        this.idInsumo = idInsumo;
     }
 
 }

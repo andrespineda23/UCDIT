@@ -62,7 +62,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoTipoEquipo = null;
         nuevoProveedor = null;
         //
-        validacionesFechaCompra = false;
+        validacionesFechaCompra = true;
         validacionesDescripcion = true;
         validacionesCodigo = false;
         validacionesNombre = false;
@@ -280,7 +280,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoProveedor = null;
         nuevoTipoEquipo = null;
         //
-        validacionesFechaCompra = false;
+        validacionesFechaCompra = true;
         validacionesDescripcion = true;
         validacionesCodigo = false;
         validacionesNombre = false;
@@ -301,7 +301,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoProveedor = null;
         nuevoTipoEquipo = null;
         //
-        validacionesFechaCompra = false;
+        validacionesFechaCompra = true;
         validacionesDescripcion = true;
         validacionesCodigo = false;
         validacionesNombre = false;

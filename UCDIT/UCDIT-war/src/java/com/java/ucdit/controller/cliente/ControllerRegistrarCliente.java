@@ -152,7 +152,7 @@ public class ControllerRegistrarCliente implements Serializable {
                         validacionesTelFijo = true;
                     } else {
                         validacionesTelFijo = false;
-                        FacesContext.getCurrentInstance().addMessage("form:nuevoTelFijo", new FacesMessage("El nombre se encuentra incorrecto."));
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoTelFijo", new FacesMessage("El telefono se encuentra incorrecto."));
                     }
                 } else {
                     validacionesTelFijo = false;

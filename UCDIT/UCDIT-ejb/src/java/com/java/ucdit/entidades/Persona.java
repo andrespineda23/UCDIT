@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -88,6 +89,8 @@ public class Persona implements Serializable {
     @JoinColumn(name = "usuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
+    @Transient
+    private String nombreApellido;
 
     public Persona() {
     }
@@ -133,6 +136,17 @@ public class Persona implements Serializable {
 
     public void setApellidopersona(String apellidopersona) {
         this.apellidopersona = apellidopersona.toUpperCase();
+    }
+
+    public String getNombreApellido() {
+        getNombrepersona();
+        getApellidopersona();
+        nombreApellido = nombrepersona + " " + apellidopersona;
+        return nombreApellido;
+    }
+
+    public void setNombreApellido(String nombreApellido) {
+        this.nombreApellido = nombreApellido;
     }
 
     public String getNumerodocumento() {

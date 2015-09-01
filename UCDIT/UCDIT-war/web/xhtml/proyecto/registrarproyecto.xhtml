@@ -50,27 +50,26 @@ and open the template in the editor.
             </header>
             <!-- HEADER SECTION END-->
             <!--HOME SECTION START  -->
-            <section id="inventario">
+            <section id="proyecto">
                 <div class="overlay">       
                     <div class="container">
                         <div class="row text-center">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
-                                <h2>Nuevo Insumo</h2>
+                                <h2>Nuevo Proyecto</h2>
                                 <h3>Información</h3>
                                 <p>
                                     <strong>A continuación se muestra el formato de ingreso de la información:</strong>
                                     <br></br>
-                                    NOMBRE - Longitud (Min. 4 - Max. 60). Ejemplo: <strong><h:outputText value=" Resistencia prueba" /></strong>
+                                    NOMBRE - Longitud (Min. 4 - Max. 100). Ejemplo: <strong><h:outputText value=" Proyecto Prueba" /></strong>
                                     <br></br>
-                                    CODIGO - Longitud (Min. 4 - Max. 20). Ejemplo: <strong><h:outputText value=" RS01 / 1010" /></strong>
+                                    DESCRIPCIÓN - Longitud (Min. 20 - Max. 300). Formato: <strong><h:outputText value=" Descripción general del proyecto prueba" /></strong>
                                     <br></br>
-                                    CANT. MINIMA - Longitud (7). Ejemplo: <strong><h:outputText value=" 10" /></strong>
+                                    FECHA INICIO - Formato (dd/mm/yyyy). Ejemplo: <strong><h:outputText value=" 31/08/2015" /></strong>
                                     <br></br>
-                                    CANT. EXISTENCIA - Longitud (7). Ejemplo: <strong><h:outputText value=" 100" /></strong>
+                                    COSTO PROYECTO  - Longitud (Min. 6 - Max. 12). Ejemplo: <strong><h:outputText value=" 1000000" /></strong>
                                     <br></br>
-                                    DESCRIPCIÓN  - Longitud (Min. 10 - Max. 200). Ejemplo: <strong><h:outputText value=" Descripción de prueba" /></strong>
-                                    <br></br>
-                                    COSTO COMPRA - Longitud (7). Ejemplo: <strong><h:outputText value=" 15000" /></strong>
+                                    Adicionalmente es necesario asociar al menos un personal interno al proyecto para que permita ser creado.
+                                    Puede seleccionar uno o varios registros de personal interno.
                                 </p>
                                 <div class="space"> </div>
                             </div>
@@ -89,7 +88,7 @@ and open the template in the editor.
                                 <div class="space hidden-xs"> </div>
                                 <div class="space hidden-xs"> </div>
                                 <div class="space hidden-xs"> </div>
-                                <h:commandButton value="Regresar" action="#{controllerRegistrarInsumo.cancelarRegistroInsumo()}" actionListener="#{controllerAdministrarInsumo.buscarInsumosRegistrador()}" immediate="true" class="btn btn-custom btn-two"/>
+                                <h:commandButton value="Regresar" action="#{controllerRegistrarProyecto.cancelarRegistroProyecto()}" actionListener="#{controllerAdministrarProyecto.buscarProyectoRegistrador()}" immediate="true" class="btn btn-custom btn-two"/>
                             </div>
                         </div>
                     </div>
@@ -104,64 +103,86 @@ and open the template in the editor.
                             <fieldset>
                                 <legend class="text-info">Datos Basicos</legend>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Nombre Insumo*"/></strong>
-                                    <h:inputText maxlength="60" value="#{controllerRegistrarInsumo.nuevoNombre}" disabled="#{controllerRegistrarInsumo.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarInsumo.validarNombreInsumo()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
+                                    <strong><h:outputText value="Nombre Proyecto*"/></strong>
+                                    <h:inputText maxlength="100" value="#{controllerRegistrarProyecto.nuevoNombre}" disabled="#{controllerRegistrarProyecto.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarProyecto.validarNombreProyecto()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
                                     </h:inputText>
                                     <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Codigo Insumo*"/></strong>
-                                    <h:inputText maxlength="20" value="#{controllerRegistrarInsumo.nuevoCodigo}" disabled="#{controllerRegistrarInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarInsumo.validarCodigoInsumo()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
+                                    <strong><h:outputText value="Descripcion*"/></strong>
+                                    <h:inputText maxlength="300" value="#{controllerRegistrarProyecto.nuevoDescripcion}" disabled="#{controllerRegistrarProyecto.activarCasillas}" required="true" class="form-control" id="nuevoDescripcion" requiredMessage="El campo Dirección es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarProyecto.validarDescripcionProyecto()}" execute="nuevoDescripcion" render="nuevoDescripcion msnDescripcion" />
                                     </h:inputText>
-                                    <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>
+                                    <h6><h:message id="msnDescripcion" for="nuevoDescripcion" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Cantidad Minima*"/></strong>
-                                    <h:inputText maxlength="8" value="#{controllerRegistrarInsumo.nuevoCantMinima}" disabled="#{controllerRegistrarInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCantMinima" requiredMessage="El campo Cantidad Minima es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarInsumo.validarCantMinimaInsumo()}" execute="nuevoCantMinima" render="nuevoCantMinima msnCantMinima" />
+                                    <strong><h:outputText value="Fecha Inicio*"/></strong>
+                                    <h:inputText maxlength="10" value="#{controllerRegistrarProyecto.nuevoFechaInicio}" disabled="#{controllerRegistrarProyecto.activarCasillas}" required="true" class="form-control" id="nuevoFechaInicio" requiredMessage="El campo Fecha Inicio es obligatorio.">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                        <f:ajax event="blur" listener="#{controllerRegistrarProyecto.validarFechaInicioProyecto()}" execute="nuevoFechaInicio" render="nuevoFechaInicio msnFechaInicio" />
                                     </h:inputText>
-                                    <h6><h:message id="msnCantMinima" for="nuevoCantMinima" style="color: red"/></h6>
+                                    <h6><h:message id="msnFechaInicio" for="nuevoFechaInicio" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Cantidad Existencia*"/></strong>
-                                    <h:inputText maxlength="8" value="#{controllerRegistrarInsumo.nuevoCantExistencia}" disabled="#{controllerRegistrarInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCantExistencia" requiredMessage="El campo Cantidad Existencia es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerRegistrarInsumo.validarCantExistenciaInsumo()}" execute="nuevoCantExistencia" render="nuevoCantExistencia msnCantExistencia" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnCantExistencia" for="nuevoCantExistencia" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Tipo Unidad*"/></strong>
-                                    <h:selectOneMenu value="#{controllerRegistrarInsumo.nuevoTipoUnidad}"
-                                                     class="form-control" disabled="#{controllerRegistrarInsumo.activarCasillas}"
-                                                     id="nuevoTipoUnidad">
+                                    <strong><h:outputText value="Cliente*"/></strong>
+                                    <h:selectOneMenu value="#{controllerRegistrarProyecto.nuevoCliente}"
+                                                     class="form-control" disabled="#{controllerRegistrarProyecto.activarCasillas}"
+                                                     id="nuevoCliente">
                                         <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                        <f:selectItems value="#{controllerRegistrarInsumo.listaTipoUnidad}" var="tipo"
-                                                       itemLabel="#{tipo.nombretipounidad}" itemValue="#{tipo}"/>
+                                        <f:selectItems value="#{controllerRegistrarProyecto.listaCliente}" var="tipo1"
+                                                       itemLabel="#{tipo1.nombrecliente}" itemValue="#{tipo1}"/>
                                         <f:converter converterId="ConverterGenerico" />
-                                        <f:ajax event="change" listener="#{controllerRegistrarInsumo.validarTipoUnidadInsumo()}" execute="nuevoTipoUnidad" render="msnTipoUnidad"/>
+                                        <f:ajax event="change" listener="#{controllerRegistrarProyecto.validarClienteProyecto()}" execute="nuevoCliente" render="msnCliente"/>
                                     </h:selectOneMenu>
-                                    <h6><h:message id="msnTipoUnidad" for="nuevoTipoUnidad" style="color: red"/></h6>
+                                    <h6><h:message id="msnCliente" for="nuevoCliente" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Supervisor*"/></strong>
+                                    <h:selectOneMenu value="#{controllerRegistrarProyecto.nuevoSupervisor}"
+                                                     class="form-control" disabled="#{controllerRegistrarProyecto.activarCasillas}"
+                                                     id="nuevoSupervisor">
+                                        <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
+                                        <f:selectItems value="#{controllerRegistrarProyecto.listaSupervisor}" var="tipo"
+                                                       itemLabel="#{tipo.persona.nombreApellido}" itemValue="#{tipo}"/>
+                                        <f:converter converterId="ConverterGenerico" />
+                                        <f:ajax event="change" listener="#{controllerRegistrarProyecto.validarSupervisorProyecto()}" execute="nuevoSupervisor" render="msnSupervisor"/>
+                                    </h:selectOneMenu>
+                                    <h6><h:message id="msnSupervisor" for="nuevoSupervisor" style="color: red"/></h6>
                                 </div>
                                 <fieldset>
                                     <legend class="h5 text-info">Datos Opcionales</legend>
                                     <div class="form-group">
-                                        <strong><h:outputText value="Costo Compra"/></strong>
-                                        <h:inputText maxlength="8" value="#{controllerRegistrarInsumo.nuevoCostoCompra}" disabled="#{controllerRegistrarInsumo.activarCasillas}" class="form-control" id="nuevoCostoCompra" >
-                                            <f:ajax event="blur" listener="#{controllerRegistrarInsumo.validarCostoCompraInsumo()}" execute="nuevoCostoCompra" render="nuevoCostoCompra msnCostoCompra" />
+                                        <strong><h:outputText value="Costo Proyecto"/></strong>
+                                        <h:inputText maxlength="12" value="#{controllerRegistrarProyecto.nuevoCostoProyecto}" disabled="#{controllerRegistrarProyecto.activarCasillas}" class="form-control" id="nuevoCostoProyecto" >
+                                            <f:ajax event="blur" listener="#{controllerRegistrarProyecto.validarDatosOpcionales(1)}" execute="nuevoCostoProyecto" render="nuevoCostoProyecto msnCostoProyecto" />
                                         </h:inputText>
-                                        <h6><h:message id="msnCostoCompra" for="nuevoCostoCompra" style="color: red"/></h6>
-                                    </div>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Descripción"/></strong>
-                                        <h:inputText maxlength="200" value="#{controllerRegistrarInsumo.nuevoDescripcion}" disabled="#{controllerRegistrarInsumo.activarCasillas}" class="form-control" id="nuevoDescripcion" >
-                                            <f:ajax event="blur" listener="#{controllerRegistrarInsumo.validarDescripcionInsumo()}" execute="nuevoDescripcion" render="nuevoDescripcion msnDescripcion" />
-                                        </h:inputText>
-                                        <h6><h:message id="msnDescripcion" for="nuevoDescripcion" style="color: red"/></h6>
+                                        <h6><h:message id="msnCostoProyecto" for="nuevoCostoProyecto" style="color: red"/></h6>
                                     </div>
                                 </fieldset>
                             </fieldset>
+                            <br></br>
+                            <fieldset>
+                                <legend class="text-info">Personal Interno Activo</legend>
+                                <div class="row">
+                                    <h:dataTable id="dataTable" var="item" 
+                                                 styleClass="table table-condensed table-responsive" 
+                                                 value="#{controllerRegistrarProyecto.listaPersonalAsociado}">
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre Personal Interno"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.personalInterno.persona.nombreApellido}"/>
+                                        </h:column>  
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="Desea Asociar al Personal"/>
+                                            </f:facet>
+                                            <h:selectBooleanCheckbox value="#{item.activo}"/>
+                                        </h:column>
+                                    </h:dataTable>
+                                </div>
+                            </fieldset>    
                             <hr class="intro-divider"/>
                             <div class="row col-md-12">
                                 <div class="text-center">
@@ -169,26 +190,27 @@ and open the template in the editor.
                                         Resultados del Formulario
                                     </h5>
                                     <strong>
-                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarInsumo.mensajeFormulario}" style="color: #{controllerRegistrarInsumo.colorMensaje}}"/>
+                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarProyecto.mensajeFormulario}" style="color: #{controllerRegistrarProyecto.colorMensaje}}"/>
                                     </strong>
                                 </div>
                                 <br></br>
                             </div>
                             <hr class="intro-divider"/>
                             <div class="right pull-right">
-                                <h:commandButton value="Registrar" disabled="#{controllerRegistrarInsumo.activarAceptar}" actionListener="#{controllerRegistrarInsumo.registrarNuevoInsumo()}" class="btn btn-success" >
+                                <h:commandButton value="Registrar" disabled="#{controllerRegistrarProyecto.activarAceptar}" actionListener="#{controllerRegistrarProyecto.registrarNuevoProyecto()}" class="btn btn-success" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                                 <span></span>
                                 <span></span>
-                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarInsumo.cancelarRegistroInsumo()}" actionListener="#{controllerAdministrarInsumo.buscarInsumosRegistrador()}" immediate="true">
+                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarProyecto.cancelarRegistroProyecto()}" actionListener="#{controllerAdministrarProyecto.buscarProyectoRegistrador()}" immediate="true">
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
                                 <span></span>
                                 <span></span>
-                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarInsumo.activarLimpiar}" actionListener="#{controllerRegistrarInsumo.cambiarActivarCasillas()}" >
+                                <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarProyecto.activarLimpiar}" actionListener="#{controllerRegistrarProyecto.cambiarActivarCasillas()}" >
                                     <f:ajax execute="@form" render="form" />
                                 </h:commandButton>
+
                             </div>
                         </div>
                     </div>

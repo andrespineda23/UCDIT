@@ -50,17 +50,16 @@ and open the template in the editor.
             </header>
             <!-- HEADER SECTION END-->
             <!--HOME SECTION START  -->
-            <section id="inventario">
+            <section id="proyecto">
                 <div class="overlay">       
                     <div class="container">
                         <div class="row text-center">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
-                                <h2>Administración de Insumos</h2>
+                                <h2>Administración de Equipos de un Proyecto</h2>
                                 <h3>Funciones</h3>
                                 <p>
-                                    Por medio de esta pagina usted puede administrar la información relacionada con los insumos usados por el personal de la UCDIT.
-                                    Usted puede ingresar un nuevo insumo al sitema, modificar la información de alguno ya registrado y consultar
-                                    los insumos con los cuales cuenta la UCDIT en el momento. Adicionalmente, puede registrar un nuevo ingreso de compra de insumo.
+                                    Por medio de esta pagina usted puede administrar la información de los insumos que han sido utilizados para la elaboración de un proyecto en especifico.
+                                    Usted puede consultar los insumos utilizados, registrar un nuevo insumo o modificar la información de dicho insumo.
                                 </p>
                                 <div class="space"> </div>
                             </div>
@@ -69,14 +68,14 @@ and open the template in the editor.
                                 <div class="space hidden-xs"> </div>
                                 <div class="space hidden-xs"> </div>
                                 <div class="space hidden-xs"> </div>
-                                <h:commandButton value="Nuevo Insumo" actionListener="#{controllerAdministrarInsumo.limpiarProcesoBusqueda()}" action="registrarinsumo" class="btn btn-custom btn-success"/>
+                                <h:commandButton value="Nuevo Registro" actionListener="#{controllerRegistrarEquipoPorProyecto.recibirIdProyecto(controllerAdministrarEquipoPorProyecto.idProyecto)}" action="#{controllerAdministrarEquipoPorProyecto.paginaNuevoRegistro()}" class="btn btn-custom btn-success"/>
                             </div>
                             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
                                 <div class="space hidden-xs"> </div>
                                 <div class="space hidden-xs"> </div>
                                 <div class="space hidden-xs"> </div>
                                 <div class="space hidden-xs"> </div>
-                                <h:commandButton value="Regresar" actionListener="#{controllerAdministrarInsumo.limpiarProcesoBusqueda()}" action="iniciosupervisor" class="btn btn-custom btn-two"/>
+                                <h:commandButton value="Regresar" action="#{controllerAdministrarEquipoPorProyecto.regresarProyectoDetalles()}" actionListener="#{controllerDetallesProyecto.recibirIdProyectoDetalle(controllerAdministrarEquipoPorProyecto.idProyecto)}" class="btn btn-custom btn-two"/>
                             </div>
                         </div>
                     </div>
@@ -87,53 +86,49 @@ and open the template in the editor.
             <section id="about">
                 <div class="container">
                     <div class="row">
-                        <div id="resultadosBusqueda" >
+                        <div id="resultadosBusqueda">
                             <fieldset style="border: black;border-radius: 10px;">
-                                <h3><legend style="color: darkblue"><strong>Insumos Registrados - (Total : #{controllerAdministrarInsumo.cantidadRegistros})</strong></legend></h3>
+                                <h3><legend style="color: darkblue"><strong>Equipos Registrados - (Total : #{controllerAdministrarEquipoPorProyecto.cantidadRegistros})</strong></legend></h3>
                                 <div class="row">
                                     <h:dataTable id="dataTable" var="item" 
                                                  styleClass="table table-condensed table-responsive" 
-                                                 value="#{controllerAdministrarInsumo.listaInsumosTabla}">
+                                                 value="#{controllerAdministrarEquipoPorProyecto.listaEquipoPorProyectosTabla}">
                                         <h:column>
                                             <f:facet name="header">
-                                                <h:outputText value="Nombre"/>
+                                                <h:outputText value="Equipo"/>
                                             </f:facet>
-                                            <h:outputText value="#{item.nombreinsumo}"/>
+                                            <h:outputText value="#{item.equipotecnologico.nombreequipo}"/>
                                         </h:column>  
                                         <h:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Codigo"/>
                                             </f:facet>
-                                            <h:outputText value="#{item.codigoinsumo}"/>
+                                            <h:outputText value="#{item.equipotecnologico.codigoequipo}">
+                                            </h:outputText>
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header">
-                                                <h:outputText value="Cant. Existente"/>
+                                                <h:outputText value="Minutos Usados"/>
                                             </f:facet>
-                                            <h:outputText value="#{item.cantidadexistencia}"/>
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">
-                                                <h:outputText value="Tipo Unidad"/>
-                                            </f:facet>
-                                            <h:outputText value="#{item.tipounidad.nombretipounidad}"/>
+                                            <h:outputText value="#{item.cantidadminutosuso}">
+                                            </h:outputText>
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header">
                                                 <h:outputText value="Detalles"/>
                                             </f:facet>
-                                            <h:commandLink value="Ver" action="#{controllerAdministrarInsumo.paginaDetalles()}" actionListener="#{controllerDetallesInsumo.recibirIdInsumoDetalle(item.idinsumo)}"/>
+                                            <h:commandLink value="Ver" />
                                         </h:column>
                                         <f:facet name="footer">
                                             <nav>
                                                 <ul class="pager">
                                                     <li>
-                                                        <h:commandLink value="Anterior" actionListener="#{controllerAdministrarInsumo.cargarPaginaAnteriorInsumo()}" disabled="#{controllerAdministrarInsumo.bloquearPagAntInsumo}">
+                                                        <h:commandLink value="Anterior" actionListener="#{controllerAdministrarEquipoPorProyecto.cargarPaginaAnteriorEquipoPorProyecto()}" disabled="#{controllerAdministrarEquipoPorProyecto.bloquearPagAntEquipoPorProyecto}">
                                                             <f:ajax execute="@form" render="form" />
                                                         </h:commandLink>
                                                     </li>
                                                     <li>
-                                                        <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarInsumo.cargarPaginaSiguienteInsumo()}" disabled="#{controllerAdministrarInsumo.bloquearPagSigInsumo}">
+                                                        <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarEquipoPorProyecto.cargarPaginaSiguienteEquipoPorProyecto()}" disabled="#{controllerAdministrarEquipoPorProyecto.bloquearPagSigEquipoPorProyecto}">
                                                             <f:ajax execute="@form" render="form" />
                                                         </h:commandLink>
                                                     </li>
@@ -141,7 +136,7 @@ and open the template in the editor.
                                             </nav>
                                         </f:facet>
                                     </h:dataTable>
-                                </div><!--/.row-->
+                                </div>
                             </fieldset>
                         </div>
                     </div>

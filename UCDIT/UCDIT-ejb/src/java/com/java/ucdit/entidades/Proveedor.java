@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,6 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Proveedor.findByTelefonomovil", query = "SELECT p FROM Proveedor p WHERE p.telefonomovil = :telefonomovil"),
     @NamedQuery(name = "Proveedor.findByTelefonofijo", query = "SELECT p FROM Proveedor p WHERE p.telefonofijo = :telefonofijo")})
 public class Proveedor implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
+    private Collection<IngresoInsumo> ingresoInsumoCollection;
 
     private static final Long serialVersionUID = 1L;
     @Id
@@ -82,8 +86,8 @@ public class Proveedor implements Serializable {
     private String telefonofijo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
     private Collection<EquipoTecnologico> equipoTecnologicoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedor")
-    private Collection<Insumo> insumoCollection;
+    @Transient
+    private String strNitNombre;
 
     public Proveedor() {
     }
@@ -110,7 +114,7 @@ public class Proveedor implements Serializable {
     }
 
     public String getNombreproveedor() {
-        if (null != ciudad) {
+        if (null != nombreproveedor) {
             return nombreproveedor.toUpperCase();
         }
         return nombreproveedor;
@@ -121,7 +125,7 @@ public class Proveedor implements Serializable {
     }
 
     public String getIdentificacionproveedor() {
-        if (null != ciudad) {
+        if (null != identificacionproveedor) {
             return identificacionproveedor.toUpperCase();
         }
         return identificacionproveedor;
@@ -186,15 +190,6 @@ public class Proveedor implements Serializable {
         this.equipoTecnologicoCollection = equipoTecnologicoCollection;
     }
 
-    @XmlTransient
-    public Collection<Insumo> getInsumoCollection() {
-        return insumoCollection;
-    }
-
-    public void setInsumoCollection(Collection<Insumo> insumoCollection) {
-        this.insumoCollection = insumoCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -219,5 +214,27 @@ public class Proveedor implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.Proveedor[ idproveedor=" + idproveedor + " ]";
     }
+
+    @XmlTransient
+    public Collection<IngresoInsumo> getIngresoInsumoCollection() {
+        return ingresoInsumoCollection;
+    }
+
+    public void setIngresoInsumoCollection(Collection<IngresoInsumo> ingresoInsumoCollection) {
+        this.ingresoInsumoCollection = ingresoInsumoCollection;
+    }
+
+    public String getStrNitNombre() {
+        getIdentificacionproveedor();
+        getNombreproveedor();
+        strNitNombre = identificacionproveedor + " / " + nombreproveedor;
+        return strNitNombre;
+    }
+
+    public void setStrNitNombre(String strNitNombre) {
+        this.strNitNombre = strNitNombre;
+    }
+
+;
 
 }

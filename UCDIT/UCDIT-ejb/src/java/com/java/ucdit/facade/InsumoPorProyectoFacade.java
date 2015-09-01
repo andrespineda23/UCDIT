@@ -6,9 +6,12 @@
 package com.java.ucdit.facade;
 
 import com.java.ucdit.entidades.InsumoPorProyecto;
+import java.math.BigInteger;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,6 +19,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class InsumoPorProyectoFacade extends AbstractFacade<InsumoPorProyecto> {
+
     @PersistenceContext(unitName = "UCDIT-ejbPU")
     private EntityManager em;
 
@@ -27,5 +31,19 @@ public class InsumoPorProyectoFacade extends AbstractFacade<InsumoPorProyecto> {
     public InsumoPorProyectoFacade() {
         super(InsumoPorProyecto.class);
     }
-    
+
+    public List<InsumoPorProyecto> obtenerInsumoPorProyectoPorIdProyecto(BigInteger idProyecto) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM InsumoPorProyecto p WHERE p.proyecto.idproyecto=:idProyecto");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idProyecto", idProyecto);
+            List<InsumoPorProyecto> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error InsumoPorProyectoFacade obtenerInsumoPorProyectoPorIdProyecto: " + e.toString());
+            return null;
+        }
+    }
+
 }

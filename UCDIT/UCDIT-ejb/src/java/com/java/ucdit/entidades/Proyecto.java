@@ -24,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -54,6 +55,11 @@ public class Proyecto implements Serializable {
     @Basic(optional = false)
     @Column(name = "idproyecto")
     private BigInteger idproyecto;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "nombreproyecto")
+    private String nombreproyecto;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechainicio")
@@ -94,6 +100,8 @@ public class Proyecto implements Serializable {
     private Collection<PersonalPorProyecto> personalPorProyectoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proyecto")
     private Collection<BitacoraProyecto> bitacoraProyectoCollection;
+    @Transient
+    private String strEstado;
 
     public Proyecto() {
     }
@@ -173,6 +181,22 @@ public class Proyecto implements Serializable {
 
     public void setEstadoproyecto(Boolean estadoproyecto) {
         this.estadoproyecto = estadoproyecto;
+    }
+
+    public String getStrEstado() {
+        getEstadoproyecto();
+        if (null != estadoproyecto) {
+            if (estadoproyecto == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "FINALIZADO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
     public Supervisor getSupervisor() {
@@ -268,6 +292,17 @@ public class Proyecto implements Serializable {
     @Override
     public String toString() {
         return "com.java.ucdit.entidades.Proyecto[ idproyecto=" + idproyecto + " ]";
+    }
+
+    public String getNombreproyecto() {
+        if(null != nombreproyecto){
+            return nombreproyecto.toUpperCase();
+        }
+        return nombreproyecto;
+    }
+
+    public void setNombreproyecto(String nombreproyecto) {
+        this.nombreproyecto = nombreproyecto.toUpperCase();
     }
 
 }

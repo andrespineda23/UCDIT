@@ -524,4 +524,166 @@
         </navigation-case>
     </navigation-rule>
     
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/administrarproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/administrarproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciosupervisor</from-outcome>
+            <to-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/administrarproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/registrarproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/registrarproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/administrarproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/administrarproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/detallesproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/detallesproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/administrarproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/detallesproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarinsumoporproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/administrarinsumoporproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/administrarinsumoporproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/detallesproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/administrarinsumoporproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarinsumoporproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/registrarinsumoporproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/registrarinsumoporproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarinsumoproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/administrarinsumoporproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/detallesproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarequipoporproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/administrarequipoporproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/administrarequipoporproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/detallesproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/administrarequipoporproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarequipoporproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/registrarequipoporproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/registrarequipoporproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administrarequipoproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/administrarequipoporproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/detallesinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administraringresoinsumo</from-outcome>
+            <to-view-id>/xhtml/inventario/administraringresoinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/administraringresoinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesinsumo</from-outcome>
+            <to-view-id>/xhtml/inventario/detallesinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/administraringresoinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registraringresoinsumo</from-outcome>
+            <to-view-id>/xhtml/inventario/registraringresoinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/registraringresoinsumo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>administraringresoinsumo</from-outcome>
+            <to-view-id>/xhtml/inventario/administraringresoinsumo.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
 </faces-config>

@@ -112,6 +112,26 @@ public class Utilidades {
             return false;
         }
     }
+    
+    /**
+     * Metodo que valida si un numero es numero y no posee algun caracter
+     * diferente. Adicionalmente si ese numero es mayor a cero
+     *
+     * @param numero Numero a validar
+     * @return true-Es numero / false-No es numero
+     */
+    public static boolean isNumberGreaterThanZero(String numero) {
+        try {
+            System.out.println("numero : " + numero);
+            boolean respuesta = false;
+            Pattern pattern = Pattern.compile("([1-9])([0-9])+");
+            Matcher matcher = pattern.matcher(numero);
+            respuesta = matcher.matches();
+            return respuesta;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /**
      * *

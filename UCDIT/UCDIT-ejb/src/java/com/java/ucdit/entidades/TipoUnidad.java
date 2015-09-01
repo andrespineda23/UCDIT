@@ -6,7 +6,9 @@
 package com.java.ucdit.entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +16,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,6 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TipoUnidad.findByIdtipounidad", query = "SELECT t FROM TipoUnidad t WHERE t.idtipounidad = :idtipounidad"),
     @NamedQuery(name = "TipoUnidad.findByNombretipounidad", query = "SELECT t FROM TipoUnidad t WHERE t.nombretipounidad = :nombretipounidad")})
 public class TipoUnidad implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipounidad")
+    private Collection<Insumo> insumoCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -98,6 +104,15 @@ public class TipoUnidad implements Serializable {
     @Override
     public String toString() {
         return "com.java.ucdit.entidades.TipoUnidad[ idtipounidad=" + idtipounidad + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Insumo> getInsumoCollection() {
+        return insumoCollection;
+    }
+
+    public void setInsumoCollection(Collection<Insumo> insumoCollection) {
+        this.insumoCollection = insumoCollection;
     }
 
 }

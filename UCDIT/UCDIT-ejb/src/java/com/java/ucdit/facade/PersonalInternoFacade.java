@@ -7,6 +7,7 @@ package com.java.ucdit.facade;
 
 import com.java.ucdit.entidades.PersonalInterno;
 import java.math.BigInteger;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -66,6 +67,18 @@ public class PersonalInternoFacade extends AbstractFacade<PersonalInterno> {
             return personal;
         } catch (Exception e) {
             System.out.println("Error PersonalInternoFacade obtenerPersonalInternoPorDocumento: " + e.toString());
+            return null;
+        }
+    }
+    
+    public List<PersonalInterno> obtenerPersonalInternoActivo() {
+        try {
+            Query query = em.createQuery("SELECT p FROM PersonalInterno p WHERE p.persona.usuario.estado=true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<PersonalInterno> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error PersonalInternoFacade obtenerPersonalInternoActivo: " + e.toString());
             return null;
         }
     }

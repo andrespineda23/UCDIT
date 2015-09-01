@@ -32,13 +32,11 @@ public class ControllerRegistrarInsumo implements Serializable {
     //
     private String nuevoNombre, nuevoCodigo, nuevoDescripcion, nuevoCostoCompra;
     private String nuevoCantMinima, nuevoCantExistencia;
-    private List<Proveedor> listaProveedor;
-    private Proveedor nuevoProveedor;
     private List<TipoUnidad> listaTipoUnidad;
     private TipoUnidad nuevoTipoUnidad;
     //
     private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesCostoCompra;
-    private boolean validacionesCantMinima, validacionesCantExistencia, validacionesTipoUnidad, validacionesProveedor;
+    private boolean validacionesCantMinima, validacionesCantExistencia, validacionesTipoUnidad;
     private String mensajeFormulario;
     private boolean activarCasillas;
     private String colorMensaje;
@@ -57,7 +55,6 @@ public class ControllerRegistrarInsumo implements Serializable {
         nuevoCostoCompra = "0";
         nuevoCantMinima = "0";
         nuevoTipoUnidad = null;
-        nuevoProveedor = null;
         //
         validacionesCostoCompra = true;
         validacionesDescripcion = true;
@@ -66,7 +63,6 @@ public class ControllerRegistrarInsumo implements Serializable {
         validacionesCantExistencia = true;
         validacionesCantMinima = false;
         validacionesTipoUnidad = false;
-        validacionesProveedor = false;
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
@@ -176,21 +172,12 @@ public class ControllerRegistrarInsumo implements Serializable {
         }
     }
 
-    public void validarProveedorInsumo() {
-        if (Utilidades.validarNulo(nuevoProveedor)) {
-            validacionesProveedor = true;
-        } else {
-            FacesContext.getCurrentInstance().addMessage("form:nuevoProveedor", new FacesMessage("El proveedor es obligatorio."));
-            validacionesCostoCompra = false;
-        }
-    }
-
     public void validarTipoUnidadInsumo() {
         if (Utilidades.validarNulo(nuevoTipoUnidad)) {
             validacionesTipoUnidad = true;
         } else {
             FacesContext.getCurrentInstance().addMessage("form:nuevoTipoUnidad", new FacesMessage("El tipo unidad es obligatorio."));
-            validacionesCostoCompra = false;
+            validacionesTipoUnidad = false;
         }
     }
 
@@ -217,9 +204,7 @@ public class ControllerRegistrarInsumo implements Serializable {
         if (validacionesTipoUnidad == false) {
             retorno = false;
         }
-        if (validacionesProveedor == false) {
-            retorno = false;
-        }
+
         return retorno;
     }
 
@@ -259,7 +244,6 @@ public class ControllerRegistrarInsumo implements Serializable {
             } else {
                 nuevaInsumo.setDescripcion("");
             }
-            nuevaInsumo.setProveedor(nuevoProveedor);
             nuevaInsumo.setTipounidad(nuevoTipoUnidad);
             administrarInsumoBO.crearInsumo(nuevaInsumo);
         } catch (Exception e) {
@@ -274,7 +258,6 @@ public class ControllerRegistrarInsumo implements Serializable {
         nuevoCantExistencia = "0";
         nuevoDescripcion = null;
         nuevoCantMinima = "0";
-        nuevoProveedor = null;
         nuevoTipoUnidad = null;
         //
         validacionesCostoCompra = true;
@@ -284,7 +267,6 @@ public class ControllerRegistrarInsumo implements Serializable {
         validacionesCantExistencia = true;
         validacionesCantMinima = false;
         validacionesTipoUnidad = false;
-        validacionesProveedor = false;
         mensajeFormulario = "";
     }
 
@@ -295,7 +277,6 @@ public class ControllerRegistrarInsumo implements Serializable {
         nuevoCantExistencia = "0";
         nuevoDescripcion = null;
         nuevoCantMinima = "0";
-        nuevoProveedor = null;
         nuevoTipoUnidad = null;
         //
         validacionesCostoCompra = true;
@@ -305,13 +286,11 @@ public class ControllerRegistrarInsumo implements Serializable {
         validacionesCantExistencia = true;
         validacionesCantMinima = false;
         validacionesTipoUnidad = false;
-        validacionesProveedor = false;
         activarAceptar = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
         colorMensaje = "black";
         activarCasillas = false;
-        listaProveedor = null;
         listaTipoUnidad = null;
         return "administrarinsumo";
     }
@@ -373,25 +352,6 @@ public class ControllerRegistrarInsumo implements Serializable {
 
     public void setNuevoCantExistencia(String nuevoCantExistencia) {
         this.nuevoCantExistencia = nuevoCantExistencia;
-    }
-
-    public List<Proveedor> getListaProveedor() {
-        if (null == listaProveedor) {
-            listaProveedor = administrarInsumoBO.consultarProveedoresRegistrados();
-        }
-        return listaProveedor;
-    }
-
-    public void setListaProveedor(List<Proveedor> listaProveedor) {
-        this.listaProveedor = listaProveedor;
-    }
-
-    public Proveedor getNuevoProveedor() {
-        return nuevoProveedor;
-    }
-
-    public void setNuevoProveedor(Proveedor nuevoProveedor) {
-        this.nuevoProveedor = nuevoProveedor;
     }
 
     public List<TipoUnidad> getListaTipoUnidad() {
