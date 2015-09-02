@@ -69,10 +69,11 @@ public class AdministrarProyectoBO implements AdministrarProyectoBOInterface {
         try {
             proyectoFacade.create(proyecto);
             Proyecto nuevoProyecto = proyectoFacade.obtenerUltimaProyectoRegistrado();
-            for(int i = 0;i<lista.size();i++){
+            for (int i = 0; i < lista.size(); i++) {
                 PersonalPorProyecto personal = new PersonalPorProyecto();
                 personal.setPersonalinterno(lista.get(i));
                 personal.setProyecto(nuevoProyecto);
+                personal.setEstado(true);
                 personalPorProyectoFacade.create(personal);
             }
         } catch (Exception e) {
@@ -209,6 +210,10 @@ public class AdministrarProyectoBO implements AdministrarProyectoBOInterface {
             System.out.println("Error AdministrarProyectoBO obtenerPersonalInternoRegistrado: " + e.toString());
             return null;
         }
+    }
+
+    @Override
+    public void asociarPersonalAProyecto(Proyecto proyecto, List<PersonalPorProyecto> personalPorProyecto, List<PersonalInterno> personalInterno) {
     }
 
 }

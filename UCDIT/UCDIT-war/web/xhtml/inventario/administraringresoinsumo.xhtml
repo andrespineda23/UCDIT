@@ -115,6 +115,12 @@ and open the template in the editor.
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header">
+                                                <h:outputText value="Cantidad Ingresada"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.cantidad}"/>
+                                        </h:column>
+                                        <h:column>
+                                            <f:facet name="header">
                                                 <h:outputText value="Insumo"/>
                                             </f:facet>
                                             <h:outputText value="#{item.insumo.nombreinsumo}"/>

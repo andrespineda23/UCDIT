@@ -50,8 +50,9 @@ public class ControllerAdministrarProyecto implements Serializable {
             listaProyectos = administrarProyectoBO.consultarProyectosRegistrados();
             listaProyectosTemporal = listaProyectos;
         } else {
+            listaProyectos = administrarProyectoBO.consultarProyectosRegistrados();
             listaProyectosTemporal = new ArrayList<Proyecto>();
-            if (tipoConsulta == 1) {
+            if (tipoConsulta == 2) {
                 if (null != listaProyectos) {
                     for (int i = 0; i < listaProyectos.size(); i++) {
                         if (listaProyectos.get(i).getEstadoproyecto() == true) {
@@ -69,6 +70,7 @@ public class ControllerAdministrarProyecto implements Serializable {
                 }
             }
         }
+        cargarInformacionTabla();
     }
 
     private void iniciarDatosTabla() {
@@ -87,31 +89,35 @@ public class ControllerAdministrarProyecto implements Serializable {
         iniciarDatosTabla();
         try {
             actualizarTipoConsulta();
-            if (listaProyectosTemporal != null) {
-                if (listaProyectosTemporal.size() > 0) {
-                    listaProyectosTabla = new ArrayList<Proyecto>();
-                    tamTotalProyecto = listaProyectosTemporal.size();
-                    posicionProyectoTabla = 0;
-                    cantidadRegistros = String.valueOf(tamTotalProyecto);
-                    cargarDatosTablaProyecto();
-                } else {
-                    listaProyectosTabla = null;
-                    tamTotalProyecto = 0;
-                    posicionProyectoTabla = 0;
-                    bloquearPagAntProyecto = true;
-                    cantidadRegistros = String.valueOf(tamTotalProyecto);
-                    bloquearPagSigProyecto = true;
-                }
+            cargarInformacionTabla();
+        } catch (Exception e) {
+            System.out.println("Error ControllerAdministrarProyecto buscarProyectoRegistrador : " + e.toString());
+        }
+    }
+
+    private void cargarInformacionTabla() {
+        if (listaProyectosTemporal != null) {
+            if (listaProyectosTemporal.size() > 0) {
+                listaProyectosTabla = new ArrayList<Proyecto>();
+                tamTotalProyecto = listaProyectosTemporal.size();
+                posicionProyectoTabla = 0;
+                cantidadRegistros = String.valueOf(tamTotalProyecto);
+                cargarDatosTablaProyecto();
             } else {
                 listaProyectosTabla = null;
                 tamTotalProyecto = 0;
                 posicionProyectoTabla = 0;
-                cantidadRegistros = String.valueOf(tamTotalProyecto);
                 bloquearPagAntProyecto = true;
+                cantidadRegistros = String.valueOf(tamTotalProyecto);
                 bloquearPagSigProyecto = true;
             }
-        } catch (Exception e) {
-            System.out.println("Error ControllerAdministrarProyecto buscarProyectoRegistrador : " + e.toString());
+        } else {
+            listaProyectosTabla = null;
+            tamTotalProyecto = 0;
+            posicionProyectoTabla = 0;
+            cantidadRegistros = String.valueOf(tamTotalProyecto);
+            bloquearPagAntProyecto = true;
+            bloquearPagSigProyecto = true;
         }
     }
 

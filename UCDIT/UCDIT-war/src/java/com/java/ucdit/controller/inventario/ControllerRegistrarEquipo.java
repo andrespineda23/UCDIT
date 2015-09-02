@@ -47,6 +47,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private boolean fechaDiferida;
 
     public ControllerRegistrarEquipo() {
     }
@@ -59,6 +60,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoValorUso = "0";
         nuevoFechaCompra = new Date();
         nuevoValorCompra = "0";
+        fechaDiferida = true;
         nuevoTipoEquipo = null;
         nuevoProveedor = null;
         //
@@ -170,11 +172,21 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     public void validarFechaCompraEquipoTecnologico() {
         if (Utilidades.validarNulo(nuevoFechaCompra)) {
-            if (Utilidades.fechaIngresadaCorrecta(nuevoFechaCompra)) {
-                validacionesFechaCompra = true;
+            if (fechaDiferida == true) {
+                nuevoFechaCompra = new Date();
+                if (Utilidades.fechaIngresadaCorrecta(nuevoFechaCompra)) {
+                    validacionesFechaCompra = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaCompra", new FacesMessage("La fecha de compra es incorrecta."));
+                    validacionesFechaCompra = false;
+                }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoFechaCompra", new FacesMessage("La fecha de compra es incorrecta."));
-                validacionesFechaCompra = false;
+                if (Utilidades.fechaDiferidaIngresadaCorrecta(nuevoFechaCompra)) {
+                    validacionesFechaCompra = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaCompra", new FacesMessage("La fecha de compra es incorrecta."));
+                    validacionesFechaCompra = false;
+                }
             }
         } else {
             FacesContext.getCurrentInstance().addMessage("form:nuevoFechaCompra", new FacesMessage("La fecha de compra es obligatoria."));
@@ -277,6 +289,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoValorUso = "0";
         nuevoDescripcion = null;
         nuevoValorCompra = "0";
+        fechaDiferida = true;
         nuevoProveedor = null;
         nuevoTipoEquipo = null;
         //
@@ -297,6 +310,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoNombre = null;
         nuevoValorUso = "0";
         nuevoDescripcion = null;
+        fechaDiferida = true;
         nuevoValorCompra = "0";
         nuevoProveedor = null;
         nuevoTipoEquipo = null;
@@ -454,6 +468,15 @@ public class ControllerRegistrarEquipo implements Serializable {
 
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
+    }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        
+        this.fechaDiferida = fechaDiferida;
     }
 
 }

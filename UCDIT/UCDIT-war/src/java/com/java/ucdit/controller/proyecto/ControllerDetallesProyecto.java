@@ -53,6 +53,7 @@ public class ControllerDetallesProyecto implements Serializable {
     private String mensajeFormulario;
     private String colorMensaje;
     private boolean modificacionRegistro;
+    private boolean fechaDiferida;
 
     public ControllerDetallesProyecto() {
     }
@@ -72,6 +73,7 @@ public class ControllerDetallesProyecto implements Serializable {
 
     private void cargarInformacionRegistro() {
         if (Utilidades.validarNulo(proyectoDetalle)) {
+            fechaDiferida = true;
             editarNombre = proyectoDetalle.getNombreproyecto();
             editarFechaInicio = proyectoDetalle.getFechainicio();
             editarDescripcion = proyectoDetalle.getDescripcionproyecto();
@@ -121,11 +123,21 @@ public class ControllerDetallesProyecto implements Serializable {
 
     public void validarFechaInicioProyecto() {
         if (Utilidades.validarNulo(editarFechaInicio)) {
-            if (Utilidades.fechaIngresadaCorrecta(editarFechaInicio)) {
-                validacionesFechaInicio = true;
+            if (fechaDiferida == true) {
+                editarFechaInicio = new Date();
+                if (Utilidades.fechaIngresadaCorrecta(editarFechaInicio)) {
+                    validacionesFechaInicio = true;
+                } else {
+                    validacionesFechaInicio = true;
+                    FacesContext.getCurrentInstance().addMessage("form:editarFechaInicio", new FacesMessage("La fecha de inicio es incorrecta."));
+                }
             } else {
-                validacionesFechaInicio = true;
-                FacesContext.getCurrentInstance().addMessage("form:editarFechaInicio", new FacesMessage("La fecha de inicio es incorrecta."));
+                if (Utilidades.fechaDiferidaIngresadaCorrecta(editarFechaInicio)) {
+                    validacionesFechaInicio = true;
+                } else {
+                    validacionesFechaInicio = true;
+                    FacesContext.getCurrentInstance().addMessage("form:editarFechaInicio", new FacesMessage("La fecha de inicio es incorrecta."));
+                }
             }
         } else {
             validacionesFechaInicio = true;
@@ -180,7 +192,7 @@ public class ControllerDetallesProyecto implements Serializable {
         if (tipoReg == 1) {
             if (Utilidades.validarNulo(editarCostoProyecto) && (!editarCostoProyecto.isEmpty()) && (editarCostoProyecto.trim().length() > 0)) {
                 int tam = editarCostoProyecto.length();
-                if (tam == 6) {
+                if (tam >= 6) {
                     if (Utilidades.isNumber(editarCostoProyecto)) {
                         validacionesCostoProyecto = true;
                     } else {
@@ -259,49 +271,26 @@ public class ControllerDetallesProyecto implements Serializable {
     }
 
     public String cancelarRegistroProyecto() {
-        editarNombre = null;
-        editarFechaInicio = new Date();
-        editarDescripcion = null;
-        editarCostoProyecto = "0";
-        editarCliente = null;
-        editarSupervisor = null;
-        //
-        validacionesCliente = false;
-        validacionesNombre = false;
-        validacionesFechaInicio = true;
-        validacionesCliente = false;
-        validacionesDescripcion = false;
-        validacionesCostoProyecto = true;
-        listaCliente = null;
-        listaPersonalAsociado = null;
-        listaSupervisor = null;
-        mensajeFormulario = "N/A";
-        colorMensaje = "black";
+        limpiarFormularioDirigirPaginas();
         return "administrarproyecto";
     }
-    
+
     public String dirigiarPaginaInsumoProyecto() {
-        editarNombre = null;
-        editarFechaInicio = new Date();
-        editarDescripcion = null;
-        editarCostoProyecto = "0";
-        editarCliente = null;
-        editarSupervisor = null;
-        //
-        validacionesCliente = false;
-        validacionesNombre = false;
-        validacionesFechaInicio = true;
-        validacionesCliente = false;
-        validacionesDescripcion = false;
-        validacionesCostoProyecto = true;
-        listaCliente = null;
-        listaPersonalAsociado = null;
-        listaSupervisor = null;
-        mensajeFormulario = "N/A";
-        colorMensaje = "black";
+        limpiarFormularioDirigirPaginas();
         return "administrarinsumoporproyecto";
     }
+
     public String dirigiarPaginaEquipoProyecto() {
+        limpiarFormularioDirigirPaginas();
+        return "administrarequipoporproyecto";
+    }
+
+    public String dirigiarPaginaAsociarPersonal() {
+        limpiarFormularioDirigirPaginas();
+        return "asociarpersonalaproyecto";
+    }
+
+    private void limpiarFormularioDirigirPaginas() {
         editarNombre = null;
         editarFechaInicio = new Date();
         editarDescripcion = null;
@@ -309,6 +298,7 @@ public class ControllerDetallesProyecto implements Serializable {
         editarCliente = null;
         editarSupervisor = null;
         //
+        fechaDiferida = true;
         validacionesCliente = false;
         validacionesNombre = false;
         validacionesFechaInicio = true;
@@ -320,7 +310,6 @@ public class ControllerDetallesProyecto implements Serializable {
         listaSupervisor = null;
         mensajeFormulario = "N/A";
         colorMensaje = "black";
-        return "administrarequipoporproyecto";
     }
 
     //GET-SET
@@ -442,6 +431,14 @@ public class ControllerDetallesProyecto implements Serializable {
 
     public void setModificacionRegistro(boolean modificacionRegistro) {
         this.modificacionRegistro = modificacionRegistro;
+    }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        this.fechaDiferida = fechaDiferida;
     }
 
 }

@@ -102,7 +102,6 @@ public class Utilidades {
      */
     public static boolean isNumber(String numero) {
         try {
-            System.out.println("numero : " + numero);
             boolean respuesta = false;
             Pattern pattern = Pattern.compile("([0-9])+");
             Matcher matcher = pattern.matcher(numero);
@@ -112,7 +111,7 @@ public class Utilidades {
             return false;
         }
     }
-    
+
     /**
      * Metodo que valida si un numero es numero y no posee algun caracter
      * diferente. Adicionalmente si ese numero es mayor a cero
@@ -122,9 +121,8 @@ public class Utilidades {
      */
     public static boolean isNumberGreaterThanZero(String numero) {
         try {
-            System.out.println("numero : " + numero);
             boolean respuesta = false;
-            Pattern pattern = Pattern.compile("([1-9])([0-9])+");
+            Pattern pattern = Pattern.compile("^[1-9][0-9]?$|^100$");
             Matcher matcher = pattern.matcher(numero);
             respuesta = matcher.matches();
             return respuesta;
@@ -201,6 +199,26 @@ public class Utilidades {
             }
             if (fechaValidar.getYear() < fechaDia.getYear()) {
                 retorno = false;
+            }
+            return retorno;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Metodo encargado de validar si una fecha ingresada es mayor a la fecha
+     * actual
+     *
+     * @param fechaValidar Fecha a validar
+     * @return true - fecha correcta / false - fecha incorrecta (fecha mayor)
+     */
+    public static boolean fechaDiferidaIngresadaCorrecta(Date fechaValidar) {
+        try {
+            boolean retorno = false;
+            Date fechaDia = new Date();
+            if (fechaDia.after(fechaValidar)) {
+                retorno = true;
             }
             return retorno;
         } catch (Exception e) {

@@ -45,6 +45,10 @@ public class AdministrarInsumoPorProyectoBO implements AdministrarInsumoPorProye
     @Override
     public void crearInsumoPorProyecto(InsumoPorProyecto insumo) {
         try {
+            Insumo insumoEditar = insumo.getInsumo();
+            int cantidad = insumoEditar.getCantidadexistencia() - insumo.getCantidadusada();
+            insumoEditar.setCantidadexistencia(cantidad);
+            insumoFacade.edit(insumoEditar);
             insumoPorProyectoFacade.create(insumo);
         } catch (Exception e) {
             System.out.println("Error AdministrarInsumoPorProyectoBO crearInsumoPorProyecto: " + e.toString());

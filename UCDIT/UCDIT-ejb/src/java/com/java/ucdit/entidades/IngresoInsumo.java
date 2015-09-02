@@ -40,6 +40,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "IngresoInsumo.findByDescripcion", query = "SELECT i FROM IngresoInsumo i WHERE i.descripcion = :descripcion"),
     @NamedQuery(name = "IngresoInsumo.findByValorcompra", query = "SELECT i FROM IngresoInsumo i WHERE i.valorcompra = :valorcompra")})
 public class IngresoInsumo implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cantidad")
+    private int cantidad;
     @JoinColumn(name = "proveedor", referencedColumnName = "idproveedor")
     @ManyToOne(optional = false)
     private Proveedor proveedor;
@@ -164,6 +168,14 @@ public class IngresoInsumo implements Serializable {
 
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
 }

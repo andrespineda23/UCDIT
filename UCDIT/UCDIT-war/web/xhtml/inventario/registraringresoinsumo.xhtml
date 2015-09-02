@@ -94,11 +94,15 @@ and open the template in the editor.
             <!--HOME SECTION END  -->
             <!-- ABOUT SECTION START-->
             <section id="about">
-                <div class="container">
+                <div class="container"> 
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <fieldset>
                                 <legend class="text-info">Datos Basicos</legend>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Insumo*"/></strong>
+                                    <h:inputText value="#{controllerRegistrarIngresoInsumo.nuevoInsumo.nombreinsumo}" disabled="true" class="form-control" id="nuevoFactura" />
+                                </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="# Factura*"/></strong>
                                     <h:inputText maxlength="60" value="#{controllerRegistrarIngresoInsumo.nuevoFactura}" disabled="#{controllerRegistrarIngresoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoFactura" requiredMessage="El campo Factura es obligatorio.">
@@ -108,10 +112,22 @@ and open the template in the editor.
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Fecha*"/></strong>
-                                    <h:inputText maxlength="10" value="#{controllerRegistrarIngresoInsumo.nuevoFecha}" disabled="#{controllerRegistrarIngresoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoFecha" requiredMessage="El campo Fecha es obligatorio.">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                        <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarFechaIngresoInsumo()}" execute="nuevoFecha" render="nuevoFecha msnFecha" />
-                                    </h:inputText>
+                                    <div class="input-group">
+                                        <h:inputText maxlength="10" value="#{controllerRegistrarIngresoInsumo.nuevoFecha}" readonly="#{controllerRegistrarIngresoInsumo.fechaDiferida}" disabled="#{controllerRegistrarIngresoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoFecha" requiredMessage="El campo Fecha es obligatorio.">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                            <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarFechaIngresoInsumo()}" execute="nuevoFecha" render="nuevoFecha msnFecha" />
+                                        </h:inputText>
+                                        <span class="input-group-addon">
+                                            <h:outputText value="Fecha Actual"/>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerRegistrarIngresoInsumo.fechaDiferida}">
+                                                <f:ajax event="change" listener="#{controllerRegistrarIngresoInsumo.validarFechaIngresoInsumo()}" execute="fechaDiferida" render="@this msnFecha nuevoFecha" />
+                                            </h:selectBooleanCheckbox>
+                                        </span>
+                                    </div>
                                     <h6><h:message id="msnFecha" for="nuevoFecha" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
@@ -122,11 +138,18 @@ and open the template in the editor.
                                     <h6><h:message id="msnDescripcion" for="nuevoDescripcion" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
-                                    <strong><h:outputText value="Valor*"/></strong>
+                                    <strong><h:outputText value="Valor Unidad*"/></strong>
                                     <h:inputText maxlength="7" value="#{controllerRegistrarIngresoInsumo.nuevoValor}" disabled="#{controllerRegistrarIngresoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoValor" requiredMessage="El campo Valor es obligatorio.">
                                         <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarValorIngresoInsumo()}" execute="nuevoValor" render="nuevoValor msnValor" />
                                     </h:inputText>
                                     <h6><h:message id="msnValor" for="nuevoValor" style="color: red"/></h6>
+                                </div>
+                                <div class="form-group">
+                                    <strong><h:outputText value="Cantidad*"/></strong>
+                                    <h:inputText maxlength="3" value="#{controllerRegistrarIngresoInsumo.nuevoCantidad}" disabled="#{controllerRegistrarIngresoInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCantidad" requiredMessage="El campo Cantidad es obligatorio.">
+                                        <f:ajax event="blur" listener="#{controllerRegistrarIngresoInsumo.validarCantidadIngresoInsumo()}" execute="nuevoCantidad" render="nuevoCantidad msnCantidad" />
+                                    </h:inputText>
+                                    <h6><h:message id="msnCantidad" for="nuevoCantidad" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Proveedor*"/></strong>

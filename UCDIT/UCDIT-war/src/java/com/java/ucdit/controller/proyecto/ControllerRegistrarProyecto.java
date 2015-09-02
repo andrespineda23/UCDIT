@@ -52,12 +52,14 @@ public class ControllerRegistrarProyecto implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private boolean fechaDiferida;
 
     public ControllerRegistrarProyecto() {
     }
 
     @PostConstruct
     public void init() {
+        fechaDiferida = true;
         nuevoNombre = null;
         nuevoFechaInicio = new Date();
         nuevoDescripcion = null;
@@ -114,11 +116,21 @@ public class ControllerRegistrarProyecto implements Serializable {
 
     public void validarFechaInicioProyecto() {
         if (Utilidades.validarNulo(nuevoFechaInicio)) {
-            if (Utilidades.fechaIngresadaCorrecta(nuevoFechaInicio)) {
-                validacionesFechaInicio = true;
+            if (fechaDiferida == true) {
+                nuevoFechaInicio = new Date();
+                if (Utilidades.fechaIngresadaCorrecta(nuevoFechaInicio)) {
+                    validacionesFechaInicio = true;
+                } else {
+                    validacionesFechaInicio = true;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaInicio", new FacesMessage("La fecha de inicio es incorrecta."));
+                }
             } else {
-                validacionesFechaInicio = true;
-                FacesContext.getCurrentInstance().addMessage("form:nuevoFechaInicio", new FacesMessage("La fecha de inicio es incorrecta."));
+                if (Utilidades.fechaDiferidaIngresadaCorrecta(nuevoFechaInicio)) {
+                    validacionesFechaInicio = true;
+                } else {
+                    validacionesFechaInicio = true;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFechaInicio", new FacesMessage("La fecha de inicio es incorrecta."));
+                }
             }
         } else {
             validacionesFechaInicio = true;
@@ -169,7 +181,7 @@ public class ControllerRegistrarProyecto implements Serializable {
         if (tipoReg == 1) {
             if (Utilidades.validarNulo(nuevoCostoProyecto) && (!nuevoCostoProyecto.isEmpty()) && (nuevoCostoProyecto.trim().length() > 0)) {
                 int tam = nuevoCostoProyecto.length();
-                if (tam == 6) {
+                if (tam > 5) {
                     if (Utilidades.isNumber(nuevoCostoProyecto)) {
                         validacionesCostoProyecto = true;
                     } else {
@@ -178,7 +190,7 @@ public class ControllerRegistrarProyecto implements Serializable {
                     }
                 } else {
                     validacionesCostoProyecto = false;
-                    FacesContext.getCurrentInstance().addMessage("form:nuevoCostoProyecto", new FacesMessage("El tamaño minimo permitido es 5 caracteres."));
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCostoProyecto", new FacesMessage("El tamaño minimo permitido es 6 caracteres."));
                 }
             }
         }
@@ -278,6 +290,7 @@ public class ControllerRegistrarProyecto implements Serializable {
         nuevoNombre = null;
         nuevoFechaInicio = new Date();
         nuevoDescripcion = null;
+        fechaDiferida = true;
         nuevoCostoProyecto = "0";
         nuevoCliente = null;
         nuevoSupervisor = null;
@@ -296,6 +309,7 @@ public class ControllerRegistrarProyecto implements Serializable {
         nuevoNombre = null;
         nuevoFechaInicio = new Date();
         nuevoDescripcion = null;
+        fechaDiferida = true;
         nuevoCostoProyecto = "0";
         nuevoCliente = null;
         nuevoSupervisor = null;
@@ -443,6 +457,14 @@ public class ControllerRegistrarProyecto implements Serializable {
 
     public void setListaPersonalAsociado(List<AsociacionPersonaProyecto> listaPersonalAsociado) {
         this.listaPersonalAsociado = listaPersonalAsociado;
+    }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        this.fechaDiferida = fechaDiferida;
     }
 
 }

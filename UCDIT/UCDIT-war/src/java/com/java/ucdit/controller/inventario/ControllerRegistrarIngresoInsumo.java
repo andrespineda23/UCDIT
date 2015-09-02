@@ -35,31 +35,35 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     private BigInteger idInsumo;
     private Insumo nuevoInsumo;
     //
-    private String nuevoFactura, nuevoValor, nuevoDescripcion;
+    private String nuevoFactura, nuevoValor, nuevoDescripcion, nuevoCantidad;
     private Date nuevoFecha;
     private List<Proveedor> listaProveedor;
     private Proveedor nuevoProveedor;
     //
-    private boolean validacionesFactura, validacionesValor, validacionesDescripcion, validacionesFecha, validacionesProveedor;
+    private boolean validacionesFactura, validacionesValor, validacionesDescripcion, validacionesFecha, validacionesProveedor, validacionesCantidad;
     private String mensajeFormulario;
     private boolean activarCasillas;
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private boolean fechaDiferida;
 
     public ControllerRegistrarIngresoInsumo() {
     }
 
     @PostConstruct
     public void init() {
+        fechaDiferida = true;
         nuevoFecha = new Date();
         nuevoValor = "0";
         nuevoFactura = null;
+        nuevoCantidad = "1";
         nuevoDescripcion = null;
         nuevoProveedor = null;
         //
         validacionesFecha = true;
         validacionesValor = false;
+        validacionesCantidad = true;
         validacionesProveedor = false;
         validacionesFactura = false;
         validacionesDescripcion = false;
@@ -95,6 +99,20 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
         }
     }
 
+    public void validarCantidadIngresoInsumo() {
+        if (Utilidades.validarNulo(nuevoCantidad) && (!nuevoCantidad.isEmpty()) && (nuevoCantidad.trim().length() > 0)) {
+            if (!Utilidades.validarCaracteresAlfaNumericos(nuevoCantidad)) {
+                validacionesCantidad = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad ingresada es incorrecta."));
+            } else {
+                validacionesCantidad = true;
+            }
+        } else {
+            validacionesCantidad = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCantidad", new FacesMessage("La cantidad es obligatoria."));
+        }
+    }
+
     public void validarValorIngresoInsumo() {
         if (Utilidades.validarNulo(nuevoValor) && (!nuevoValor.isEmpty()) && (nuevoValor.trim().length() > 0)) {
             if (Utilidades.isNumberGreaterThanZero(nuevoValor)) {
@@ -113,7 +131,7 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
         if (Utilidades.validarNulo(nuevoDescripcion) && (!nuevoDescripcion.isEmpty()) && (nuevoDescripcion.trim().length() > 0)) {
             int tam = nuevoDescripcion.length();
             if (tam >= 4) {
-                if ((Utilidades.validarCaracterString(nuevoDescripcion)) == false) {
+                if ((Utilidades.validarCaracteresAlfaNumericos(nuevoDescripcion)) == false) {
                     validacionesDescripcion = false;
                     FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La descripción ingresada es incorrecta."));
                 } else {
@@ -131,11 +149,21 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
 
     public void validarFechaIngresoInsumo() {
         if (Utilidades.validarNulo(nuevoFecha)) {
-            if (Utilidades.fechaIngresadaCorrecta(nuevoFecha)) {
-                validacionesFecha = true;
+            if (fechaDiferida == true) {
+                nuevoFecha = new Date();
+                if (Utilidades.fechaIngresadaCorrecta(nuevoFecha)) {
+                    validacionesFecha = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha se encuentra incorrecta."));
+                    validacionesFecha = false;
+                }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha se encuentra incorrecta."));
-                validacionesFecha = false;
+                if (Utilidades.fechaDiferidaIngresadaCorrecta(nuevoFecha)) {
+                    validacionesFecha = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha se encuentra incorrecta."));
+                    validacionesFecha = false;
+                }
             }
         } else {
             FacesContext.getCurrentInstance().addMessage("form:nuevoFecha", new FacesMessage("La fecha es obligatoria."));
@@ -164,6 +192,9 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
             retorno = false;
         }
         if (validacionesDescripcion == false) {
+            retorno = false;
+        }
+        if (validacionesCantidad == false) {
             retorno = false;
         }
         if (validacionesProveedor == false) {
@@ -196,6 +227,7 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
             IngresoInsumo nuevaIngresoInsumo = new IngresoInsumo();
             nuevaIngresoInsumo.setValorcompra(Integer.valueOf(nuevoValor));
             nuevaIngresoInsumo.setNumerofactura(nuevoFactura);
+            nuevaIngresoInsumo.setCantidad(Integer.valueOf(nuevoCantidad));
             nuevaIngresoInsumo.setFechacompra(nuevoFecha);
             nuevaIngresoInsumo.setDescripcion(nuevoDescripcion);
             nuevaIngresoInsumo.setProveedor(nuevoProveedor);
@@ -210,11 +242,14 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
         nuevoFecha = new Date();
         nuevoValor = "0";
         nuevoFactura = null;
+        fechaDiferida = true;
+        nuevoCantidad = "1";
         nuevoDescripcion = null;
         nuevoProveedor = null;
         //
         validacionesFecha = true;
         validacionesValor = false;
+        validacionesCantidad = true;
         validacionesFactura = false;
         validacionesProveedor = false;
         validacionesDescripcion = false;
@@ -224,8 +259,10 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
     public String cancelarRegistroIngresoInsumo() {
         nuevoFecha = new Date();
         nuevoValor = "0";
+        nuevoCantidad = "1";
         nuevoFactura = null;
         nuevoProveedor = null;
+        fechaDiferida = true;
         nuevoDescripcion = null;
         //
         validacionesFecha = true;
@@ -233,6 +270,7 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
         validacionesProveedor = false;
         validacionesFactura = false;
         validacionesDescripcion = false;
+        validacionesCantidad = true;
         activarAceptar = false;
         mensajeFormulario = "N/A";
         activarLimpiar = true;
@@ -358,6 +396,22 @@ public class ControllerRegistrarIngresoInsumo implements Serializable {
 
     public void setNuevoProveedor(Proveedor nuevoProveedor) {
         this.nuevoProveedor = nuevoProveedor;
+    }
+
+    public String getNuevoCantidad() {
+        return nuevoCantidad;
+    }
+
+    public void setNuevoCantidad(String nuevoCantidad) {
+        this.nuevoCantidad = nuevoCantidad;
+    }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        this.fechaDiferida = fechaDiferida;
     }
 
 }

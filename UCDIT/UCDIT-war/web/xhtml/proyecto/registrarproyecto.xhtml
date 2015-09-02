@@ -118,10 +118,22 @@ and open the template in the editor.
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Fecha Inicio*"/></strong>
-                                    <h:inputText maxlength="10" value="#{controllerRegistrarProyecto.nuevoFechaInicio}" disabled="#{controllerRegistrarProyecto.activarCasillas}" required="true" class="form-control" id="nuevoFechaInicio" requiredMessage="El campo Fecha Inicio es obligatorio.">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                        <f:ajax event="blur" listener="#{controllerRegistrarProyecto.validarFechaInicioProyecto()}" execute="nuevoFechaInicio" render="nuevoFechaInicio msnFechaInicio" />
-                                    </h:inputText>
+                                    <div class="input-group">
+                                        <h:inputText maxlength="10" value="#{controllerRegistrarProyecto.nuevoFechaInicio}" readonly="#{controllerRegistrarProyecto.fechaDiferida}" disabled="#{controllerRegistrarProyecto.activarCasillas}" required="true" class="form-control" id="nuevoFechaInicio" requiredMessage="El campo Fecha Inicio es obligatorio.">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                            <f:ajax event="blur" listener="#{controllerRegistrarProyecto.validarFechaInicioProyecto()}" execute="nuevoFechaInicio" render="nuevoFechaInicio msnFechaInicio" />
+                                        </h:inputText>
+                                        <span class="input-group-addon">
+                                            <h:outputText value="Fecha Actual"/>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerRegistrarProyecto.fechaDiferida}">
+                                                <f:ajax event="change" listener="#{controllerRegistrarProyecto.validarFechaInicioProyecto()}" execute="fechaDiferida" render="@this msnFechaInicio nuevoFechaInicio" />
+                                            </h:selectBooleanCheckbox>
+                                        </span>
+                                    </div>
                                     <h6><h:message id="msnFechaInicio" for="nuevoFechaInicio" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
@@ -164,9 +176,9 @@ and open the template in the editor.
                             <br></br>
                             <fieldset>
                                 <legend class="text-info">Personal Interno Activo</legend>
-                                <div class="row">
+                                <div class="row" >
                                     <h:dataTable id="dataTable" var="item" 
-                                                 styleClass="table table-condensed table-responsive" 
+                                                 styleClass="table table-condensed table-responsive"  
                                                  value="#{controllerRegistrarProyecto.listaPersonalAsociado}">
                                         <h:column>
                                             <f:facet name="header">
@@ -178,7 +190,7 @@ and open the template in the editor.
                                             <f:facet name="header">
                                                 <h:outputText value="Desea Asociar al Personal"/>
                                             </f:facet>
-                                            <h:selectBooleanCheckbox value="#{item.activo}"/>
+                                            <h:selectBooleanCheckbox disabled="#{controllerRegistrarProyecto.activarCasillas}" value="#{item.activo}"/>
                                         </h:column>
                                     </h:dataTable>
                                 </div>

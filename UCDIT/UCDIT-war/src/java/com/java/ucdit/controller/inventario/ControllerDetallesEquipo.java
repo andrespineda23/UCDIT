@@ -50,12 +50,14 @@ public class ControllerDetallesEquipo implements Serializable {
     private String colorMensaje;
     private boolean modificacionRegistro;
     private boolean editarEstado;
+    private boolean fechaDiferida;
 
     public ControllerDetallesEquipo() {
     }
 
     @PostConstruct
     public void init() {
+        fechaDiferida = true;
         colorMensaje = "black";
         mensajeFormulario = "N/A";
     }
@@ -203,11 +205,21 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void validarFechaCompraEquipoTecnologico() {
         if (Utilidades.validarNulo(editarFechaCompra)) {
-            if (Utilidades.fechaIngresadaCorrecta(editarFechaCompra)) {
-                validacionesFechaCompra = true;
+            if (fechaDiferida == true) {
+                editarFechaCompra = new Date();
+                if (Utilidades.fechaIngresadaCorrecta(editarFechaCompra)) {
+                    validacionesFechaCompra = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:editarFechaCompra", new FacesMessage("La fecha de compra es incorrecta."));
+                    validacionesFechaCompra = false;
+                }
             } else {
-                FacesContext.getCurrentInstance().addMessage("form:editarFechaCompra", new FacesMessage("La fecha de compra es incorrecta."));
-                validacionesFechaCompra = false;
+                if (Utilidades.fechaDiferidaIngresadaCorrecta(editarFechaCompra)) {
+                    validacionesFechaCompra = true;
+                } else {
+                    FacesContext.getCurrentInstance().addMessage("form:editarFechaCompra", new FacesMessage("La fecha de compra es incorrecta."));
+                    validacionesFechaCompra = false;
+                }
             }
         } else {
             FacesContext.getCurrentInstance().addMessage("form:editarFechaCompra", new FacesMessage("La fecha de compra es obligatoria."));
@@ -316,6 +328,7 @@ public class ControllerDetallesEquipo implements Serializable {
         editarCodigo = null;
         editarNombre = null;
         editarValorUso = "0";
+        fechaDiferida = true;
         editarDescripcion = null;
         editarValorCompra = "0";
         editarProveedor = null;
@@ -441,6 +454,14 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void setEditarEstado(boolean editarEstado) {
         this.editarEstado = editarEstado;
+    }
+
+    public boolean isFechaDiferida() {
+        return fechaDiferida;
+    }
+
+    public void setFechaDiferida(boolean fechaDiferida) {
+        this.fechaDiferida = fechaDiferida;
     }
 
 }

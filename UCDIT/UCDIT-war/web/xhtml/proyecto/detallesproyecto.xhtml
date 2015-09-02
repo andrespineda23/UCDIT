@@ -115,10 +115,22 @@ and open the template in the editor.
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Fecha Inicio*"/></strong>
-                                    <h:inputText maxlength="10" value="#{controllerDetallesProyecto.editarFechaInicio}"  required="true" class="form-control" id="editarFechaInicio" requiredMessage="El campo Fecha Inicio es obligatorio.">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                        <f:ajax event="blur" listener="#{controllerDetallesProyecto.validarFechaInicioProyecto()}" execute="editarFechaInicio" render="editarFechaInicio msnFechaInicio" />
-                                    </h:inputText>
+                                    <div class="input-group">
+                                        <h:inputText maxlength="10" value="#{controllerDetallesProyecto.editarFechaInicio}" readonly="#{controllerDetallesProyecto.fechaDiferida}" required="true" class="form-control" id="editarFechaInicio" requiredMessage="El campo Fecha Inicio es obligatorio.">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                            <f:ajax event="blur" listener="#{controllerDetallesProyecto.validarFechaInicioProyecto()}" execute="editarFechaInicio" render="editarFechaInicio msnFechaInicio" />
+                                        </h:inputText>
+                                        <span class="input-group-addon">
+                                            <h:outputText value="Fecha Actual"/>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerDetallesProyecto.fechaDiferida}">
+                                                <f:ajax event="change" listener="#{controllerDetallesProyecto.validarFechaInicioProyecto()}" execute="fechaDiferida" render="@this msnFechaInicio editarFechaInicio" />
+                                            </h:selectBooleanCheckbox>
+                                        </span>
+                                    </div>
                                     <h6><h:message id="msnFechaInicio" for="editarFechaInicio" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
@@ -180,7 +192,12 @@ and open the template in the editor.
                                                 <h:outputText value="Estado"/>
                                             </f:facet>
                                             <h:outputText value="#{item.personalinterno.persona.usuario.strEstado}"/>
-                                        </h:column>  
+                                        </h:column>
+                                        <f:facet name="footer">
+                                            <nav>
+                                                <h:commandButton value="Adiministrar Personal Asociado (Agregar/Inactivar)" class="btn btn-link" actionListener="#{controllerAsociarPersonalAProyecto.recibirIdProyectoDetalle(controllerDetallesProyecto.idProyecto)}" action="#{controllerDetallesProyecto.dirigiarPaginaAsociarPersonal()}"/>
+                                            </nav>
+                                        </f:facet>
                                     </h:dataTable>
                                 </div>
                             </fieldset>    

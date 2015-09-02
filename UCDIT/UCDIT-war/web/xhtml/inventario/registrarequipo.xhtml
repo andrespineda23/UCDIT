@@ -133,11 +133,23 @@ and open the template in the editor.
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Fecha Adquisición/Compra*"/></strong>
-                                    <h:inputText maxlength="11" value="#{controllerRegistrarEquipo.nuevoFechaCompra}" disabled="#{controllerRegistrarEquipo.activarCasillas}" required="true" class="form-control" id="nuevoFecha" requiredMessage="El campo Fecha es obligatorio.">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
-                                        <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarFechaCompraEquipoTecnologico()}" execute="nuevoFecha" render="nuevoFecha msnFecha" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnFecha" for="nuevoFecha" style="color: red"/></h6>
+                                    <div class="input-group">
+                                        <h:inputText maxlength="11" value="#{controllerRegistrarEquipo.nuevoFechaCompra}" readonly="#{controllerRegistrarEquipo.fechaDiferida}" disabled="#{controllerRegistrarEquipo.activarCasillas}" required="true" class="form-control" id="nuevoFechaCompra" requiredMessage="El campo Fecha es obligatorio.">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                            <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarFechaCompraEquipoTecnologico()}" execute="nuevoFecha" render="nuevoFechaCompra msnFecha" />
+                                        </h:inputText>
+                                        <span class="input-group-addon">
+                                            <h:outputText value="Fecha Actual"/>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerRegistrarEquipo.fechaDiferida}">
+                                                <f:ajax event="change" listener="#{controllerRegistrarEquipo.validarFechaCompraEquipoTecnologico()}" execute="fechaDiferida" render="@this msnFecha nuevoFechaCompra" />
+                                            </h:selectBooleanCheckbox>
+                                        </span>
+                                    </div>
+                                    <h6><h:message id="msnFecha" for="nuevoFechaCompra" style="color: red"/></h6>
                                 </div>
                                 <div class="form-group">
                                     <strong><h:outputText value="Tipo Equipo*"/></strong>

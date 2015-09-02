@@ -50,4 +50,6 @@ public interface AdministrarProyectoBOInterface {
     public void editarIEquipoPorProyecto(EquipoPorProyecto equipoPorProyecto);
 
     public List<PersonalInterno> obtenerPersonalInternoRegistrado();
+
+    public void asociarPersonalAProyecto(Proyecto proyecto, List<PersonalPorProyecto> personalPorProyecto, List<PersonalInterno> personalInterno);
 }

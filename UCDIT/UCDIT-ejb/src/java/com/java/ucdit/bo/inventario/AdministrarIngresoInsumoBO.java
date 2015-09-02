@@ -45,6 +45,10 @@ public class AdministrarIngresoInsumoBO implements AdministrarIngresoInsumoBOInt
     @Override
     public void crearIngresoInsumo(IngresoInsumo ingreso) {
         try {
+            Insumo insumo = ingreso.getInsumo();
+            int cantidad = insumo.getCantidadexistencia() + ingreso.getCantidad();
+            insumo.setCantidadexistencia(cantidad);
+            insumoFacade.edit(insumo);
             ingresoInsumoFacade.create(ingreso);
         } catch (Exception e) {
             System.out.println("Error AdministrarIngresosInsumoBO crearIngresoInsumo: " + e.toString());

@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,6 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PersonalPorProyecto.findAll", query = "SELECT p FROM PersonalPorProyecto p"),
     @NamedQuery(name = "PersonalPorProyecto.findByIdpersonalporproyecto", query = "SELECT p FROM PersonalPorProyecto p WHERE p.idpersonalporproyecto = :idpersonalporproyecto")})
 public class PersonalPorProyecto implements Serializable {
+
+    @Column(name = "estado")
+    private Boolean estado;
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +53,8 @@ public class PersonalPorProyecto implements Serializable {
     @JoinColumn(name = "personalinterno", referencedColumnName = "idpersonalinterno")
     @ManyToOne(optional = false)
     private PersonalInterno personalinterno;
+    @Transient
+    private String strEstado;
 
     public PersonalPorProyecto() {
     }
@@ -114,5 +120,29 @@ public class PersonalPorProyecto implements Serializable {
     public String toString() {
         return "com.java.ucdit.entidades.PersonalPorProyecto[ idpersonalporproyecto=" + idpersonalporproyecto + " ]";
     }
-    
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public String getStrEstado() {
+        getEstado();
+        if (null != estado) {
+            if (estado == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
+    }
+
 }

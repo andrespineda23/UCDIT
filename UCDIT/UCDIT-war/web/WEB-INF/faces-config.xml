@@ -686,4 +686,21 @@
     </navigation-rule>
     
     
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/detallesproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>asociarpersonalaproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/asociarpersonalaproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/proyecto/asociarpersonalaproyecto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>detallesproyecto</from-outcome>
+            <to-view-id>/xhtml/proyecto/detallesproyecto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
 </faces-config>
