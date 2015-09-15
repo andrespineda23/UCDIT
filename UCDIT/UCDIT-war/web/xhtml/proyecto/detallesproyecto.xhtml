@@ -132,6 +132,10 @@ and open the template in the editor.
                                                 </h:inputText>
                                                 <h6><h:message id="msnCostoProyecto" for="editarCostoProyecto" style="color: red"/></h6>
                                             </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Costo Real"/></strong>
+                                                <h:inputText maxlength="12" value="#{controllerDetallesProyecto.costoHastaDia}"  class="form-control" id="costoHastaDia" />
+                                            </div>
                                         </fieldset>
                                     </fieldset>
                                     <br></br>

@@ -7,6 +7,8 @@ package com.java.ucdit.controller.proyecto;
 
 import com.java.ucdit.bo.interfaces.proyecto.AdministrarProyectoBOInterface;
 import com.java.ucdit.entidades.Cliente;
+import com.java.ucdit.entidades.EquipoPorProyecto;
+import com.java.ucdit.entidades.InsumoPorProyecto;
 import com.java.ucdit.entidades.PersonalInterno;
 import com.java.ucdit.entidades.PersonalPorProyecto;
 import com.java.ucdit.entidades.Proyecto;
@@ -54,6 +56,7 @@ public class ControllerDetallesProyecto implements Serializable {
     private String colorMensaje;
     private boolean modificacionRegistro;
     private boolean fechaDiferida;
+    private String costoHastaDia;
 
     public ControllerDetallesProyecto() {
     }
@@ -88,6 +91,27 @@ public class ControllerDetallesProyecto implements Serializable {
             validacionesCliente = true;
             validacionesDescripcion = true;
             validacionesCostoProyecto = true;
+            List<EquipoPorProyecto> listaEquipoPorProyecto = administrarProyectoBO.consultarEquipoProProyectoPorIdProyecto(this.idProyecto);
+            List<InsumoPorProyecto> listaInsumoPorProyecto = administrarProyectoBO.consultarInsumoPorProyectoPorIdProyecto(this.idProyecto);
+            costoHastaDia = "";
+            if (Utilidades.validarNulo(listaEquipoPorProyecto)) {
+                Integer costo = 0;
+                for (int i = 0; i < listaEquipoPorProyecto.size(); i++) {
+                    costo = costo + listaEquipoPorProyecto.get(i).getCostouso();
+                }
+                costoHastaDia = costoHastaDia + "Equipo : $" + costo + " / ";
+            } else {
+                costoHastaDia = costoHastaDia + "Equipo : $0 / ";
+            }
+            if (Utilidades.validarNulo(listaInsumoPorProyecto)) {
+                Integer costo = 0;
+                for (int i = 0; i < listaInsumoPorProyecto.size(); i++) {
+                    costo = costo + listaInsumoPorProyecto.get(i).getCostouso();
+                }
+                costoHastaDia = costoHastaDia + "Insumo : $" + costo;
+            } else {
+                costoHastaDia = costoHastaDia + "Insumo : $0";
+            }
         }
     }
 
@@ -439,6 +463,14 @@ public class ControllerDetallesProyecto implements Serializable {
 
     public void setFechaDiferida(boolean fechaDiferida) {
         this.fechaDiferida = fechaDiferida;
+    }
+
+    public String getCostoHastaDia() {
+        return costoHastaDia;
+    }
+
+    public void setCostoHastaDia(String costoHastaDia) {
+        this.costoHastaDia = costoHastaDia;
     }
 
 }
