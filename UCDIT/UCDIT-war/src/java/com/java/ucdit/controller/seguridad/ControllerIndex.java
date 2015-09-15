@@ -156,6 +156,8 @@ public class ControllerIndex implements Serializable {
     }
 
     public String cerrarSession() throws IOException, ServletException {
+        usuarioLoginSistema = null;
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         FacesContext faceContext = FacesContext.getCurrentInstance();
         HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
         httpServletRequest.logout();

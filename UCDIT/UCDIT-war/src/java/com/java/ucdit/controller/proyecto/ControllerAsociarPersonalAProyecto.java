@@ -56,10 +56,14 @@ public class ControllerAsociarPersonalAProyecto implements Serializable {
     }
 
     private void eliminarPersonalAsociado() {
-        if (null != listaPersonalInterno) {
-            for (int i = 0; i < listaPersonalInterno.size(); i++) {
-                if (listaPersonalInterno.get(i).getIdpersonalinterno().equals(listaPersonalAsociado.get(i).getPersonalinterno().getIdpersonalinterno())) {
-                    listaPersonalInterno.remove(i);
+        if (null != listaPersonalAsociado) {
+            for (int i = 0; i < listaPersonalAsociado.size(); i++) {
+                if (null != listaPersonalInterno) {
+                    for (int j = 0; j < listaPersonalInterno.size(); j++) {
+                        if (listaPersonalAsociado.get(i).getPersonalinterno().getIdpersonalinterno().equals(listaPersonalInterno.get(j).getIdpersonalinterno())) {
+                            listaPersonalInterno.remove(j);
+                        }
+                    }
                 }
             }
         }

@@ -45,12 +45,14 @@ public class ControllerRegistrarEquipoPorProyecto implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private boolean prototipo;
 
     public ControllerRegistrarEquipoPorProyecto() {
     }
 
     @PostConstruct
     public void init() {
+        prototipo = false;
         nuevoMinutos = "1";
         nuevoEquipoTecnologico = null;
         //
@@ -124,6 +126,7 @@ public class ControllerRegistrarEquipoPorProyecto implements Serializable {
     public void almacenarNuevoEquipoPorProyectoEnSistema() {
         try {
             EquipoPorProyecto nuevaProyecto = new EquipoPorProyecto();
+            nuevaProyecto.setUsadoparaprototipo(prototipo);
             int cantidad = Integer.valueOf(nuevoMinutos);
             nuevaProyecto.setCantidadminutosuso(cantidad);
             Integer costo = (nuevoEquipoTecnologico.getValorhorauso() / 60) * cantidad;
@@ -137,6 +140,7 @@ public class ControllerRegistrarEquipoPorProyecto implements Serializable {
     }
 
     public void limpiarFormulario() {
+        prototipo = false;
         nuevoMinutos = "1";
         nuevoEquipoTecnologico = null;
         //
@@ -151,6 +155,7 @@ public class ControllerRegistrarEquipoPorProyecto implements Serializable {
         nuevoEquipoTecnologico = null;
         //
         validacionesMinutos = false;
+        prototipo = false;
         validacionesEquipo = false;
         activarAceptar = false;
         listaEquipoTecnologico = null;
@@ -250,6 +255,14 @@ public class ControllerRegistrarEquipoPorProyecto implements Serializable {
 
     public void setActivarAceptar(boolean activarAceptar) {
         this.activarAceptar = activarAceptar;
+    }
+
+    public boolean isPrototipo() {
+        return prototipo;
+    }
+
+    public void setPrototipo(boolean prototipo) {
+        this.prototipo = prototipo;
     }
 
 }

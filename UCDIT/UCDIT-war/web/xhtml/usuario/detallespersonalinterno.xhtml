@@ -7,231 +7,177 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <!--[if IE]>
-            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-            <![endif]-->
-        <!-- Favicon Icon -->
-        <link rel="icon" href="../../assets/img/favicon2.ico" />
-        <title>UCDIT</title>
-        <!-- BOOTSTRAP CORE CSS -->
-        <link href="../../assets/css/bootstrap.css" rel="stylesheet" />
-        <!-- ION ICONS STYLES -->
-        <link href="../../assets/css/ionicons.css" rel="stylesheet" />
-        <!-- FONT AWESOME ICONS STYLES -->
-        <link href="../../assets/css/font-awesome.css" rel="stylesheet" />
-        <!-- CUSTOM CSS -->
-        <link href="../../assets/css/style.css" rel="stylesheet" />
-        <!-- IE10 viewport hack  -->
-        <script src="../../assets/js/ie-10-view-port.js"></script>
-        <!-- HTML5 Shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
     </h:head>
     <h:body>
-        <h:form id="form">
-            <!-- HEADER SECTION START-->
-            <header id="header">
-                <div class="container" >
-                    <div class="row"  >
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 logo-wrapper">
-                            <img src="../../assets/img/logo-universidad-central.png" alt="" />
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- HEADER SECTION END-->
-            <!--HOME SECTION START  -->
-            <section id="usuario">
-                <div class="overlay">       
-                    <div class="container">
-                        <div class="row text-center">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
-                                <h2>Editar Personal Interno</h2>
-                                <h3>Información</h3>
-                                <p>
-                                    <strong>A continuación se muestra el formato de ingreso de la información:</strong>
-                                    <br></br>
-                                    NOMBRE - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" Yelsing" /></strong>
-                                    <br></br>
-                                    APELLIDO - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" Torres" /></strong>
-                                    <br></br>
-                                    IDENTIFICACIÓN - Longitud (Min. 8 - Max. 45). Ejemplo: <strong><h:outputText value=" 774411201" /></strong>
-                                    <br></br>
-                                    VALOR HORA - Longitud (Max. 10). Formato: <strong><h:outputText value=" 2500" /></strong>
-                                    <br></br>
-                                    CORREO  - Longitud (Min. 15 - Max. 45). Ejemplo: <strong><h:outputText value=" correoprueba@prueba.com" /></strong>
-                                    <br></br>
-                                    TELEFONO FIJO - Longitud (7). Ejemplo: <strong><h:outputText value=" 7474745" /></strong>
-                                    <br></br>
-                                    TELEFONO CELULAR - Longitud (10). Ejemplo: <strong><h:outputText value=" 3017654321" /></strong>
-                                </p>
-                                <div class="space"> </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
-                                <div class="space hidden-xs"> </div>
-                                <div class="space hidden-xs"> </div>
-                                <div class="space hidden-xs"> </div>
-                                <div class="space hidden-xs"> </div>
-                                <div class="space hidden-xs"> </div>
-                                <div class="space hidden-xs"> </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
-                                <div class="space hidden-xs"> </div>
-                                <div class="space hidden-xs"> </div>
-                                <div class="space hidden-xs"> </div>
-                                <div class="space hidden-xs"> </div>
-                                <div class="space hidden-xs"> </div>
-                                <div class="space hidden-xs"> </div>
-                                <h:commandButton value="Regresar" action="#{controllerDetallesPersonalInterno.cancelarRegistroPersonalInterno()}" actionListener="#{controllerAdministrarPersonalInterno.buscarPersonalInternoRegistrador()}" immediate="true" class="btn btn-custom btn-two"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!--HOME SECTION END  -->
-            <!-- ABOUT SECTION START-->
-            <section id="about">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <fieldset>
-                                <legend class="text-info">Datos Personales</legend>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Nombre Personal Interno*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerDetallesPersonalInterno.editarNombre}"  required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarNombrePersonalInterno()}" execute="editarNombre" render="editarNombre msnNombre" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Apellido Personal Interno*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerDetallesPersonalInterno.editarApellido}"  required="true" class="form-control" id="editarApellido" requiredMessage="El campo Apellido es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarApellidoPersonalInterno()}" execute="editarApellido" render="editarApellido msnApellido" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnApellido" for="editarApellido" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Número Documento*"/></strong>
-                                    <h:inputText maxlength="45" value="#{controllerDetallesPersonalInterno.editarIdentificacion}"  required="true" class="form-control" id="editarIdentificacion" requiredMessage="El campo Número Documento es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarIdentificacionPersonalInterno()}" execute="editarIdentificacion" render="editarIdentificacion msnIdentificacion" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnIdentificacion" for="editarIdentificacion" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Valor Hora Trabajo*"/></strong>
-                                    <h:inputText maxlength="10" value="#{controllerDetallesPersonalInterno.editarValorHora}"  required="true" class="form-control" id="editarValorHora" requiredMessage="El campo Valor Hora es obligatorio.">
-                                        <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarValorHoraPersonalInterno()}" execute="editarValorHora" render="editarValorHora msnValorHora" />
-                                    </h:inputText>
-                                    <h6><h:message id="msnValorHora" for="editarValorHora" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Correo Electronico*"/></strong>
-                                    <div class="input-group">
-                                        <h:inputText maxlength="60"  value="#{controllerDetallesPersonalInterno.editarCorreo}"   required="true" class="form-control" id="editarCorreo" requiredMessage="El campo Correo es obligatorio." >
-                                            <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarCorreoPersonalInterno()}" execute="editarCorreo" render="editarCorreo msnEmail"/>
-                                        </h:inputText>
-                                        <span class="input-group-addon">@</span>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <!--HOME SECTION START  -->
+                    <section id="usuario">
+                        <div class="overlay">       
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
+                                        <h2>Editar Personal Interno</h2>
+                                        <h3>Información</h3>
+                                        <p>
+                                            <strong>A continuación se muestra el formato de ingreso de la información:</strong>
+                                            <br></br>
+                                            NOMBRE - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" Yelsing" /></strong>
+                                            <br></br>
+                                            APELLIDO - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" Torres" /></strong>
+                                            <br></br>
+                                            IDENTIFICACIÓN - Longitud (Min. 8 - Max. 45). Ejemplo: <strong><h:outputText value=" 774411201" /></strong>
+                                            <br></br>
+                                            VALOR HORA - Longitud (Max. 10). Formato: <strong><h:outputText value=" 2500" /></strong>
+                                            <br></br>
+                                            CORREO  - Longitud (Min. 15 - Max. 45). Ejemplo: <strong><h:outputText value=" correoprueba@prueba.com" /></strong>
+                                            <br></br>
+                                            TELEFONO FIJO - Longitud (7). Ejemplo: <strong><h:outputText value=" 7474745" /></strong>
+                                            <br></br>
+                                            TELEFONO CELULAR - Longitud (10). Ejemplo: <strong><h:outputText value=" 3017654321" /></strong>
+                                        </p>
+                                        <div class="space"> </div>
                                     </div>
-                                    <h6><h:message id="msnEmail" for="editarCorreo" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Tipo Personal*"/></strong>
-                                    <h:selectOneMenu value="#{controllerDetallesPersonalInterno.editarTipoPersonal}"
-                                                     class="form-control" 
-                                                     id="editarTipoPersonal">
-                                        <f:selectItems value="#{controllerDetallesPersonalInterno.listaTipoPersonal}" var="tipo"
-                                                       itemLabel="#{tipo.nombretipopersonal}" itemValue="#{tipo}"/>
-                                        <f:converter converterId="ConverterGenerico" />
-                                        <f:ajax event="change" listener="#{controllerDetallesPersonalInterno.validarTipoPersonal()}" execute="editarTipoPersonal" render="msnTipoPersonal"/>
-                                    </h:selectOneMenu>
-                                    <h6><h:message id="msnTipoPersonal" for="editarTipoPersonal" style="color: red"/></h6>
-                                </div>
-                                <div class="form-group">
-                                    <strong><h:outputText value="Estado Usuario*"/></strong>
-                                    <h:selectOneMenu value="#{controllerDetallesPersonalInterno.editarEstado}"
-                                                     class="form-control" 
-                                                     id="editarEstado">
-                                        <f:selectItem itemLabel="ACTIVO" itemValue="true" />
-                                        <f:selectItem itemLabel="INACTIVO" itemValue="false" />
-                                        <f:ajax event="change" listener="#{controllerDetallesPersonalInterno.validarEstado()}" execute="editarEstado" />
-                                    </h:selectOneMenu>
-                                </div>
-                                <fieldset>
-                                    <legend class="h5 text-info">Datos Opcionales</legend>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Telefono Fijo"/></strong>
-                                        <h:inputText maxlength="8" value="#{controllerDetallesPersonalInterno.editarTelFijo}"  class="form-control" id="editarTelFijo" >
-                                            <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarDatosOpcionales(1)}" execute="editarTelFijo" render="editarTelFijo msnTelFijo" />
-                                        </h:inputText>
-                                        <h6><h:message id="msnTelFijo" for="editarTelFijo" style="color: red"/></h6>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
                                     </div>
-                                    <div class="form-group">
-                                        <strong><h:outputText value="Telefono Celular"/></strong>
-                                        <h:inputText maxlength="11" value="#{controllerDetallesPersonalInterno.editarTelCelular}"  class="form-control" id="editarTelCelular" >
-                                            <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarDatosOpcionales(2)}" execute="editarTelCelular" render="editarTelCelular msnTelCelular" />
-                                        </h:inputText>
-                                        <h6><h:message id="msnTelCelular" for="editarTelCelular" style="color: red"/></h6>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Regresar" action="#{controllerDetallesPersonalInterno.cancelarRegistroPersonalInterno()}" actionListener="#{controllerAdministrarPersonalInterno.buscarPersonalInternoRegistrador()}" immediate="true" class="btn btn-custom btn-two"/>
                                     </div>
-                                </fieldset>
-                            </fieldset>
-                            <hr class="intro-divider"/>
-                            <div class="row col-md-12">
-                                <div class="text-center">
-                                    <h5>
-                                        Resultados del Formulario
-                                    </h5>
-                                    <strong>
-                                        <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesPersonalInterno.mensajeFormulario}" style="color: #{controllerDetallesPersonalInterno.colorMensaje}}"/>
-                                    </strong>
                                 </div>
-                                <br></br>
-                            </div>
-                            <hr class="intro-divider"/>
-                            <div class="right pull-right">
-                                <h:commandButton value="Modificar" actionListener="#{controllerDetallesPersonalInterno.registrarModificacionPersonalInterno()}" class="btn btn-success" >
-                                    <f:ajax execute="@form" render="form" />
-                                </h:commandButton>
-                                <span></span>
-                                <span></span>
-                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesPersonalInterno.cancelarRegistroPersonalInterno()}" actionListener="#{controllerAdministrarPersonalInterno.buscarPersonalInternoRegistrador()}" immediate="true">
-                                    <f:ajax execute="@form" render="form" />
-                                </h:commandButton>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-            <!-- ABOUT SECTION END-->   
-            <!-- FOOTER SECTION START-->
-            <footer>
-                <div class="container">
-                    <div class="row text-center">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            &#169; 2015 - Andrés Pineda | by <a href="https://www.facebook.com/AndresPineda.51" target="_blank"> Pineda Software </a> 
+                    </section>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Personales</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Nombre Personal Interno*"/></strong>
+                                            <h:inputText maxlength="45" value="#{controllerDetallesPersonalInterno.editarNombre}"  required="true" class="form-control" id="editarNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarNombrePersonalInterno()}" execute="editarNombre" render="editarNombre msnNombre" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNombre" for="editarNombre" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Apellido Personal Interno*"/></strong>
+                                            <h:inputText maxlength="45" value="#{controllerDetallesPersonalInterno.editarApellido}"  required="true" class="form-control" id="editarApellido" requiredMessage="El campo Apellido es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarApellidoPersonalInterno()}" execute="editarApellido" render="editarApellido msnApellido" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnApellido" for="editarApellido" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Número Documento*"/></strong>
+                                            <h:inputText maxlength="45" value="#{controllerDetallesPersonalInterno.editarIdentificacion}"  required="true" class="form-control" id="editarIdentificacion" requiredMessage="El campo Número Documento es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarIdentificacionPersonalInterno()}" execute="editarIdentificacion" render="editarIdentificacion msnIdentificacion" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnIdentificacion" for="editarIdentificacion" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Valor Hora Trabajo*"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerDetallesPersonalInterno.editarValorHora}"  required="true" class="form-control" id="editarValorHora" requiredMessage="El campo Valor Hora es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarValorHoraPersonalInterno()}" execute="editarValorHora" render="editarValorHora msnValorHora" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnValorHora" for="editarValorHora" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Correo Electronico*"/></strong>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="60"  value="#{controllerDetallesPersonalInterno.editarCorreo}"   required="true" class="form-control" id="editarCorreo" requiredMessage="El campo Correo es obligatorio." >
+                                                    <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarCorreoPersonalInterno()}" execute="editarCorreo" render="editarCorreo msnEmail"/>
+                                                </h:inputText>
+                                                <span class="input-group-addon">@</span>
+                                            </div>
+                                            <h6><h:message id="msnEmail" for="editarCorreo" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Tipo Personal*"/></strong>
+                                            <h:selectOneMenu value="#{controllerDetallesPersonalInterno.editarTipoPersonal}"
+                                                             class="form-control" 
+                                                             id="editarTipoPersonal">
+                                                <f:selectItems value="#{controllerDetallesPersonalInterno.listaTipoPersonal}" var="tipo"
+                                                               itemLabel="#{tipo.nombretipopersonal}" itemValue="#{tipo}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerDetallesPersonalInterno.validarTipoPersonal()}" execute="editarTipoPersonal" render="msnTipoPersonal"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnTipoPersonal" for="editarTipoPersonal" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Estado Usuario*"/></strong>
+                                            <h:selectOneMenu value="#{controllerDetallesPersonalInterno.editarEstado}"
+                                                             class="form-control" 
+                                                             id="editarEstado">
+                                                <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                                <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                                <f:ajax event="change" listener="#{controllerDetallesPersonalInterno.validarEstado()}" execute="editarEstado" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <fieldset>
+                                            <legend class="h5 text-info">Datos Opcionales</legend>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Telefono Fijo"/></strong>
+                                                <h:inputText maxlength="8" value="#{controllerDetallesPersonalInterno.editarTelFijo}"  class="form-control" id="editarTelFijo" >
+                                                    <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarDatosOpcionales(1)}" execute="editarTelFijo" render="editarTelFijo msnTelFijo" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnTelFijo" for="editarTelFijo" style="color: red"/></h6>
+                                            </div>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Telefono Celular"/></strong>
+                                                <h:inputText maxlength="11" value="#{controllerDetallesPersonalInterno.editarTelCelular}"  class="form-control" id="editarTelCelular" >
+                                                    <f:ajax event="blur" listener="#{controllerDetallesPersonalInterno.validarDatosOpcionales(2)}" execute="editarTelCelular" render="editarTelCelular msnTelCelular" />
+                                                </h:inputText>
+                                                <h6><h:message id="msnTelCelular" for="editarTelCelular" style="color: red"/></h6>
+                                            </div>
+                                        </fieldset>
+                                    </fieldset>
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesPersonalInterno.mensajeFormulario}" style="color: #{controllerDetallesPersonalInterno.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesPersonalInterno.registrarModificacionPersonalInterno()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesPersonalInterno.cancelarRegistroPersonalInterno()}" actionListener="#{controllerAdministrarPersonalInterno.buscarPersonalInternoRegistrador()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </footer>
-            <!-- FOOTER SECTION END-->
-
-            <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-            <!-- CORE JQUERY  SCRIPTS -->
-            <script src="../../assets/js/jquery-1.11.1.js"></script>
-            <!-- BOOTSTRAP SCRIPTS  -->
-            <script src="../../assets/js/bootstrap.js"></script>
-            <!-- SCROLLING SCRIPTS PLUGIN  -->
-            <script src="../../assets/js/jquery.easing.min.js"></script>
-            <!-- CUSTOM SCRIPTS   -->
-            <script src="../../assets/js/custom.js"></script>
-        </h:form>
+                    </section>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
     </h:body>
 </html>

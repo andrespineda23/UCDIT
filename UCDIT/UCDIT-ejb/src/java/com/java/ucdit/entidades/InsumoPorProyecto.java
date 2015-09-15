@@ -34,6 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "InsumoPorProyecto.findByCantidadusada", query = "SELECT i FROM InsumoPorProyecto i WHERE i.cantidadusada = :cantidadusada"),
     @NamedQuery(name = "InsumoPorProyecto.findByCostouso", query = "SELECT i FROM InsumoPorProyecto i WHERE i.costouso = :costouso")})
 public class InsumoPorProyecto implements Serializable {
+    @Column(name = "usadoparaprototipo")
+    private Boolean usadoparaprototipo;
     private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -128,6 +130,14 @@ public class InsumoPorProyecto implements Serializable {
     @Override
     public String toString() {
         return "com.java.ucdit.entidades.InsumoPorProyecto[ idinsumoporproyecto=" + idinsumoporproyecto + " ]";
+    }
+
+    public Boolean getUsadoparaprototipo() {
+        return usadoparaprototipo;
+    }
+
+    public void setUsadoparaprototipo(Boolean usadoparaprototipo) {
+        this.usadoparaprototipo = usadoparaprototipo;
     }
     
 }

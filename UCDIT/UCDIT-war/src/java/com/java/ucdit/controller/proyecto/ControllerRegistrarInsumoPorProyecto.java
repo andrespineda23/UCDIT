@@ -45,12 +45,14 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
     private String colorMensaje;
     private boolean activarLimpiar;
     private boolean activarAceptar;
+    private boolean prototipo;
 
     public ControllerRegistrarInsumoPorProyecto() {
     }
 
     @PostConstruct
     public void init() {
+        prototipo = false;
         nuevoCantidad = "1";
         nuevoInsumo = null;
         //
@@ -141,6 +143,7 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
             InsumoPorProyecto nuevaProyecto = new InsumoPorProyecto();
             int cantidad = Integer.valueOf(nuevoCantidad);
             nuevaProyecto.setCantidadusada(cantidad);
+            nuevaProyecto.setUsadoparaprototipo(prototipo);
             Integer costo = nuevoInsumo.getCostocompra() * cantidad;
             nuevaProyecto.setCostouso(costo);
             nuevaProyecto.setInsumo(nuevoInsumo);
@@ -154,6 +157,7 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
     public void limpiarFormulario() {
         nuevoCantidad = "1";
         nuevoInsumo = null;
+        prototipo = false;
         //
         validacionesCantidad = false;
         validacionesInsumo = false;
@@ -163,6 +167,7 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
     public String cancelarRegistroProyecto() {
         nuevoCantidad = "1";
         nuevoProyecto = null;
+        prototipo = false;
         nuevoInsumo = null;
         //
         validacionesCantidad = false;
@@ -268,6 +273,14 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
 
     public void setIdProyecto(BigInteger idProyecto) {
         this.idProyecto = idProyecto;
+    }
+
+    public boolean isPrototipo() {
+        return prototipo;
+    }
+
+    public void setPrototipo(boolean prototipo) {
+        this.prototipo = prototipo;
     }
 
 }

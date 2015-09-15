@@ -58,6 +58,24 @@
     
     
     <navigation-rule>
+        <from-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>registrarfactura</from-outcome>
+            <to-view-id>/xhtml/inventario/registrarfactura.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/xhtml/inventario/registrarfactura.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>iniciosupervisor</from-outcome>
+            <to-view-id>/xhtml/supervisor/iniciosupervisor.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    
+    <navigation-rule>
         <from-view-id>/xhtml/inventario/administrarproveedor.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>registrarproveedor</from-outcome>
