@@ -82,9 +82,10 @@ and open the template in the editor.
                                                 </h:column>
                                                 <h:column>
                                                     <f:facet name="header">
-                                                        <h:outputText value="Detalles"/>
+                                                        <h:outputText value="¿Usado para ...?"/>
                                                     </f:facet>
-                                                    <h:commandLink value="Ver" />
+                                                    <h:outputText value="#{item.strPrototipo}">
+                                                    </h:outputText>
                                                 </h:column>
                                                 <f:facet name="footer">
                                                     <nav>

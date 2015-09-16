@@ -270,7 +270,7 @@ public class ControllerRegistrarEquipo implements Serializable {
             nuevaEquipoTecnologico.setValorhorauso(Integer.valueOf(nuevoValorUso));
             nuevaEquipoTecnologico.setValorcompra(Integer.valueOf(nuevoValorCompra));
             if (Utilidades.validarNulo(nuevoDescripcion)) {
-                nuevaEquipoTecnologico.setDescripcion(nuevoValorUso);
+                nuevaEquipoTecnologico.setDescripcion(nuevoDescripcion);
             } else {
                 nuevaEquipoTecnologico.setDescripcion("");
             }

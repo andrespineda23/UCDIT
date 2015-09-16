@@ -143,7 +143,14 @@ and open the template in the editor.
                                     </div>
                                     <hr class="intro-divider"/>
                                     <div class="row">
-                                        <div class="col-md-6 col-lg-6 hidden-sm hidden-xs"></div>
+                                        <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
+                                            <div class="left pull-left">
+                                                <h:commandButton value="Historial de Ingreso"  action="#{controllerDetallesInsumo.dirigirPaginaIngreso()}" actionListener="#{controllerAdministrarIngresoInsumo.recibirIdInsumo(controllerDetallesInsumo.idInsumo)}" class="btn btn-success" immediate="true">
+                                                    <f:ajax execute="@form" render="form" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 col-lg-1 hidden-sm hidden-xs"></div>
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                             <div class="right pull-right">
                                                 <h:commandButton value="Modificar" actionListener="#{controllerDetallesInsumo.registrarModificacionInsumo()}" class="btn btn-success" >

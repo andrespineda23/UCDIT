@@ -116,6 +116,13 @@ public class AdministrarProyectoBO implements AdministrarProyectoBOInterface {
     public List<Supervisor> obtenerSupervisoresRegistrados() {
         try {
             List<Supervisor> lista = supervisorFacade.findAll();
+            if (null != lista) {
+                for (int i = 0; i < lista.size(); i++) {
+                    if ("supervisor".equals(lista.get(i).getPersona().getUsuario().getUsuario())) {
+                        lista.remove(i);
+                    }
+                }
+            }
             return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarProyectoBO obtenerSupervisoresRegistrados: " + e.toString());

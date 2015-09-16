@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -34,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "InsumoPorProyecto.findByCantidadusada", query = "SELECT i FROM InsumoPorProyecto i WHERE i.cantidadusada = :cantidadusada"),
     @NamedQuery(name = "InsumoPorProyecto.findByCostouso", query = "SELECT i FROM InsumoPorProyecto i WHERE i.costouso = :costouso")})
 public class InsumoPorProyecto implements Serializable {
+
     @Column(name = "usadoparaprototipo")
     private Boolean usadoparaprototipo;
     private static final Long serialVersionUID = 1L;
@@ -54,6 +56,8 @@ public class InsumoPorProyecto implements Serializable {
     @JoinColumn(name = "insumo", referencedColumnName = "idinsumo")
     @ManyToOne(optional = false)
     private Insumo insumo;
+    @Transient
+    private String strPrototipo;
 
     public InsumoPorProyecto() {
     }
@@ -139,5 +143,21 @@ public class InsumoPorProyecto implements Serializable {
     public void setUsadoparaprototipo(Boolean usadoparaprototipo) {
         this.usadoparaprototipo = usadoparaprototipo;
     }
-    
+
+    public String getStrPrototipo() {
+        getUsadoparaprototipo();
+        if (null != usadoparaprototipo) {
+            if (usadoparaprototipo == true) {
+                strPrototipo = "PROTOTIPO";
+            } else {
+                strPrototipo = "PROYECTO";
+            }
+        }
+        return strPrototipo;
+    }
+
+    public void setStrPrototipo(String strPrototipo) {
+        this.strPrototipo = strPrototipo;
+    }
+
 }

@@ -40,6 +40,13 @@ public class AdministrarSupervisorBO implements AdministrarSupervisorBOInterface
     public List<Supervisor> consultarSupervisoresRegistrados() {
         try {
             List<Supervisor> lista = supervisorFacade.findAll();
+            if (null != lista) {
+                for (int i = 0; i < lista.size(); i++) {
+                    if ("supervisor".equals(lista.get(i).getPersona().getUsuario().getUsuario())) {
+                        lista.remove(i);
+                    }
+                }
+            }
             return lista;
         } catch (Exception e) {
             System.out.println("Error AdministrarSupervisoresBO consultarSupervisoresRegistrados: " + e.toString());

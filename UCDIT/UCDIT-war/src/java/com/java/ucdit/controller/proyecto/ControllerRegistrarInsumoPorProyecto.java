@@ -56,7 +56,7 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
         nuevoCantidad = "1";
         nuevoInsumo = null;
         //
-        validacionesCantidad = false;
+        validacionesCantidad = true;
         validacionesInsumo = false;
         activarLimpiar = true;
         colorMensaje = "black";
@@ -159,7 +159,7 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
         nuevoInsumo = null;
         prototipo = false;
         //
-        validacionesCantidad = false;
+        validacionesCantidad = true;
         validacionesInsumo = false;
         mensajeFormulario = "";
     }
@@ -170,7 +170,7 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
         prototipo = false;
         nuevoInsumo = null;
         //
-        validacionesCantidad = false;
+        validacionesCantidad = true;
         validacionesInsumo = false;
         activarAceptar = false;
         listaInsumo = null;

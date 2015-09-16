@@ -56,7 +56,7 @@ public class ControllerRegistrarEquipoPorProyecto implements Serializable {
         nuevoMinutos = "1";
         nuevoEquipoTecnologico = null;
         //
-        validacionesMinutos = false;
+        validacionesMinutos = true;
         validacionesEquipo = false;
         activarLimpiar = true;
         colorMensaje = "black";
@@ -129,7 +129,7 @@ public class ControllerRegistrarEquipoPorProyecto implements Serializable {
             nuevaProyecto.setUsadoparaprototipo(prototipo);
             int cantidad = Integer.valueOf(nuevoMinutos);
             nuevaProyecto.setCantidadminutosuso(cantidad);
-            Integer costo = (nuevoEquipoTecnologico.getValorhorauso() / 60) * cantidad;
+            Integer costo = nuevoEquipoTecnologico.getValorhorauso() * cantidad;
             nuevaProyecto.setCostouso(costo);
             nuevaProyecto.setEquipotecnologico(nuevoEquipoTecnologico);
             nuevaProyecto.setProyecto(nuevoProyecto);
@@ -144,7 +144,7 @@ public class ControllerRegistrarEquipoPorProyecto implements Serializable {
         nuevoMinutos = "1";
         nuevoEquipoTecnologico = null;
         //
-        validacionesMinutos = false;
+        validacionesMinutos = true;
         validacionesEquipo = false;
         mensajeFormulario = "";
     }
@@ -154,7 +154,7 @@ public class ControllerRegistrarEquipoPorProyecto implements Serializable {
         nuevoProyecto = null;
         nuevoEquipoTecnologico = null;
         //
-        validacionesMinutos = false;
+        validacionesMinutos = true;
         prototipo = false;
         validacionesEquipo = false;
         activarAceptar = false;
@@ -202,6 +202,9 @@ public class ControllerRegistrarEquipoPorProyecto implements Serializable {
     }
 
     public List<EquipoTecnologico> getListaEquipoTecnologico() {
+        if (null == listaEquipoTecnologico) {
+            listaEquipoTecnologico = administrarEquipoPorProyectoBO.obtenerEquiposTecnologicosRegistrados();
+        }
         return listaEquipoTecnologico;
     }
 

@@ -311,7 +311,7 @@ public class ControllerDetallesEquipo implements Serializable {
             equipoTecnologicoDetalles.setValorhorauso(Integer.valueOf(editarValorUso));
             equipoTecnologicoDetalles.setValorcompra(Integer.valueOf(editarValorCompra));
             if (Utilidades.validarNulo(editarDescripcion)) {
-                equipoTecnologicoDetalles.setDescripcion(editarValorUso);
+                equipoTecnologicoDetalles.setDescripcion(editarDescripcion);
             } else {
                 equipoTecnologicoDetalles.setDescripcion("");
             }
