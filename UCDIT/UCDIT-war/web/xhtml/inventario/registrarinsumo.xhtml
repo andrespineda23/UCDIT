@@ -36,8 +36,6 @@ and open the template in the editor.
                                             CANT. EXISTENCIA - Longitud (7). Ejemplo: <strong><h:outputText value=" 100" /></strong>
                                             <br></br>
                                             DESCRIPCIÓN  - Longitud (Min. 10 - Max. 200). Ejemplo: <strong><h:outputText value=" Descripción de prueba" /></strong>
-                                            <br></br>
-                                            COSTO COMPRA - Longitud (7). Ejemplo: <strong><h:outputText value=" 15000" /></strong>
                                         </p>
                                         <div class="space"> </div>
                                     </div>
@@ -92,13 +90,6 @@ and open the template in the editor.
                                             <h6><h:message id="msnCantMinima" for="nuevoCantMinima" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Cantidad Existencia*"/></strong>
-                                            <h:inputText maxlength="8" value="#{controllerRegistrarInsumo.nuevoCantExistencia}" disabled="#{controllerRegistrarInsumo.activarCasillas}" required="true" class="form-control" id="nuevoCantExistencia" requiredMessage="El campo Cantidad Existencia es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerRegistrarInsumo.validarCantExistenciaInsumo()}" execute="nuevoCantExistencia" render="nuevoCantExistencia msnCantExistencia" />
-                                            </h:inputText>
-                                            <h6><h:message id="msnCantExistencia" for="nuevoCantExistencia" style="color: red"/></h6>
-                                        </div>
-                                        <div class="form-group">
                                             <strong><h:outputText value="Tipo Unidad*"/></strong>
                                             <h:selectOneMenu value="#{controllerRegistrarInsumo.nuevoTipoUnidad}"
                                                              class="form-control" disabled="#{controllerRegistrarInsumo.activarCasillas}"
@@ -113,13 +104,6 @@ and open the template in the editor.
                                         </div>
                                         <fieldset>
                                             <legend class="h5 text-info">Datos Opcionales</legend>
-                                            <div class="form-group">
-                                                <strong><h:outputText value="Costo Compra"/></strong>
-                                                <h:inputText maxlength="8" value="#{controllerRegistrarInsumo.nuevoCostoCompra}" disabled="#{controllerRegistrarInsumo.activarCasillas}" class="form-control" id="nuevoCostoCompra" >
-                                                    <f:ajax event="blur" listener="#{controllerRegistrarInsumo.validarCostoCompraInsumo()}" execute="nuevoCostoCompra" render="nuevoCostoCompra msnCostoCompra" />
-                                                </h:inputText>
-                                                <h6><h:message id="msnCostoCompra" for="nuevoCostoCompra" style="color: red"/></h6>
-                                            </div>
                                             <div class="form-group">
                                                 <strong><h:outputText value="Descripción"/></strong>
                                                 <h:inputText maxlength="200" value="#{controllerRegistrarInsumo.nuevoDescripcion}" disabled="#{controllerRegistrarInsumo.activarCasillas}" class="form-control" id="nuevoDescripcion" >

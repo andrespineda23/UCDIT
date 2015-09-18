@@ -7,9 +7,11 @@ package com.java.ucdit.controller.inventario;
 
 import com.java.ucdit.ayuda.RegistroFactura;
 import com.java.ucdit.bo.interfaces.inventario.AdministrarIngresoInsumoBOInterface;
+import com.java.ucdit.bo.interfaces.inventario.AdministrarInsumoBOInterface;
 import com.java.ucdit.entidades.IngresoInsumo;
 import com.java.ucdit.entidades.Insumo;
 import com.java.ucdit.entidades.Proveedor;
+import com.java.ucdit.entidades.TipoUnidad;
 import com.java.ucdit.utilidades.Utilidades;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,6 +34,16 @@ public class ControllerRegistrarFactura implements Serializable {
 
     @EJB
     AdministrarIngresoInsumoBOInterface administrarIngresosInsumoBO;
+    @EJB
+    AdministrarInsumoBOInterface administrarInsumoBO;
+    //
+    private String nuevoNombre, nuevoCodigo;
+    private String nuevoCantMinima;
+    private List<TipoUnidad> listaTipoUnidad;
+    private TipoUnidad nuevoTipoUnidad;
+    //
+    private boolean validacionesNombre, validacionesCodigo;
+    private boolean validacionesCantMinima, validacionesTipoUnidad;
 
     private List<RegistroFactura> listaRegistroFactura;
     private List<Insumo> listaInsumos;
@@ -42,6 +54,7 @@ public class ControllerRegistrarFactura implements Serializable {
     private Date nuevoFecha;
     private List<Proveedor> listaProveedor;
     private Proveedor nuevoProveedor;
+    private boolean incluyeIVA;
     //
     private boolean validacionesFactura, validacionesValor, validacionesDescripcion, validacionesFecha, validacionesProveedor, validacionesCantidad, validacionesInsumo;
     private String mensajeFormulario;
@@ -50,26 +63,31 @@ public class ControllerRegistrarFactura implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private boolean fechaDiferida;
+    private boolean insumoNuevo;
+    private boolean activarCasillasNuevo;
 
     public ControllerRegistrarFactura() {
     }
 
     @PostConstruct
     public void init() {
+        activarCasillasNuevo = true;
+        insumoNuevo = false;
+        incluyeIVA = false;
         listaRegistroFactura = null;
-        insumoIngreso = null;
         fechaDiferida = true;
         nuevoFecha = new Date();
-        nuevoValor = "0";
         nuevoFactura = null;
-        nuevoCantidad = "1";
         nuevoDescripcion = null;
         nuevoProveedor = null;
+        insumoIngreso = null;
+        nuevoValor = "0";
+        nuevoCantidad = "1";
         //
-        validacionesFecha = true;
         validacionesInsumo = false;
-        validacionesValor = false;
+        validacionesValor = true;
         validacionesCantidad = true;
+        validacionesFecha = true;
         validacionesProveedor = false;
         validacionesFactura = false;
         validacionesDescripcion = false;
@@ -80,6 +98,101 @@ public class ControllerRegistrarFactura implements Serializable {
         mensajeFormulario = "N/A";
     }
 
+    public void actualizarInformacionInsumoNuevo() {
+        nuevoCodigo = null;
+        nuevoNombre = null;
+        nuevoCantMinima = "0";
+        nuevoTipoUnidad = null;
+        //
+        validacionesCodigo = false;
+        validacionesNombre = false;
+        validacionesCantMinima = true;
+        validacionesTipoUnidad = false;
+        listaTipoUnidad = administrarInsumoBO.consultarTipoUnidadRegistrado();
+        if (insumoNuevo == false) {
+            insumoIngreso = null;
+            //
+            validacionesInsumo = false;
+            activarCasillasNuevo = false;
+        } else {
+            activarCasillasNuevo = true;
+        }
+        mensajeFormulario = "N/A";
+        colorMensaje = "black";
+    }
+
+    ///
+    
+    public void validarNombreInsumo() {
+        if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
+            int tam = nuevoNombre.length();
+            if (tam >= 4) {
+                if (!Utilidades.validarCaracteresAlfaNumericos(nuevoNombre)) {
+                    validacionesNombre = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre ingresado es incorrecto."));
+                } else {
+                    validacionesNombre = true;
+                }
+            } else {
+                validacionesNombre = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El tamaño minimo permitido es 4 caracteres."));
+            }
+        } else {
+            validacionesNombre = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNombre", new FacesMessage("El nombre es obligatorio."));
+        }
+    }
+
+    public void validarCodigoInsumo() {
+        if (Utilidades.validarNulo(nuevoCodigo) && (!nuevoCodigo.isEmpty()) && (nuevoCodigo.trim().length() > 0)) {
+            int tam = nuevoCodigo.length();
+            if (tam >= 4) {
+                if (Utilidades.validarCaracteresAlfaNumericos(nuevoCodigo)) {
+                    Insumo registro = administrarInsumoBO.obtenerInsumoPorCodigo(nuevoCodigo);
+                    if (registro == null) {
+                        validacionesCodigo = true;
+                    } else {
+                        validacionesCodigo = false;
+                        FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado ya esta registrado."));
+                    }
+                } else {
+                    validacionesCodigo = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo ingresado es incorrecto."));
+                }
+            } else {
+                validacionesCodigo = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("La tamaño minimo permitido es 4 caracteres."));
+            }
+        } else {
+            validacionesCodigo = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCodigo", new FacesMessage("El codigo es obligatorio."));
+        }
+    }
+
+    public void validarCantMinimaInsumo() {
+        if (Utilidades.validarNulo(nuevoCantMinima) && (!nuevoCantMinima.isEmpty()) && (nuevoCantMinima.trim().length() > 0)) {
+            if (Utilidades.isNumber(nuevoCantMinima)) {
+                validacionesCantMinima = true;
+            } else {
+                validacionesCantMinima = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoCantMinima", new FacesMessage("La cantidad minima es incorrecta."));
+            }
+        } else {
+            validacionesCantMinima = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoCantMinima", new FacesMessage("La cantidad minima es obligatoria."));
+        }
+    }
+
+    public void validarTipoUnidadInsumo() {
+        if (Utilidades.validarNulo(nuevoTipoUnidad)) {
+            validacionesTipoUnidad = true;
+        } else {
+            FacesContext.getCurrentInstance().addMessage("form:nuevoTipoUnidad", new FacesMessage("El tipo unidad es obligatorio."));
+            validacionesTipoUnidad = false;
+        }
+    }
+
+    ///
     public void validarFacturaIngresoInsumo() {
         if (Utilidades.validarNulo(nuevoFactura) && (!nuevoFactura.isEmpty()) && (nuevoFactura.trim().length() > 0)) {
             int tam = nuevoFactura.length();
@@ -205,36 +318,90 @@ public class ControllerRegistrarFactura implements Serializable {
     }
 
     public void adicionarRegistroFactura() {
-        if (validarRegistroFactura() == true) {
-            cargarRegistroAFactura();
+        if (insumoNuevo == false) {
+            if (validarRegistroFactura() == true) {
+                cargarRegistroAFactura();
+            } else {
+                colorMensaje = "red";
+                mensajeFormulario = "Existen errores en el formulario de factura, por favor corregir para continuar.";
+            }
         } else {
-            colorMensaje = "red";
-            mensajeFormulario = "Existen errores en el formulario, por favor corregir para continuar.";
+            if (validacionesCantidad == true && validacionesValor == true) {
+                if (validarResultadosValidacionInsumo() == true) {
+                    cargarRegistroAFactura();
+                } else {
+                    colorMensaje = "red";
+                    mensajeFormulario = "Existen errores en el formulario del nuevo registro, por favor corregir para continuar.";
+                }
+            } else {
+                colorMensaje = "red";
+                mensajeFormulario = "Existen errores en el formulario de factura, por favor corregir para continuar.";
+            }
         }
     }
 
     private void cargarRegistroAFactura() {
         RegistroFactura registroFactura = new RegistroFactura();
-        registroFactura.setCosto(Integer.valueOf(nuevoValor));
-        registroFactura.setCantidad(Integer.valueOf(nuevoCantidad));
-        registroFactura.setInsumo(insumoIngreso);
-        if (!Utilidades.validarNulo(listaRegistroFactura)) {
-            listaRegistroFactura = new ArrayList<RegistroFactura>();
-        }
-        listaRegistroFactura.add(registroFactura);
-        nuevoValor = "0";
-        nuevoCantidad = "1";
-        if (Utilidades.validarNulo(listaInsumos)) {
-            for (int i = 0; i < listaInsumos.size(); i++) {
-                if (insumoIngreso.getIdinsumo().equals(listaInsumos.get(i).getIdinsumo())) {
-                    listaInsumos.remove(i);
+        if (insumoNuevo == false) {
+            if (incluyeIVA == false) {
+                registroFactura.setCosto(Integer.valueOf(nuevoValor));
+            } else {
+                Integer costo = Integer.valueOf(nuevoValor);
+                Double iva = costo * 0.16;
+                Integer total = costo + iva.intValue();
+                registroFactura.setCosto(total);
+            }
+            registroFactura.setCantidad(Integer.valueOf(nuevoCantidad));
+            registroFactura.setInsumo(insumoIngreso);
+            if (!Utilidades.validarNulo(listaRegistroFactura)) {
+                listaRegistroFactura = new ArrayList<RegistroFactura>();
+            }
+            listaRegistroFactura.add(registroFactura);
+            nuevoValor = "0";
+            nuevoCantidad = "1";
+            incluyeIVA = false;
+            if (Utilidades.validarNulo(listaInsumos)) {
+                for (int i = 0; i < listaInsumos.size(); i++) {
+                    if (insumoIngreso.getIdinsumo().equals(listaInsumos.get(i).getIdinsumo())) {
+                        listaInsumos.remove(i);
+                    }
                 }
             }
+        } else {
+            if (incluyeIVA == false) {
+                registroFactura.setCosto(Integer.valueOf(nuevoValor));
+            } else {
+                Integer costo = Integer.valueOf(nuevoValor);
+                Double iva = costo * 0.16;
+                Integer total = costo + iva.intValue();
+                registroFactura.setCosto(total);
+            }
+            registroFactura.setCantidad(Integer.valueOf(nuevoCantidad));
+            Insumo nuevaInsumo = new Insumo();
+            nuevaInsumo.setCodigoinsumo(nuevoCodigo);
+            nuevaInsumo.setNombreinsumo(nuevoNombre);
+            nuevaInsumo.setCantidadminima(Integer.valueOf(nuevoCantMinima));
+            nuevaInsumo.setCantidadexistencia(registroFactura.getCantidad());
+            nuevaInsumo.setCostocompra(registroFactura.getCosto());
+            nuevaInsumo.setDescripcion("");
+            nuevaInsumo.setTipounidad(nuevoTipoUnidad);
+            //
+            registroFactura.setInsumo(nuevaInsumo);
+            if (!Utilidades.validarNulo(listaRegistroFactura)) {
+                listaRegistroFactura = new ArrayList<RegistroFactura>();
+            }
+            listaRegistroFactura.add(registroFactura);
+            nuevoValor = "0";
+            nuevoCantidad = "1";
+            incluyeIVA = false;
         }
+        actualizarInformacionInsumoNuevo();
         insumoIngreso = null;
+        activarCasillasNuevo = true;
         validacionesCantidad = true;
         validacionesValor = true;
         validacionesInsumo = false;
+        insumoNuevo = false;
     }
 
     private boolean validarResultadosValidacion() {
@@ -254,13 +421,31 @@ public class ControllerRegistrarFactura implements Serializable {
         return retorno;
     }
 
+    private boolean validarResultadosValidacionInsumo() {
+        boolean retorno = true;
+        if (validacionesCodigo == false) {
+            retorno = false;
+        }
+        if (validacionesNombre == false) {
+            retorno = false;
+        }
+        if (validacionesCantMinima == false) {
+            retorno = false;
+        }
+        if (validacionesTipoUnidad == false) {
+            retorno = false;
+        }
+
+        return retorno;
+    }
+
     /**
      * Metodo encargado de realizar el registro y validaciones de la información
      * del nuevo docente
      */
     public void registrarNuevoIngresoInsumo() {
         if (validarResultadosValidacion() == true) {
-            if (Utilidades.validarNulo(listaRegistroFactura) == false) {
+            if (Utilidades.validarNulo(listaRegistroFactura) == true) {
                 almacenarNuevoIngresoInsumoEnSistema();
                 limpiarFormulario();
                 activarLimpiar = false;
@@ -297,16 +482,20 @@ public class ControllerRegistrarFactura implements Serializable {
     }
 
     public void limpiarFormulario() {
+        actualizarInformacionInsumoNuevo();
         nuevoFecha = new Date();
         nuevoValor = "0";
+        incluyeIVA = false;
         nuevoFactura = null;
+        insumoNuevo = false;
         fechaDiferida = true;
+        activarCasillasNuevo = true;
         nuevoCantidad = "1";
         nuevoDescripcion = null;
         nuevoProveedor = null;
         //
         validacionesFecha = true;
-        validacionesValor = false;
+        validacionesValor = true;
         validacionesInsumo = false;
         validacionesCantidad = true;
         validacionesFactura = false;
@@ -317,19 +506,24 @@ public class ControllerRegistrarFactura implements Serializable {
         listaInsumos = administrarIngresosInsumoBO.obtenerInsumosRegistrados();
         insumoIngreso = null;
         listaRegistroFactura = null;
+        activarCasillasNuevo = true;
     }
 
     public String cancelarRegistroIngresoInsumo() {
+        actualizarInformacionInsumoNuevo();
         nuevoFecha = new Date();
         nuevoValor = "0";
         nuevoCantidad = "1";
         nuevoFactura = null;
         nuevoProveedor = null;
         fechaDiferida = true;
+        incluyeIVA = false;
         nuevoDescripcion = null;
         //
+        insumoNuevo = false;
+        activarCasillasNuevo = true;
         validacionesFecha = true;
-        validacionesValor = false;
+        validacionesValor = true;
         validacionesProveedor = false;
         validacionesFactura = false;
         validacionesInsumo = false;
@@ -347,6 +541,7 @@ public class ControllerRegistrarFactura implements Serializable {
         listaProveedor = null;
         colorMensaje = "black";
         activarCasillas = false;
+        activarCasillasNuevo = true;
         return "iniciosupervisor";
     }
 
@@ -493,6 +688,70 @@ public class ControllerRegistrarFactura implements Serializable {
 
     public void setFechaDiferida(boolean fechaDiferida) {
         this.fechaDiferida = fechaDiferida;
+    }
+
+    public boolean isIncluyeIVA() {
+        return incluyeIVA;
+    }
+
+    public void setIncluyeIVA(boolean incluyeIVA) {
+        this.incluyeIVA = incluyeIVA;
+    }
+
+    public boolean isInsumoNuevo() {
+        return insumoNuevo;
+    }
+
+    public void setInsumoNuevo(boolean insumoNuevo) {
+        this.insumoNuevo = insumoNuevo;
+    }
+
+    public String getNuevoNombre() {
+        return nuevoNombre;
+    }
+
+    public void setNuevoNombre(String nuevoNombre) {
+        this.nuevoNombre = nuevoNombre;
+    }
+
+    public String getNuevoCodigo() {
+        return nuevoCodigo;
+    }
+
+    public void setNuevoCodigo(String nuevoCodigo) {
+        this.nuevoCodigo = nuevoCodigo;
+    }
+
+    public String getNuevoCantMinima() {
+        return nuevoCantMinima;
+    }
+
+    public void setNuevoCantMinima(String nuevoCantMinima) {
+        this.nuevoCantMinima = nuevoCantMinima;
+    }
+
+    public List<TipoUnidad> getListaTipoUnidad() {
+        return listaTipoUnidad;
+    }
+
+    public void setListaTipoUnidad(List<TipoUnidad> listaTipoUnidad) {
+        this.listaTipoUnidad = listaTipoUnidad;
+    }
+
+    public TipoUnidad getNuevoTipoUnidad() {
+        return nuevoTipoUnidad;
+    }
+
+    public void setNuevoTipoUnidad(TipoUnidad nuevoTipoUnidad) {
+        this.nuevoTipoUnidad = nuevoTipoUnidad;
+    }
+
+    public boolean isActivarCasillasNuevo() {
+        return activarCasillasNuevo;
+    }
+
+    public void setActivarCasillasNuevo(boolean activarCasillasNuevo) {
+        this.activarCasillasNuevo = activarCasillasNuevo;
     }
 
 }

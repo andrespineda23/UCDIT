@@ -116,15 +116,27 @@ and open the template in the editor.
                                         <legend class="text-info">Datos Insumo</legend>
                                         <div class="form-group">
                                             <strong><h:outputText value="Insumo*"/></strong>
-                                            <h:selectOneMenu value="#{controllerRegistrarFactura.insumoIngreso}" 
-                                                             class="form-control" disabled="#{controllerRegistrarFactura.activarCasillas}"
-                                                             id="nuevoInsumo">
-                                                <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
-                                                <f:selectItems value="#{controllerRegistrarFactura.listaInsumos}" var="tipo1"
-                                                               itemLabel="#{tipo1.nombreinsumo}" itemValue="#{tipo1}"/>
-                                                <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerRegistrarFactura.validarInsumoIngresoInsumo()}" execute="nuevoInsumo" render="msnInsumo"/>
-                                            </h:selectOneMenu>
+                                            <div class="input-group">
+                                                <h:selectOneMenu value="#{controllerRegistrarFactura.insumoIngreso}"  readonly="#{controllerRegistrarFactura.insumoNuevo}"
+                                                                 class="form-control" disabled="#{controllerRegistrarFactura.activarCasillas}"
+                                                                 id="nuevoInsumo">
+                                                    <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
+                                                    <f:selectItems value="#{controllerRegistrarFactura.listaInsumos}" var="tipo1"
+                                                                   itemLabel="#{tipo1.nombreinsumo}" itemValue="#{tipo1}"/>
+                                                    <f:converter converterId="ConverterGenerico" />
+                                                    <f:ajax event="change" listener="#{controllerRegistrarFactura.validarInsumoIngresoInsumo()}" execute="nuevoInsumo" render="msnInsumo"/>
+                                                </h:selectOneMenu>
+                                                <span class="input-group-addon" id="basic-addon2">
+                                                    <label>¿Insumo Nuevo?</label>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <h:selectBooleanCheckbox value="#{controllerRegistrarFactura.insumoNuevo}">
+                                                        <f:ajax execute="@this" render="form" listener="#{controllerRegistrarFactura.actualizarInformacionInsumoNuevo()}" immediate="true"/>
+                                                    </h:selectBooleanCheckbox>
+                                                </span>
+                                            </div>
+
+
                                             <h6><h:message id="msnInsumo" for="nuevoInsumo" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
@@ -140,6 +152,45 @@ and open the template in the editor.
                                                 <f:ajax event="blur" listener="#{controllerRegistrarFactura.validarValorIngresoInsumo()}" execute="nuevoValor" render="nuevoValor msnValor" />
                                             </h:inputText>
                                             <h6><h:message id="msnValor" for="nuevoValor" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="¿Desea asignar al costo del insumo el IVA?*"/></strong>
+                                            <h:selectBooleanCheckbox value="#{controllerRegistrarFactura.incluyeIVA}"/>
+                                        </div>
+                                        <br></br>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Nombre Insumo*"/></strong>
+                                            <h:inputText maxlength="60" value="#{controllerRegistrarFactura.nuevoNombre}" disabled="#{controllerRegistrarFactura.activarCasillasNuevo}"  class="form-control" id="nuevoNombre" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarFactura.validarNombreInsumo()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Codigo Insumo*"/></strong>
+                                            <h:inputText maxlength="20" value="#{controllerRegistrarFactura.nuevoCodigo}" disabled="#{controllerRegistrarFactura.activarCasillasNuevo}"  class="form-control" id="nuevoCodigo" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarFactura.validarCodigoInsumo()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Cantidad Minima*"/></strong>
+                                            <h:inputText maxlength="8" value="#{controllerRegistrarFactura.nuevoCantMinima}" disabled="#{controllerRegistrarFactura.activarCasillasNuevo}" class="form-control" id="nuevoCantMinima" >
+                                                <f:ajax event="blur" listener="#{controllerRegistrarFactura.validarCantMinimaInsumo()}" execute="nuevoCantMinima" render="nuevoCantMinima msnCantMinima" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCantMinima" for="nuevoCantMinima" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Tipo Unidad*"/></strong>
+                                            <h:selectOneMenu value="#{controllerRegistrarFactura.nuevoTipoUnidad}"
+                                                             class="form-control" disabled="#{controllerRegistrarFactura.activarCasillasNuevo}"
+                                                             id="nuevoTipoUnidad">
+                                                <f:selectItem itemLabel="Seleccione Registro" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarFactura.listaTipoUnidad}" var="tipo"
+                                                               itemLabel="#{tipo.nombretipounidad}" itemValue="#{tipo}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarFactura.validarTipoUnidadInsumo()}" execute="nuevoTipoUnidad" render="msnTipoUnidad"/>
+                                            </h:selectOneMenu>
+                                            <h6><h:message id="msnTipoUnidad" for="nuevoTipoUnidad" style="color: red"/></h6>
                                         </div>
                                         <br></br>
                                         <div class="right pull-right">

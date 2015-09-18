@@ -79,7 +79,7 @@ public class Utilidades {
      */
     public static boolean validarCaracteresAlfaNumericos(String str) {
         boolean respuesta = false;
-        Pattern pattern = Pattern.compile("([a-z]|[A-Z]|[ÁÉÍÓÚ]|[áéíóú]|[0-9]|[-]|[.]|[#]|\\s)+");
+        Pattern pattern = Pattern.compile("([a-z]|[A-Z]|[ÁÉÍÓÚ]|[áéíóú]|[0-9]|[-]|[/]|[.]|[#]|\\s)+");
         Matcher matcher = pattern.matcher(str);
         respuesta = matcher.matches();
         return respuesta;
