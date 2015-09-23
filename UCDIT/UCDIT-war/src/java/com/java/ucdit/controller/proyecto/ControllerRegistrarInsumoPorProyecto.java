@@ -46,12 +46,17 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
     private boolean activarLimpiar;
     private boolean activarAceptar;
     private boolean prototipo;
+    private boolean activarCasillasCantidad;
+    private String tipoUnidad, cantidadExistente;
 
     public ControllerRegistrarInsumoPorProyecto() {
     }
 
     @PostConstruct
     public void init() {
+        tipoUnidad = "";
+        cantidadExistente = "";
+        activarCasillasCantidad = true;
         prototipo = false;
         nuevoCantidad = "1";
         nuevoInsumo = null;
@@ -87,7 +92,13 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
     public void validarInsumoProyecto() {
         if (Utilidades.validarNulo(nuevoInsumo)) {
             validacionesInsumo = true;
+            activarCasillasCantidad = false;
+            tipoUnidad = nuevoInsumo.getTipounidad().getNombretipounidad();
+            cantidadExistente = String.valueOf(nuevoInsumo.getCantidadexistencia());
         } else {
+            activarCasillasCantidad = true;
+            tipoUnidad = "";
+            cantidadExistente = "";
             validacionesInsumo = false;
             FacesContext.getCurrentInstance().addMessage("form:nuevoInsumo", new FacesMessage("El insumo es obligatorio."));
         }
@@ -156,8 +167,11 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
 
     public void limpiarFormulario() {
         nuevoCantidad = "1";
+        tipoUnidad = "";
+        cantidadExistente = "";
         nuevoInsumo = null;
         prototipo = false;
+        activarCasillasCantidad = true;
         //
         validacionesCantidad = true;
         validacionesInsumo = false;
@@ -166,9 +180,12 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
 
     public String cancelarRegistroProyecto() {
         nuevoCantidad = "1";
+        tipoUnidad = "";
+        cantidadExistente = "";
         nuevoProyecto = null;
         prototipo = false;
         nuevoInsumo = null;
+        activarCasillasCantidad = true;
         //
         validacionesCantidad = true;
         validacionesInsumo = false;
@@ -281,6 +298,30 @@ public class ControllerRegistrarInsumoPorProyecto implements Serializable {
 
     public void setPrototipo(boolean prototipo) {
         this.prototipo = prototipo;
+    }
+
+    public boolean isActivarCasillasCantidad() {
+        return activarCasillasCantidad;
+    }
+
+    public void setActivarCasillasCantidad(boolean activarCasillasCantidad) {
+        this.activarCasillasCantidad = activarCasillasCantidad;
+    }
+
+    public String getTipoUnidad() {
+        return tipoUnidad;
+    }
+
+    public void setTipoUnidad(String tipoUnidad) {
+        this.tipoUnidad = tipoUnidad;
+    }
+
+    public String getCantidadExistente() {
+        return cantidadExistente;
+    }
+
+    public void setCantidadExistente(String cantidadExistente) {
+        this.cantidadExistente = cantidadExistente;
     }
 
 }

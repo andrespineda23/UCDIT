@@ -68,13 +68,6 @@ and open the template in the editor.
                                             <h:selectBooleanCheckbox value="#{controllerRegistrarInsumoPorProyecto.prototipo}"/>
                                         </div>
                                         <div class="form-group">
-                                            <strong><h:outputText value="Cantidad Usada*"/></strong>
-                                            <h:inputText maxlength="2" value="#{controllerRegistrarInsumoPorProyecto.nuevoCantidad}" disabled="#{controllerRegistrarInsumoPorProyecto.activarCasillas}" required="true" class="form-control" id="nuevoCantidad" requiredMessage="El campo Cantidad es obligatorio.">
-                                                <f:ajax event="blur" listener="#{controllerRegistrarInsumoPorProyecto.validarCantidadProyecto()}" execute="nuevoCantidad" render="nuevoCantidad msnCantidad" />
-                                            </h:inputText>
-                                            <h6><h:message id="msnCantidad" for="nuevoCantidad" style="color: red"/></h6>
-                                        </div>
-                                        <div class="form-group">
                                             <strong><h:outputText value="Insumo*"/></strong>
                                             <h:selectOneMenu value="#{controllerRegistrarInsumoPorProyecto.nuevoInsumo}"
                                                              class="form-control" disabled="#{controllerRegistrarInsumoPorProyecto.activarCasillas}"
@@ -83,16 +76,26 @@ and open the template in the editor.
                                                 <f:selectItems value="#{controllerRegistrarInsumoPorProyecto.listaInsumo}" var="tipo"
                                                                itemLabel="#{tipo.nombreinsumo}" itemValue="#{tipo}"/>
                                                 <f:converter converterId="ConverterGenerico" />
-                                                <f:ajax event="change" listener="#{controllerRegistrarInsumoPorProyecto.validarInsumoProyecto()}" execute="nuevoInsumo" render="msnInsumo"/>
+                                                <f:ajax event="change" listener="#{controllerRegistrarInsumoPorProyecto.validarInsumoProyecto()}" execute="nuevoInsumo" render="msnInsumo nuevoCantidad cantidadExistente tipoUnidad "/>
                                             </h:selectOneMenu>
                                             <h6><h:message id="msnInsumo" for="nuevoInsumo" style="color: red"/></h6>
                                         </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Cantidad Usada*"/></strong>
+                                            <h:inputText maxlength="3" value="#{controllerRegistrarInsumoPorProyecto.nuevoCantidad}" readonly="#{controllerRegistrarInsumoPorProyecto.activarCasillasCantidad}" disabled="#{controllerRegistrarInsumoPorProyecto.activarCasillas}" required="true" class="form-control" id="nuevoCantidad" requiredMessage="El campo Cantidad es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarInsumoPorProyecto.validarCantidadProyecto()}" execute="nuevoCantidad" render="nuevoCantidad msnCantidad" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCantidad" for="nuevoCantidad" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Tipo de Unidad: "/></strong>
+                                            <h:inputText  value="#{controllerRegistrarInsumoPorProyecto.tipoUnidad}" disabled="true" id="tipoUnidad" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Cantidad Existente: "/></strong>
+                                            <h:inputText  value="#{controllerRegistrarInsumoPorProyecto.cantidadExistente}" disabled="true" id="cantidadExistente" class="form-control" />
+                                        </div>
                                     </fieldset>
-                                    <br></br>  
-                                    <br></br>  
-                                    <br></br>  
-                                    <br></br>  
-                                    <br></br>  
                                     <br></br>  
                                     <hr class="intro-divider"/>
                                     <div class="row col-md-12">

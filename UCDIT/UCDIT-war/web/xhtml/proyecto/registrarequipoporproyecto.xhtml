@@ -69,7 +69,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Minutos Usado*"/></strong>
-                                            <h:inputText maxlength="2" value="#{controllerRegistrarEquipoPorProyecto.nuevoMinutos}" disabled="#{controllerRegistrarEquipoPorProyecto.activarCasillas}" required="true" class="form-control" id="nuevoMinutos" requiredMessage="El campo Minutos es obligatorio.">
+                                            <h:inputText maxlength="3" value="#{controllerRegistrarEquipoPorProyecto.nuevoMinutos}" disabled="#{controllerRegistrarEquipoPorProyecto.activarCasillas}" required="true" class="form-control" id="nuevoMinutos" requiredMessage="El campo Minutos es obligatorio.">
                                                 <f:ajax event="blur" listener="#{controllerRegistrarEquipoPorProyecto.validarMinutosProyecto()}" execute="nuevoMinutos" render="nuevoMinutos msnMinutos" />
                                             </h:inputText>
                                             <h6><h:message id="msnMinutos" for="nuevoMinutos" style="color: red"/></h6>
