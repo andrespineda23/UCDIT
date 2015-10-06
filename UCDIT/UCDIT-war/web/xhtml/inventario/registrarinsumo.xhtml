@@ -54,7 +54,7 @@ and open the template in the editor.
                                         <div class="space hidden-xs"> </div>
                                         <div class="space hidden-xs"> </div>
                                         <div class="space hidden-xs"> </div>
-                                        <h:commandButton value="Regresar" action="#{controllerRegistrarInsumo.cancelarRegistroInsumo()}" actionListener="#{controllerAdministrarInsumo.buscarInsumosRegistrador()}" immediate="true" class="btn btn-custom btn-two"/>
+                                        <h:commandButton value="Regresar" action="#{controllerRegistrarInsumo.cancelarRegistroInsumo()}"  immediate="true" class="btn btn-custom btn-two"/>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@ and open the template in the editor.
                                         </h:commandButton>
                                         <span></span>
                                         <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarInsumo.cancelarRegistroInsumo()}" actionListener="#{controllerAdministrarInsumo.buscarInsumosRegistrador()}" immediate="true">
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarInsumo.cancelarRegistroInsumo()}"  immediate="true">
                                             <f:ajax execute="@form" render="form" />
                                         </h:commandButton>
                                         <span></span>

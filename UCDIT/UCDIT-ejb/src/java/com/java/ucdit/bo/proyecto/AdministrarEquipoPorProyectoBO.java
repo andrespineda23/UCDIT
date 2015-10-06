@@ -22,7 +22,7 @@ import javax.ejb.Stateful;
  * @author ELECTRONICA
  */
 @Stateful
-public class AdministrarEquipoPorProyectoBO implements AdministrarEquipoPorProyectoBOInterface{
+public class AdministrarEquipoPorProyectoBO implements AdministrarEquipoPorProyectoBOInterface {
 
     @EJB
     EquipoTecnologicoFacade equipoTecnologicoFacade;
@@ -89,6 +89,17 @@ public class AdministrarEquipoPorProyectoBO implements AdministrarEquipoPorProye
             return registro;
         } catch (Exception e) {
             System.out.println("Error AdministrarProyectoPorProyectosBO obtenerProyectoPorId: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public EquipoPorProyecto obtenerEquipoPorProyectoPorId(BigInteger idRegistro) {
+        try {
+            EquipoPorProyecto registro = equipoPorProyectoFacade.find(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarProyectoPorProyectosBO obtenerEquipoPorProyectoPorId: " + e.toString());
             return null;
         }
     }

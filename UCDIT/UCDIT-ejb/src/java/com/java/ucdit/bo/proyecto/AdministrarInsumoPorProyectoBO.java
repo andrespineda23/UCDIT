@@ -58,6 +58,10 @@ public class AdministrarInsumoPorProyectoBO implements AdministrarInsumoPorProye
     @Override
     public void editarInsumoPorProyecto(InsumoPorProyecto insumo) {
         try {
+            Insumo insumoEditar = insumo.getInsumo();
+            int cantidad = insumoEditar.getCantidadexistencia() - insumo.getCantidadusada();
+            insumoEditar.setCantidadexistencia(cantidad);
+            insumoFacade.edit(insumoEditar);
             insumoPorProyectoFacade.edit(insumo);
         } catch (Exception e) {
             System.out.println("Error AdministrarInsumoPorProyectoBO editarInsumoPorProyecto: " + e.toString());
@@ -93,6 +97,17 @@ public class AdministrarInsumoPorProyectoBO implements AdministrarInsumoPorProye
             return registro;
         } catch (Exception e) {
             System.out.println("Error AdministrarInsumoPorProyectoBO obtenerProyectoPorId: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public InsumoPorProyecto obtenerInsumoPorProyectoPorId(BigInteger idRegistro) {
+        try {
+            InsumoPorProyecto registro = insumoPorProyectoFacade.find(idRegistro);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarInsumoPorProyectoBO obtenerInsumoPorProyectoPorId: " + e.toString());
             return null;
         }
     }

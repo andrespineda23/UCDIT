@@ -55,7 +55,7 @@ and open the template in the editor.
                                         <div class="space hidden-xs"> </div>
                                         <div class="space hidden-xs"> </div>
                                         <div class="space hidden-xs"> </div>
-                                        <h:commandButton value="Regresar" action="#{controllerDetallesEquipo.cancelarRegistroEquipoTecnologico()}" actionListener="#{controllerAdministrarEquipo.buscarEquipoTecnologicosRegistrador()}" immediate="true" class="btn btn-custom btn-two"/>
+                                        <h:commandButton value="Regresar" action="#{controllerDetallesEquipo.cancelarRegistroEquipoTecnologico()}" immediate="true" class="btn btn-custom btn-two"/>
                                     </div>
                                 </div>
                             </div>
@@ -118,6 +118,13 @@ and open the template in the editor.
                                             <h6><h:message id="msnFecha" for="editarFechaCompra" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
+                                            <strong><h:outputText value="Número de Factura de Compra*"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerDetallesEquipo.editarNumeroFactura}" required="true" class="form-control" id="editarNumeroFactura" requiredMessage="El campo Número Factura es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesEquipo.validarNumeroFacturaEquipoTecnologico()}" execute="editarNumeroFactura" render="editarNumeroFactura msnNumeroFactura" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNumeroFactura" for="editarNumeroFactura" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
                                             <strong><h:outputText value="Tipo Equipo*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesEquipo.editarTipoEquipo}"
                                                              class="form-control" 
@@ -144,11 +151,10 @@ and open the template in the editor.
                                         <div class="form-group">
                                             <strong><h:outputText value="Estado Equipo*"/></strong>
                                             <h:selectOneMenu value="#{controllerDetallesEquipo.editarEstado}"
-                                                             class="form-control" 
+                                                             class="form-control"  
                                                              id="editarEstado">
                                                 <f:selectItem itemLabel="ACTIVO" itemValue="true" />
                                                 <f:selectItem itemLabel="INACTIVO" itemValue="false" />
-                                                <f:ajax event="change" listener="#{controllerDetallesEquipo.validarEstado()}" execute="editarEstado" />
                                             </h:selectOneMenu>
                                         </div>
                                         <fieldset>
@@ -175,15 +181,37 @@ and open the template in the editor.
                                         <br></br>
                                     </div>
                                     <hr class="intro-divider"/>
-                                    <div class="right pull-right">
-                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesEquipo.registrarModificacionEquipoTecnologico()}" class="btn btn-success" >
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
-                                        <span></span>
-                                        <span></span>
-                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesEquipo.cancelarRegistroEquipoTecnologico()}" actionListener="#{controllerAdministrarEquipo.buscarEquipoTecnologicosRegistrador()}" immediate="true">
-                                            <f:ajax execute="@form" render="form" />
-                                        </h:commandButton>
+                                    <div class="row">
+                                        <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
+                                            <div class="left pull-left">
+                                                <h:commandButton value="Hoja de Vida" actionListener="#{controllerHojaDeVidaEquipo.buscarHojaDeVidaEquipo(controllerDetallesEquipo.idEquipoTecnologico)}" action="hojadevidaequipo" class="btn btn-success" >
+                                                    <f:ajax execute="@form" render="form" />
+                                                </h:commandButton>
+                                                <span></span>
+                                                <span></span>
+                                                <h:commandButton value="Componentes" class="btn btn-info" action="administrarcomponente" actionListener="#{controllerAdministrarComponente.buscarComponentesPorIdEquipo(controllerDetallesEquipo.idEquipoTecnologico)}" immediate="true">
+                                                    <f:ajax execute="@form" render="form" />
+                                                </h:commandButton>
+                                                <span></span>
+                                                <span></span>
+                                                <h:commandButton value="Manuales" class="btn btn-block" action="administrarmanualequipo" actionListener="#{controllerAdministrarManualEquipo.buscarManualPorIdEquipo(controllerDetallesEquipo.idEquipoTecnologico)}" immediate="true">
+                                                    <f:ajax execute="@form" render="form" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 col-lg-1 hidden-sm hidden-xs"></div>
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                            <div class="right pull-right">
+                                                <h:commandButton value="Modificar" actionListener="#{controllerDetallesEquipo.registrarModificacionEquipoTecnologico()}" class="btn btn-success" >
+                                                    <f:ajax execute="@form" render="form" />
+                                                </h:commandButton>
+                                                <span></span>
+                                                <span></span>
+                                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesEquipo.cancelarRegistroEquipoTecnologico()}"  immediate="true">
+                                                    <f:ajax execute="@form" render="form" />
+                                                </h:commandButton>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -7,6 +7,7 @@ package com.java.ucdit.bo.interfaces.proyecto;
 
 import com.java.ucdit.entidades.Cliente;
 import com.java.ucdit.entidades.EquipoPorProyecto;
+import com.java.ucdit.entidades.GastoAdicional;
 import com.java.ucdit.entidades.InsumoPorProyecto;
 import com.java.ucdit.entidades.PersonalInterno;
 import com.java.ucdit.entidades.PersonalPorProyecto;
@@ -52,4 +53,6 @@ public interface AdministrarProyectoBOInterface {
     public List<PersonalInterno> obtenerPersonalInternoRegistrado();
 
     public void asociarPersonalAProyecto(Proyecto proyecto, List<PersonalPorProyecto> personalPorProyecto, List<PersonalInterno> personalInterno);
+
+    public List<GastoAdicional> consultarGastoAdicionalProyecto(BigInteger idProyecto);
 }

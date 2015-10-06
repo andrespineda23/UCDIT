@@ -6,9 +6,12 @@
 package com.java.ucdit.facade;
 
 import com.java.ucdit.entidades.BitacoraProyecto;
+import java.math.BigInteger;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +29,20 @@ public class BitacoraProyectoFacade extends AbstractFacade<BitacoraProyecto> {
 
     public BitacoraProyectoFacade() {
         super(BitacoraProyecto.class);
+    }
+    
+    public List<BitacoraProyecto> obtenerBitacoraProyectoPorIdProyecto(BigInteger idProyecto) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM BitacoraProyecto p WHERE p.proyecto.idproyecto=:idProyecto");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idProyecto", idProyecto);
+            List<BitacoraProyecto> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error BitacoraProyectoFacade obtenerBitacoraProyectoPorIdProyecto: " + e.toString());
+            return null;
+        }
     }
     
 }

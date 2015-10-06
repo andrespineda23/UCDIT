@@ -35,6 +35,8 @@ and open the template in the editor.
                                             <br></br>
                                             VALOR COMPRA - Longitud (7). Ejemplo: <strong><h:outputText value=" 850000" /></strong>
                                             <br></br>
+                                            NÚMERO FACTURA -  Longitud (Min. 2 - Max. 10). Ejemplo: <strong><h:outputText value=" 16562/NN" /></strong>
+                                            <br></br>
                                             VALOR USO (MINUTO) - Longitud (7). Ejemplo: <strong><h:outputText value=" 12000" /></strong>
                                             <br></br>
                                             DESCRIPCIÓN - Longitud (Min. 10 - Max. 256). Ejemplo: <strong><h:outputText value=" Descripción de prueba" /></strong>
@@ -117,6 +119,13 @@ and open the template in the editor.
                                                 </span>
                                             </div>
                                             <h6><h:message id="msnFecha" for="nuevoFechaCompra" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Número de Factura de Compra*"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerRegistrarEquipo.nuevoNumeroFactura}" disabled="#{controllerRegistrarEquipo.activarCasillas}" required="true" class="form-control" id="nuevoNumeroFactura" requiredMessage="El campo Número Factura es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarEquipo.validarNumeroFacturaEquipoTecnologico()}" execute="nuevoNumeroFactura" render="nuevoNumeroFactura msnNumeroFactura" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNumeroFactura" for="nuevoNumeroFactura" style="color: red"/></h6>
                                         </div>
                                         <div class="form-group">
                                             <strong><h:outputText value="Tipo Equipo*"/></strong>

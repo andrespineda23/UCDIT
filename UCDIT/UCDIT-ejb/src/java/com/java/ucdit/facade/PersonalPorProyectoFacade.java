@@ -46,4 +46,30 @@ public class PersonalPorProyectoFacade extends AbstractFacade<PersonalPorProyect
         }
     }
 
+    public List<PersonalPorProyecto> obtenerPersonalPorProyectoActivo() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM PersonalPorProyecto p WHERE p.proyecto.estadoproyecto=:true");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<PersonalPorProyecto> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error PersonalPorProyectoFacade obtenerPersonalPorProyectoPorIdProyecto: " + e.toString());
+            return null;
+        }
+    }
+    public List<PersonalPorProyecto> obtenerPersonalPorProyectoPorIdPersonal(BigInteger idPersonal) {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM PersonalPorProyecto p WHERE p.personalinterno.idpersonalinterno=:idPersonal");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            query.setParameter("idPersonal", idPersonal);
+            List<PersonalPorProyecto> lista = query.getResultList();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error PersonalPorProyectoFacade obtenerPersonalPorProyectoPorIdPersonal: " + e.toString());
+            return null;
+        }
+    }
+
 }

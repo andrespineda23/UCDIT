@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -64,6 +65,8 @@ public class ObjetivoTrabajo implements Serializable {
     private boolean estadoobjetivo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "objetivotrabajo")
     private Collection<ObjetivoPorPersonalProyecto> objetivoPorPersonalProyectoCollection;
+    @Transient
+    private String strEstado;
 
     public ObjetivoTrabajo() {
     }
@@ -146,6 +149,20 @@ public class ObjetivoTrabajo implements Serializable {
     @Override
     public String toString() {
         return "com.java.ucdit.entidades.ObjetivoTrabajo[ idobjetivotrabajo=" + idobjetivotrabajo + " ]";
+    }
+
+    public String getStrEstado() {
+        getEstadoobjetivo();
+        if (estadoobjetivo == true) {
+            strEstado = "ACTIVO";
+        } else {
+            strEstado = "CERRADO";
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
 }

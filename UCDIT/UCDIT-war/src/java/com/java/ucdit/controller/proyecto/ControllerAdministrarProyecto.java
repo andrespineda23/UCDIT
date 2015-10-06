@@ -34,6 +34,7 @@ public class ControllerAdministrarProyecto implements Serializable {
     private boolean bloquearPagSigProyecto, bloquearPagAntProyecto;
     private String cantidadRegistros;
     private int tipoConsulta;
+    private String paginaAnterior;
 
     public ControllerAdministrarProyecto() {
     }
@@ -41,7 +42,6 @@ public class ControllerAdministrarProyecto implements Serializable {
     @PostConstruct
     public void init() {
         tipoConsulta = 1;
-        buscarProyectoRegistrador();
     }
 
     //1 - TODOS 2 - ACTIVOS 3 - TERMINADOS
@@ -85,7 +85,8 @@ public class ControllerAdministrarProyecto implements Serializable {
         bloquearPagSigProyecto = true;
     }
 
-    public void buscarProyectoRegistrador() {
+    public void buscarProyectoRegistrador(String page) {
+        this.paginaAnterior = page;
         iniciarDatosTabla();
         try {
             actualizarTipoConsulta();
@@ -175,7 +176,7 @@ public class ControllerAdministrarProyecto implements Serializable {
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    public String limpiarProcesoBusqueda() {
         listaProyectosTemporal = null;
         listaProyectos = null;
         listaProyectosTabla = null;
@@ -185,11 +186,17 @@ public class ControllerAdministrarProyecto implements Serializable {
         bloquearPagAntProyecto = true;
         bloquearPagSigProyecto = true;
         cantidadRegistros = "N/A";
+        return paginaAnterior;
     }
 
     public String paginaDetalles() {
         limpiarProcesoBusqueda();
         return "detallesproyecto";
+    }
+
+    public String paginaBitacora() {
+        limpiarProcesoBusqueda();
+        return "administrarbitacora";
     }
 
     // GET - SET

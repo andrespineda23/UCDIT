@@ -116,4 +116,14 @@ public class AdministrarIngresoInsumoBO implements AdministrarIngresoInsumoBOInt
         }
     }
 
+    //@Override
+    public List<IngresoInsumo> consultarIngresoInsumoRegistrado() {
+        try {
+            List<IngresoInsumo> lista = ingresoInsumoFacade.findAll();
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarIngresosInsumoBO consultarIngresoInsumoRegistrado: " + e.toString());
+            return null;
+        }
+    }
 }

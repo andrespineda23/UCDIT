@@ -44,7 +44,7 @@ and open the template in the editor.
                                         <div class="space hidden-xs"> </div>
                                         <div class="space hidden-xs"> </div>
                                         <div class="space hidden-xs"> </div>
-                                        <h:commandButton value="Regresar" action="#{controllerAsociarPersonalAProyecto.cancelarRegistroProyecto()}" actionListener="#{controllerAdministrarProyecto.buscarProyectoRegistrador()}" immediate="true" class="btn btn-custom btn-two"/>
+                                        <h:commandButton value="Regresar" action="#{controllerAsociarPersonalAProyecto.cancelarRegistroProyecto()}" actionListener="#{controllerDetallesProyecto.recibirIdProyectoDetalle(controllerAsociarPersonalAProyecto.idProyecto)}" immediate="true" class="btn btn-custom btn-two"/>
                                     </div>
                                 </div>
                             </div>

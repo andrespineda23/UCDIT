@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -70,6 +71,8 @@ public class Componente implements Serializable {
     @JoinColumn(name = "equipotecnologico", referencedColumnName = "idequipotecnologico")
     @ManyToOne(optional = false)
     private EquipoTecnologico equipotecnologico;
+    @Transient
+    private String strEstado;
 
     public Componente() {
     }
@@ -186,6 +189,22 @@ public class Componente implements Serializable {
     @Override
     public String toString() {
         return "com.java.ucdit.entidades.Componente[ idcomponente=" + idcomponente + " ]";
+    }
+
+    public String getStrEstado() {
+        getEstadocomponente();
+        if (null != estadocomponente) {
+            if (estadocomponente == true) {
+                strEstado = "ACTIVO";
+            } else {
+                strEstado = "INACTIVO";
+            }
+        }
+        return strEstado;
+    }
+
+    public void setStrEstado(String strEstado) {
+        this.strEstado = strEstado;
     }
 
 }

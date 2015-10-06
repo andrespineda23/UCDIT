@@ -319,6 +319,13 @@ margin-top:-10px;
     background-size: cover;
     -moz-background-size: cover;    
 }
+ #trabajo {
+    background: url(../img/bogota7.jpg) no-repeat center center; 
+    padding: 0;
+    -webkit-background-size: cover;
+    background-size: cover;
+    -moz-background-size: cover;    
+}
     #variable{
     background: url(../img/bogota4.jpg) no-repeat center center; 
     padding: 0;

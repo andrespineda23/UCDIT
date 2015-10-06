@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form" enctype="multipart/form-data">
+                    <!--HOME SECTION START  -->
+                    <section id="inventario">
+                        <div class="overlay">       
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
+                                        <h2>Registrar Manual de Equipo</h2>
+                                        <h3>Información</h3>
+                                        <p>
+                                            <strong>A continuación se muestra el formato de ingreso de la información:</strong>
+                                            <br></br>
+                                            NOMBRE - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" Manual del Condensador" /></strong>
+                                            <br></br>
+                                            CODIGO - Longitud (Min. 4 - Max. 45). Ejemplo: <strong><h:outputText value=" 11020" /></strong>
+                                            <br></br>
+                                            TIPO - Formato (DIGITAL o FISICO). Ejemplo: <strong><h:outputText value=" DIGITAL / FISICO" /></strong>
+                                            <br></br>
+                                            UBICACIÓN - Longitud (Min. 4 - Max. 256). Ejemplo: <strong><h:outputText value=" Biblioteca 2 Piso Sala 3" /></strong>
+                                        </p>
+                                        <div class="space"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Regresar" action="#{controllerRegistrarManualEquipo.cancelarRegistroManualEquipo()}" actionListener="#{controllerAdministrarManualEquipo.buscarManualPorIdEquipo(controllerRegistrarManualEquipo.idEquipoTecnologico)}" immediate="true" class="btn btn-custom btn-two"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Basicos</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Equipo Tecnologico*"/></strong>
+                                            <h:inputText value="#{controllerRegistrarManualEquipo.equipoTecnologico.nombreequipo}" disabled="true" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Nombre Manual Equipo*"/></strong>
+                                            <h:inputText maxlength="45"   value="#{controllerRegistrarManualEquipo.nuevoNombre}" disabled="#{controllerRegistrarManualEquipo.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarManualEquipo.validarNombreManualEquipo()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Codigo Manual Equipo*"/></strong>
+                                            <h:inputText maxlength="45"   value="#{controllerRegistrarManualEquipo.nuevoCodigo}" disabled="#{controllerRegistrarManualEquipo.activarCasillas}" required="true" class="form-control" id="nuevoCodigo" requiredMessage="El campo Codigo es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarManualEquipo.validarCodigoManualEquipo()}" execute="nuevoCodigo" render="nuevoCodigo msnCodigo" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCodigo" for="nuevoCodigo" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Tipo de Manual*"/></strong>
+                                            <h:selectOneMenu value="#{controllerRegistrarManualEquipo.nuevoTipo}"
+                                                             class="form-control"  
+                                                             id="editarEstado">
+                                                <f:selectItem itemLabel="FISICO" itemValue="FISICO" />
+                                                <f:selectItem itemLabel="DIGITAL" itemValue="DIGITAL" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarManualEquipo.validarTipoManualEquipo()}" execute="@this" render="archivo nuevoUbicacion" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Archivo Guía de Laboratorio"/></strong>
+                                            <h:inputFile disabled="#{controllerRegistrarManualEquipo.activarCasillas}" readonly="#{controllerRegistrarManualEquipo.activarArchivo}" value="#{controllerRegistrarManualEquipo.archivo}" class="form-control" id="archivo"  >
+                                                <f:ajax event="change" listener="#{controllerRegistrarManualEquipo.actualizarArchivoSeleccionado()}" render="msnArchivo" />
+                                            </h:inputFile>
+                                            <h6><h:message id="msnArchivo" for="archivo" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Ubicacion Manual Equipo*"/></strong>
+                                            <h:inputText maxlength="256"   value="#{controllerRegistrarManualEquipo.nuevoUbicacion}" readonly="#{controllerRegistrarManualEquipo.activarUbicacion}" disabled="#{controllerRegistrarManualEquipo.activarCasillas}" class="form-control" id="nuevoUbicacion">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarManualEquipo.validarUbicacionManualEquipo()}" execute="nuevoUbicacion" render="nuevoUbicacion msnUbicacion" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnUbicacion" for="nuevoUbicacion" style="color: red"/></h6>
+                                        </div>
+                                    </fieldset>
+                                    <br></br>  
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Codigos del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarManualEquipo.mensajeFormulario}" style="color: #{controllerRegistrarManualEquipo.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarManualEquipo.activarAceptar}" actionListener="#{controllerRegistrarManualEquipo.registrarNuevoManualEquipo()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarManualEquipo.cancelarRegistroManualEquipo()}" actionListener="#{controllerAdministrarManualEquipo.buscarManualPorIdEquipo(controllerRegistrarManualEquipo.idEquipoTecnologico)}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarManualEquipo.activarLimpiar}" actionListener="#{controllerRegistrarManualEquipo.cambiarActivarCasillas()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- ABOUT SECTION END-->   
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

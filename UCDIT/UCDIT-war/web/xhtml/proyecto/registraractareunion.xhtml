@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form" enctype="multipart/form-data">
+                    <!--HOME SECTION START  -->
+                    <section id="proyecto">
+                        <div class="overlay">       
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
+                                        <h2>Registrar Acta Reunion</h2>
+                                        <h3>Información</h3>
+                                        <p>
+                                            <strong>A continuación se muestra el formato de ingreso de la información:</strong>
+                                            <br></br>
+                                            OBJETIVO - Longitud (Min. 4 - Max. 300). Ejemplo: <strong><h:outputText value=" Objetivo de prueba" /></strong>
+                                            <br></br>
+                                            PERSONAL - Longitud (Min. 4 - Max. 200). Ejemplo: <strong><h:outputText value=" Personal de prueba" /></strong>
+                                            <br></br>
+                                            RESULTADOS - Longitud (Min. 4 - Max. 500). Ejemplo: <strong><h:outputText value=" Resultado de prueba" /></strong>
+                                            <br></br>
+                                            FECHA REUNIÓN - Formato (dd/mm/yyyy). Ejemplo: <strong><h:outputText value=" 31/08/2015" /></strong>
+                                        </p>
+                                        <div class="space"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Regresar" action="#{controllerRegistrarActaReunion.cancelarRegistroActaReunion()}" actionListener="#{controllerAdministrarActaReunion.buscarActaReunionRegistrados()}" immediate="true" class="btn btn-custom btn-two"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Basicos</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Nombre Proyecto*"/></strong>
+                                            <h:inputText value="#{controllerRegistrarActaReunion.proyecto.nombreproyecto}" disabled="true" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Objetivos de la Reunión*"/></strong>
+                                            <h:inputTextarea a:maxlength="300"   value="#{controllerRegistrarActaReunion.nuevoObjetivo}" disabled="#{controllerRegistrarActaReunion.activarCasillas}" required="true" class="form-control" id="nuevoObjetivo" requiredMessage="El campo Objetivo es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarActaReunion.validarObjetivoActaReunion()}" execute="nuevoObjetivo" render="nuevoObjetivo msnObjetivo" />
+                                            </h:inputTextarea>
+                                            <h6><h:message id="msnObjetivo" for="nuevoObjetivo" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Resultados de la Reunión*"/></strong>
+                                            <h:inputTextarea a:maxlength="500"   value="#{controllerRegistrarActaReunion.nuevoResultado}" disabled="#{controllerRegistrarActaReunion.activarCasillas}" required="true" class="form-control" id="nuevoResultado" requiredMessage="El campo Resultado es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarActaReunion.validarResultadoActaReunion()}" execute="nuevoResultado" render="nuevoResultado msnResultado" />
+                                            </h:inputTextarea>
+                                            <h6><h:message id="msnResultado" for="nuevoResultado" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Personal que Asistió a la Reunión*"/></strong>
+                                            <h:inputTextarea a:maxlength="200"   value="#{controllerRegistrarActaReunion.nuevoPersonal}" disabled="#{controllerRegistrarActaReunion.activarCasillas}" required="true" class="form-control" id="nuevoPersonal" requiredMessage="El campo Personal es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarActaReunion.validarPersonalActaReunion()}" execute="nuevoPersonal" render="nuevoPersonal msnPersonal" />
+                                            </h:inputTextarea>
+                                            <h6><h:message id="msnPersonal" for="nuevoPersonal" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Reunión*"/></strong>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="10" value="#{controllerRegistrarActaReunion.nuevoFechaRegistro}" readonly="#{controllerRegistrarActaReunion.fechaDiferida}" disabled="#{controllerRegistrarActaReunion.activarCasillas}" required="true" class="form-control" id="nuevoFechaRegistro" requiredMessage="El campo Fecha Reunion es obligatorio.">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarActaReunion.validarFechaRegistroActaReunion()}" execute="nuevoFechaRegistro" render="nuevoFechaRegistro msnFechaRegistro" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">
+                                                    <h:outputText value="Fecha Actual"/>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerRegistrarActaReunion.fechaDiferida}">
+                                                        <f:ajax event="change" listener="#{controllerRegistrarActaReunion.validarFechaRegistroActaReunion()}" execute="fechaDiferida" render="@this msnFechaRegistro nuevoFechaRegistro" />
+                                                    </h:selectBooleanCheckbox>
+                                                </span>
+                                            </div>
+                                            <h6><h:message id="msnFechaRegistro" for="nuevoFechaRegistro" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Archivo*"/></strong>
+                                            <h:inputFile disabled="#{controllerRegistrarActaReunion.activarCasillas}" value="#{controllerRegistrarActaReunion.archivo}" class="form-control" id="archivo"  >
+                                                <f:ajax event="change" listener="#{controllerRegistrarActaReunion.actualizarArchivoSeleccionado()}" render="msnArchivo" />
+                                            </h:inputFile>
+                                            <h6><h:message id="msnArchivo" for="archivo" style="color: red"/></h6>
+                                        </div>
+                                    </fieldset>
+                                    <br></br>  
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarActaReunion.mensajeFormulario}" style="color: #{controllerRegistrarActaReunion.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarActaReunion.activarAceptar}" actionListener="#{controllerRegistrarActaReunion.registrarNuevoActaReunion()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarActaReunion.cancelarRegistroActaReunion()}" actionListener="#{controllerAdministrarActaReunion.buscarActaReunionRegistrados()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarActaReunion.activarLimpiar}" actionListener="#{controllerRegistrarActaReunion.cambiarActivarCasillas()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- ABOUT SECTION END-->   
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <!--HOME SECTION START  -->
+                    <section id="proyecto">
+                        <div class="overlay">       
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
+                                        <h2>Editar Insumo por Proyecto</h2>
+                                        <h3>Información</h3>
+                                        <p>
+                                            <strong>A continuación se muestra el formato de ingreso de la información:</strong>
+                                            <br></br>
+                                            CANTIDAD - Longitud (Min. 1 - Max. 2). Ejemplo: <strong><h:outputText value=" 50" /></strong>
+                                        </p>
+                                        <div class="space"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Regresar" action="#{controllerDetallesInsumoPorProyecto.cancelarRegistroProyecto()}" actionListener="#{controllerAdministrarInsumoPorProyecto.recibirIdProyecto(controllerDetallesInsumoPorProyecto.insumoPorProyectoDetalle.proyecto.idproyecto)}" immediate="true" class="btn btn-custom btn-two"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Basicos</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Proyecto*"/></strong>
+                                            <h:inputText value="#{controllerDetallesInsumoPorProyecto.insumoPorProyectoDetalle.proyecto.nombreproyecto}" readonly="true" disabled="true"  class="form-control" id="editarProyecto" />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="¿El insumo sera usado para el prototipo?*"/></strong>
+                                            <h:selectBooleanCheckbox value="#{controllerDetallesInsumoPorProyecto.prototipo}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Insumo*"/></strong>
+                                            <h:inputText  value="#{controllerDetallesInsumoPorProyecto.insumoPorProyectoDetalle.insumo.nombreinsumo}" disabled="true"  class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Cantidad Usada*"/></strong>
+                                            <h:inputText maxlength="3" value="#{controllerDetallesInsumoPorProyecto.editarCantidad}" required="true" class="form-control" id="editarCantidad" requiredMessage="El campo Cantidad es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerDetallesInsumoPorProyecto.validarCantidadProyecto()}" execute="editarCantidad" render="editarCantidad msnCantidad" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnCantidad" for="editarCantidad" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Tipo de Unidad: "/></strong>
+                                            <h:inputText  value="#{controllerDetallesInsumoPorProyecto.insumoPorProyectoDetalle.insumo.tipounidad.nombretipounidad}" disabled="true" id="tipoUnidad" class="form-control" />
+                                        </div>
+                                    </fieldset>
+                                    <br></br>  
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerDetallesInsumoPorProyecto.mensajeFormulario}" style="color: #{controllerDetallesInsumoPorProyecto.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Modificar" actionListener="#{controllerDetallesInsumoPorProyecto.registrarModificacionInsumoPorProyecto()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesInsumoPorProyecto.cancelarRegistroProyecto()}" actionListener="#{controllerAdministrarInsumoPorProyecto.recibirIdProyecto(controllerDetallesInsumoPorProyecto.insumoPorProyectoDetalle.insumo.idinsumo)}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

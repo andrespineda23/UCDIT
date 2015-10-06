@@ -6,6 +6,7 @@
 package com.java.ucdit.facade;
 
 import com.java.ucdit.entidades.EquipoTecnologico;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -40,6 +41,25 @@ public class EquipoTecnologicoFacade extends AbstractFacade<EquipoTecnologico> {
             return registro;
         } catch (Exception e) {
             System.out.println("Error EquipoTecnologicoFacade buscarEquipoTecnologicoPorCodigo: " + e.toString());
+            return null;
+        }
+    }
+    
+    public EquipoTecnologico obtenerUltimoEquipoTecnologicoRegistrado() {
+        try {
+            em.clear();
+            Query query = em.createQuery("SELECT p FROM EquipoTecnologico p ORDER BY p.idequipotecnologico DESC");
+            query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+            List<EquipoTecnologico> registros = query.getResultList();
+            if (registros != null) {
+                System.out.println("registros : " + registros.size());
+                EquipoTecnologico ultimoRegistro = registros.get(0);
+                return ultimoRegistro;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error EquipoTecnologicoFacade obtenerUltimoEquipoTecnologicoRegistrado: " + e.toString());
             return null;
         }
     }

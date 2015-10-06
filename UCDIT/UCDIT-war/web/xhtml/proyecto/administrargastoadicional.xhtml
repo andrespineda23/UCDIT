@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <!-- HEADER SECTION END-->
+                    <!--HOME SECTION START  -->
+                    <section id="proyecto">
+                        <div class="overlay">       
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
+                                        <h2>Gastos Adicionales del Proyecto</h2>
+                                        <h3>Funciones</h3>
+                                        <p>
+                                            Por medio de esta pagina usted puede consultar los gastos adicionales que ha tenido un proyecto.
+                                            Adicionalmente, puede ingresar en el sistema un gasto adicional que haya tenido el proyecto o modificar la información del gasto en cuestion.
+                                        </p>
+                                        <div class="space"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Nuevo Gasto" action="#{controllerAdministrarGastoAdicional.nuevoRegistro()}" actionListener="#{controllerRegistrarGastoAdicional.recibirIdProyecto(controllerAdministrarGastoAdicional.idProyecto)}" class="btn btn-custom btn-success"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Regresar" action="#{controllerAdministrarGastoAdicional.paginaProyecto()}" actionListener="#{controllerDetallesProyecto.recibirIdProyectoDetalle(controllerAdministrarGastoAdicional.idProyecto)}" class="btn btn-custom btn-two"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div id="resultadosBusqueda">
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>Eventos Registrados - (Total : #{controllerAdministrarGastoAdicional.cantidadRegistros})</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTable" var="item" 
+                                                         styleClass="table table-condensed table-responsive" 
+                                                         value="#{controllerAdministrarGastoAdicional.listaGastoAdicionalProyectosTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Proyecto"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.proyecto.nombreproyecto}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.descripcion}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Fecha Registro"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.fechagasto}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    </h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Costo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.valorgasto}">
+                                                        <f:convertNumber currencySymbol="$" type="currency" />
+                                                    </h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="#{controllerAdministrarGastoAdicional.paginaDetalles()}" actionListener="#{controllerDetallesGastoAdicional.recibirIdGastoAdicional(item.idgastoadicional)}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerAdministrarGastoAdicional.cargarPaginaAnteriorGastoAdicionalProyecto()}" disabled="#{controllerAdministrarGastoAdicional.bloquearPagAntGastoAdicionalProyecto}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarGastoAdicional.cargarPaginaSiguienteGastoAdicionalProyecto()}" disabled="#{controllerAdministrarGastoAdicional.bloquearPagSigGastoAdicionalProyecto}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

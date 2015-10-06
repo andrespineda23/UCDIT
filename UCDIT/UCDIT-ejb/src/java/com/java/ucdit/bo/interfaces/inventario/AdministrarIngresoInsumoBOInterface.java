@@ -30,4 +30,6 @@ public interface AdministrarIngresoInsumoBOInterface {
     public Insumo obtenerInsumosPorId(BigInteger insumo);
 
     public List<Proveedor> obtenerProveedoresRegistrados();
+
+    public List<IngresoInsumo> consultarIngresoInsumoRegistrado();
 }

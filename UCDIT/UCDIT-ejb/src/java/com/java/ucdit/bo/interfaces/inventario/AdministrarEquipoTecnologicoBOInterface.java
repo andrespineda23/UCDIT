@@ -6,6 +6,7 @@
 package com.java.ucdit.bo.interfaces.inventario;
 
 import com.java.ucdit.entidades.EquipoTecnologico;
+import com.java.ucdit.entidades.IngresoEquipo;
 import com.java.ucdit.entidades.Proveedor;
 import com.java.ucdit.entidades.TipoEquipo;
 import java.math.BigInteger;
@@ -19,9 +20,11 @@ public interface AdministrarEquipoTecnologicoBOInterface {
 
     public List<EquipoTecnologico> consultarEquiposTecnologicosRegistrados();
 
-    public void crearEquipoTecnologico(EquipoTecnologico equipo);
+    public void crearEquipoTecnologico(EquipoTecnologico equipo, String factura);
 
-    public void editarEquipoTecnologico(EquipoTecnologico equipo);
+    public void editarEquipoTecnologico(IngresoEquipo equipo);
+
+    public IngresoEquipo obtenerIngresoEquipoPorIdEquipo(BigInteger idEquipoTecnologico);
 
     public EquipoTecnologico obtenerEquipoTecnologicoPorId(BigInteger idEquipoTecnologico);
 

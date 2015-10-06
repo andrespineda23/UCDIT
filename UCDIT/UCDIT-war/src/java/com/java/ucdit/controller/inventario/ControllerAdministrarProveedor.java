@@ -32,13 +32,13 @@ public class ControllerAdministrarProveedor implements Serializable {
     private int tamTotalProveedor;
     private boolean bloquearPagSigProveedor, bloquearPagAntProveedor;
     private String cantidadRegistros;
+    private String paginaAnterior;
 
     public ControllerAdministrarProveedor() {
     }
 
     @PostConstruct
     public void init() {
-        buscarProveedoresRegistrador();
     }
 
     private void iniciarDatosTabla() {
@@ -51,7 +51,8 @@ public class ControllerAdministrarProveedor implements Serializable {
         bloquearPagSigProveedor = true;
     }
 
-    public void buscarProveedoresRegistrador() {
+    public void buscarProveedoresRegistrador(String page) {
+        this.paginaAnterior = page;
         iniciarDatosTabla();
         try {
             listaProveedores = null;
@@ -138,7 +139,7 @@ public class ControllerAdministrarProveedor implements Serializable {
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    public String limpiarProcesoBusqueda() {
         listaProveedores = null;
         listaProveedoresTabla = null;
         posicionProveedorTabla = 0;
@@ -146,6 +147,7 @@ public class ControllerAdministrarProveedor implements Serializable {
         bloquearPagAntProveedor = true;
         bloquearPagSigProveedor = true;
         cantidadRegistros = "N/A";
+        return paginaAnterior;
     }
 
     public String paginaDetalles() {

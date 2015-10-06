@@ -32,13 +32,13 @@ public class ControllerAdministrarCliente implements Serializable {
     private int tamTotalCliente;
     private boolean bloquearPagSigCliente, bloquearPagAntCliente;
     private String cantidadRegistros;
+    private String paginaAnterior;
 
     public ControllerAdministrarCliente() {
     }
 
     @PostConstruct
     public void init() {
-        buscarClienteRegistrador();
     }
 
     private void iniciarDatosTabla() {
@@ -51,7 +51,8 @@ public class ControllerAdministrarCliente implements Serializable {
         bloquearPagSigCliente = true;
     }
 
-    public void buscarClienteRegistrador() {
+    public void buscarClienteRegistrador(String page) {
+        this.paginaAnterior = page;
         iniciarDatosTabla();
         try {
             listaClientes = null;
@@ -138,7 +139,7 @@ public class ControllerAdministrarCliente implements Serializable {
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    public String limpiarProcesoBusqueda() {
         listaClientes = null;
         listaClientesTabla = null;
         posicionClienteTabla = 0;
@@ -146,6 +147,7 @@ public class ControllerAdministrarCliente implements Serializable {
         bloquearPagAntCliente = true;
         bloquearPagSigCliente = true;
         cantidadRegistros = "N/A";
+        return paginaAnterior;
     }
 
     public String paginaDetalles() {

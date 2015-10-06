@@ -8,11 +8,13 @@ package com.java.ucdit.controller.proyecto;
 import com.java.ucdit.bo.interfaces.proyecto.AdministrarProyectoBOInterface;
 import com.java.ucdit.entidades.Cliente;
 import com.java.ucdit.entidades.EquipoPorProyecto;
+import com.java.ucdit.entidades.GastoAdicional;
 import com.java.ucdit.entidades.InsumoPorProyecto;
 import com.java.ucdit.entidades.PersonalInterno;
 import com.java.ucdit.entidades.PersonalPorProyecto;
 import com.java.ucdit.entidades.Proyecto;
 import com.java.ucdit.entidades.Supervisor;
+import com.java.ucdit.utilidades.UsuarioLogin;
 import com.java.ucdit.utilidades.Utilidades;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -24,6 +26,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -57,6 +60,8 @@ public class ControllerDetallesProyecto implements Serializable {
     private boolean modificacionRegistro;
     private boolean fechaDiferida;
     private String costoHastaDia;
+    private boolean estadoProyecto;
+    private boolean activarEstado;
 
     public ControllerDetallesProyecto() {
     }
@@ -69,9 +74,17 @@ public class ControllerDetallesProyecto implements Serializable {
 
     public void recibirIdProyectoDetalle(BigInteger idProyecto) {
         this.idProyecto = idProyecto;
+        activarEstado = true;
         proyectoDetalle = administrarProyectoBO.obtenerProyectoPorId(this.idProyecto);
         modificacionRegistro = false;
+        FacesContext faceContext = FacesContext.getCurrentInstance();
+        HttpServletRequest httpServletRequest = (HttpServletRequest) faceContext.getExternalContext().getRequest();
+        UsuarioLogin usuarioLoginSistema = (UsuarioLogin) httpServletRequest.getSession().getAttribute("sessionUsuario");
+        if ("ADMINISTRADOR".equalsIgnoreCase(usuarioLoginSistema.getNombreTipoUsuario())) {
+            activarEstado = false;
+        }
         cargarInformacionRegistro();
+        System.out.println("idProyecto : " + idProyecto);
     }
 
     private void cargarInformacionRegistro() {
@@ -84,6 +97,9 @@ public class ControllerDetallesProyecto implements Serializable {
             editarCliente = proyectoDetalle.getCliente();
             editarSupervisor = proyectoDetalle.getSupervisor();
             listaPersonalAsociado = administrarProyectoBO.obtenerPersonalPorProyectoPorIdProyecto(proyectoDetalle.getIdproyecto());
+            listaCliente = administrarProyectoBO.obtenerClientesRegistrados();
+            listaSupervisor = administrarProyectoBO.obtenerSupervisoresRegistrados();
+            estadoProyecto = proyectoDetalle.getEstadoproyecto();
             //
             validacionesCliente = true;
             validacionesNombre = true;
@@ -93,6 +109,7 @@ public class ControllerDetallesProyecto implements Serializable {
             validacionesCostoProyecto = true;
             List<EquipoPorProyecto> listaEquipoPorProyecto = administrarProyectoBO.consultarEquipoProProyectoPorIdProyecto(this.idProyecto);
             List<InsumoPorProyecto> listaInsumoPorProyecto = administrarProyectoBO.consultarInsumoPorProyectoPorIdProyecto(this.idProyecto);
+            List<GastoAdicional> listaGastoAdicional = administrarProyectoBO.consultarGastoAdicionalProyecto(this.idProyecto);
             costoHastaDia = "";
             if (Utilidades.validarNulo(listaEquipoPorProyecto)) {
                 Integer costo = 0;
@@ -108,9 +125,18 @@ public class ControllerDetallesProyecto implements Serializable {
                 for (int i = 0; i < listaInsumoPorProyecto.size(); i++) {
                     costo = costo + listaInsumoPorProyecto.get(i).getCostouso();
                 }
-                costoHastaDia = costoHastaDia + "Insumo : $" + costo;
+                costoHastaDia = costoHastaDia + "Insumo : $" + costo + " / ";
             } else {
-                costoHastaDia = costoHastaDia + "Insumo : $0";
+                costoHastaDia = costoHastaDia + "Insumo : $0 / ";
+            }
+            if (Utilidades.validarNulo(listaGastoAdicional)) {
+                Integer costo = 0;
+                for (int i = 0; i < listaGastoAdicional.size(); i++) {
+                    costo = costo + listaGastoAdicional.get(i).getValorgasto();
+                }
+                costoHastaDia = costoHastaDia + "Gasto Adicional : $" + costo;
+            } else {
+                costoHastaDia = costoHastaDia + "Gasto Adicional : $0";
             }
         }
     }
@@ -279,6 +305,7 @@ public class ControllerDetallesProyecto implements Serializable {
     public void almacenarModificacionProyectoEnSistema() {
         try {
             proyectoDetalle.setNombreproyecto(editarNombre);
+            proyectoDetalle.setEstadoproyecto(estadoProyecto);
             proyectoDetalle.setDescripcionproyecto(editarDescripcion);
             proyectoDetalle.setFechainicio(editarFechaInicio);
             if (Utilidades.validarNulo(editarCostoProyecto)) {
@@ -312,6 +339,11 @@ public class ControllerDetallesProyecto implements Serializable {
     public String dirigiarPaginaAsociarPersonal() {
         limpiarFormularioDirigirPaginas();
         return "asociarpersonalaproyecto";
+    }
+
+    public String dirigirGastoAdicional() {
+        limpiarFormularioDirigirPaginas();
+        return "administrargastoadicional";
     }
 
     private void limpiarFormularioDirigirPaginas() {
@@ -471,6 +503,22 @@ public class ControllerDetallesProyecto implements Serializable {
 
     public void setCostoHastaDia(String costoHastaDia) {
         this.costoHastaDia = costoHastaDia;
+    }
+
+    public boolean isEstadoProyecto() {
+        return estadoProyecto;
+    }
+
+    public void setEstadoProyecto(boolean estadoProyecto) {
+        this.estadoProyecto = estadoProyecto;
+    }
+
+    public boolean isActivarEstado() {
+        return activarEstado;
+    }
+
+    public void setActivarEstado(boolean activarEstado) {
+        this.activarEstado = activarEstado;
     }
 
 }

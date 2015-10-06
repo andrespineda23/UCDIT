@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatesup.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <!-- HEADER SECTION END-->
+                    <!--HOME SECTION START  -->
+                    <div id="home">
+                        <div class="overlay">
+                            <div class="container">
+                                <div class="row " >
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <h1 >UCDIT</h1>
+                                        <h4>
+                                            Universidad Central - Bogotá, Colombia.
+                                        </h4>
+                                        <h2 style="color: white">
+                                            Bienvenido Usuario: <strong>#{controllerPaginaInicial.usuarioLoginSistema.userUsuario}</strong>
+                                        </h2>
+                                        <span></span>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <h:commandButton value="Configurar Cuenta" class="btn btn-custom btn-two"/>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                <h:commandButton value="Cerrar Sesión" action="#{controllerIndex.cerrarSession()}" class="btn btn-custom btn-two"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
+                                    <img src="../../assets/img/inventarioequipo.png" class="img-side img-responsive" alt="" />
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h2 class="head-line">Control de <strong>Inventario y Equipos</strong></h2>
+                                    <p>
+                                        Por medio de la siguiente funcionalidad usted puede controlar la información de los equipos, proveedores y los insumos de la UCDIT. 
+                                        Por medio de la funcionalidad provista en las paginas usted puede ingresar nuevos elementos, modificarlos o consultar los elementos registrados. 
+                                        A su vez puede realizar ingreso de nuevos insumos y equipos adquiridos por la UCDIT para el uso interno.
+                                    </p>
+                                    <div class="row text-center">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="row pad-bottom">
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                    <div class="icon-wrapper">
+                                                        <i class="ion-person-stalker"></i>
+                                                    </div>                   
+                                                    <h4><h:commandLink value="Proveedores" actionListener="#{controllerAdministrarProveedor.buscarProveedoresRegistrador('iniciopersonal')}" action="administrarproveedor"/></h4>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                    <div class="icon-wrapper">
+                                                        <i class="ion-bookmark"></i>
+                                                    </div>                   
+                                                    <h4><h:commandLink value="Insumos" actionListener="#{controllerAdministrarInsumo.buscarInsumosRegistrador('iniciopersonal')}" action="administrarinsumo"/></h4> 
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                    <div class="icon-wrapper">
+                                                        <i class="ion-archive"></i>
+                                                    </div>                   
+                                                    <h4><h:commandLink value="Facturas" actionListener="#{controllerRegistrarFactura.recibirPaginaAnterior('iniciopersonal')}" action="registrarfactura"/></h4> 
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                                    <div class="icon-wrapper">
+                                                        <i class="ion-mouse"></i>
+                                                    </div>                   
+                                                    <h4><h:commandLink value="Equipo Tecnologico" actionListener="#{controllerAdministrarEquipo.buscarEquipoTecnologicosRegistrador('iniciopersonal')}" action="administrarequipo"/></h4> 
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <br></br>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <h2 class="head-line">Control de <strong>Trabajo UCDIT</strong></h2>
+                                    <p>
+                                        Por medio de la siguiente funcionalidad usted puede controlar el trabajo realizado por parte del personal interno, proyectos realizados y los clientes con los cuales existe contacto.
+                                        Por medio de la funcionalidad provista en las paginas usted puede ingresar nuevos elementos, modificarlos o consultar los elementos registrados. 
+                                    </p>
+                                    <div class="row text-center">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="row pad-bottom">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="icon-wrapper">
+                                                        <i class="ion-android-archive"></i>
+                                                    </div>                   
+                                                    <h4><h:commandLink value="Informes de Trabajo" action="administrarinformepersonal" actionListener="#{controllerAdministrarInformePersonal.buscarInformePersonalRegistrados()}" /></h4>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="icon-wrapper">
+                                                        <i class="ion-network"></i>
+                                                    </div>                   
+                                                    <h4><h:commandLink value="Proyectos" action="administrarproyecto" actionListener="#{controllerAdministrarProyecto.buscarProyectoRegistrador('iniciopersonal')}" /></h4> 
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="icon-wrapper">
+                                                        <i class="ion-person"></i>
+                                                    </div>                   
+                                                    <h4><h:commandLink value="Clientes" actionListener="#{controllerAdministrarCliente.buscarClienteRegistrador('iniciopersonal')}" action="administrarcliente"/></h4> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-center" >
+                                    <img src="../../assets/img/objetivoclientereporte.jpg" class="img-side img-responsive" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- ABOUT SECTION END-->
+
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

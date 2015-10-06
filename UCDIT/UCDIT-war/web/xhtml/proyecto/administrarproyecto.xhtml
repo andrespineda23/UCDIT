@@ -42,7 +42,7 @@ and open the template in the editor.
                                         <div class="space hidden-xs"> </div>
                                         <div class="space hidden-xs"> </div>
                                         <div class="space hidden-xs"> </div>
-                                        <h:commandButton value="Regresar" actionListener="#{controllerAdministrarProyecto.limpiarProcesoBusqueda()}" action="iniciosupervisor" class="btn btn-custom btn-two"/>
+                                        <h:commandButton value="Regresar" action="#{controllerAdministrarProyecto.limpiarProcesoBusqueda()}"  class="btn btn-custom btn-two"/>
                                     </div>
                                 </div>
                             </div>
@@ -123,6 +123,12 @@ and open the template in the editor.
                                                         <h:outputText value="Detalles"/>
                                                     </f:facet>
                                                     <h:commandLink value="Ver" action="#{controllerAdministrarProyecto.paginaDetalles()}" actionListener="#{controllerDetallesProyecto.recibirIdProyectoDetalle(item.idproyecto)}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Bitacora"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="#{controllerAdministrarProyecto.paginaBitacora()}" actionListener="#{controllerAdministrarBitacora.buscarBitacoraProyectoRegistrador(item.idproyecto)}"/>
                                                 </h:column>
                                                 <f:facet name="footer">
                                                     <nav>

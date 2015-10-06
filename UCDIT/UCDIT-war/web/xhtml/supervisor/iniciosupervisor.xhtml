@@ -65,15 +65,14 @@ and open the template in the editor.
                                                         <i class="ion-tshirt-outline"></i>
                                                     </div>                   
                                                     <h4><h:commandLink value="Supervisores" action="administrarsupervisor" actionListener="#{controllerAdministrarSupervisor.buscarSupervisorRegistrador()}"/></h4>
-                                                    Usuarios que puede 
-                                                    controlar la información del sistema en general.
+
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                                     <div class="icon-wrapper">
                                                         <i class="ion-person-stalker"></i>
                                                     </div>                   
                                                     <h4><h:commandLink value="Personal Interno" actionListener="#{controllerAdministrarPersonalInterno.buscarPersonalInternoRegistrador()}" action="administrarpersonalinterno"/></h4> 
-                                                    Usuarios relacionados con tareas especificas de la UCDIT.
+
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                                 </div>
@@ -110,29 +109,29 @@ and open the template in the editor.
                                                     <div class="icon-wrapper">
                                                         <i class="ion-person-stalker"></i>
                                                     </div>                   
-                                                    <h4><h:commandLink value="Proveedores" actionListener="#{controllerAdministrarProveedor.buscarProveedoresRegistrador()}" action="administrarproveedor"/></h4>
-                                                    Proveedores con los cuales cuenta la UCDIT para sus compras.
+                                                    <h4><h:commandLink value="Proveedores" actionListener="#{controllerAdministrarProveedor.buscarProveedoresRegistrador('iniciosupervisor')}" action="administrarproveedor"/></h4>
+
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                     <div class="icon-wrapper">
                                                         <i class="ion-bookmark"></i>
                                                     </div>                   
-                                                    <h4><h:commandLink value="Insumos" actionListener="#{controllerAdministrarInsumo.buscarInsumosRegistrador()}" action="administrarinsumo"/></h4> 
-                                                    Insumos de trabajo para la elaboración de proyectos.
+                                                    <h4><h:commandLink value="Insumos" actionListener="#{controllerAdministrarInsumo.buscarInsumosRegistrador('iniciosupervisor')}" action="administrarinsumo"/></h4> 
+
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                     <div class="icon-wrapper">
                                                         <i class="ion-archive"></i>
                                                     </div>                   
-                                                    <h4><h:commandLink value="Facturas" action="registrarfactura"/></h4> 
-                                                    Ingreso de una factura de compra.
+                                                    <h4><h:commandLink value="Facturas" actionListener="#{controllerRegistrarFactura.recibirPaginaAnterior('iniciosupervisor')}" action="registrarfactura"/></h4> 
+
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                                     <div class="icon-wrapper">
                                                         <i class="ion-mouse"></i>
                                                     </div>                   
-                                                    <h4><h:commandLink value="Equipo Tecnologico" actionListener="#{controllerAdministrarEquipo.buscarEquipoTecnologicosRegistrador()}" action="administrarequipo"/></h4> 
-                                                    Equipo tecnologico base para la realización de tareas internas.
+                                                    <h4><h:commandLink value="Equipo Tecnologico" actionListener="#{controllerAdministrarEquipo.buscarEquipoTecnologicosRegistrador('iniciosupervisor')}" action="administrarequipo"/></h4> 
+
                                                 </div>
                                             </div>
 
@@ -155,26 +154,39 @@ and open the template in the editor.
                                     <div class="row text-center">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="row pad-bottom">
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                    <div class="icon-wrapper">
-                                                        <i class="ion-android-archive"></i>
-                                                    </div>                   
-                                                    <h4><h:commandLink value="Informes de Trabajo" /></h4>
-                                                    Informes de trabajo del personal interno
+                                                <div class="row">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="icon-wrapper">
+                                                            <i class="ion-android-bookmark"></i>
+                                                        </div>                   
+                                                        <h4><h:commandLink value="Actas" actionListener="#{controllerAdministrarActaReunion.buscarActaReunionRegistrados()}"  action="administraractareunion"/></h4>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="icon-wrapper">
+                                                            <i class="ion-android-archive"></i>
+                                                        </div>                   
+                                                        <h4><h:commandLink value="Informes" action="administrarinformesupervisor" actionListener="#{controllerAdministrarInformeSupervisor.buscarInformePersonalRegistrados()}"/></h4>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                                        <div class="icon-wrapper">
+                                                            <i class="ion-chatboxes"></i>
+                                                        </div>                   
+                                                        <h4><h:commandLink value="Objetivos" action="administrarobjetivotrabajo" actionListener="#{controllerAdministrarObjetivoTrabajo.buscarObjetivoTrabajoRegistrador()}" /></h4> 
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                    <div class="icon-wrapper">
-                                                        <i class="ion-network"></i>
-                                                    </div>                   
-                                                    <h4><h:commandLink value="Proyectos" action="administrarproyecto" actionListener="#{controllerAdministrarProyecto.buscarProyectoRegistrador()}" /></h4> 
-                                                    Proyectos realizados por parte del personal de la UCDIT
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                                    <div class="icon-wrapper">
-                                                        <i class="ion-person"></i>
-                                                    </div>                   
-                                                    <h4><h:commandLink value="Clientes" actionListener="#{controllerAdministrarCliente.buscarClienteRegistrador()}" action="administrarcliente"/></h4> 
-                                                    Clientes de la UCDIT.
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="icon-wrapper">
+                                                            <i class="ion-network"></i>
+                                                        </div>                   
+                                                        <h4><h:commandLink value="Proyectos" action="administrarproyecto" actionListener="#{controllerAdministrarProyecto.buscarProyectoRegistrador('iniciosupervisor')}" /></h4> 
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                        <div class="icon-wrapper">
+                                                            <i class="ion-person"></i>
+                                                        </div>                   
+                                                        <h4><h:commandLink value="Clientes" actionListener="#{controllerAdministrarCliente.buscarClienteRegistrador('iniciosupervisor')}" action="administrarcliente"/></h4> 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

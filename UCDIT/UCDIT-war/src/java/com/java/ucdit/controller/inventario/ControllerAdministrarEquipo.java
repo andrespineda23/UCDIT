@@ -32,13 +32,14 @@ public class ControllerAdministrarEquipo implements Serializable {
     private int tamTotalEquipoTecnologico;
     private boolean bloquearPagSigEquipoTecnologico, bloquearPagAntEquipoTecnologico;
     private String cantidadRegistros;
+    private String paginaAnterior;
 
     public ControllerAdministrarEquipo() {
     }
 
     @PostConstruct
     public void init() {
-        buscarEquipoTecnologicosRegistrador();
+
     }
 
     private void iniciarDatosTabla() {
@@ -51,7 +52,8 @@ public class ControllerAdministrarEquipo implements Serializable {
         bloquearPagSigEquipoTecnologico = true;
     }
 
-    public void buscarEquipoTecnologicosRegistrador() {
+    public void buscarEquipoTecnologicosRegistrador(String page) {
+        this.paginaAnterior = page;
         iniciarDatosTabla();
         try {
             listaEquipoTecnologicos = null;
@@ -138,7 +140,7 @@ public class ControllerAdministrarEquipo implements Serializable {
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    public String limpiarProcesoBusqueda() {
         listaEquipoTecnologicos = null;
         listaEquipoTecnologicosTabla = null;
         posicionEquipoTecnologicoTabla = 0;
@@ -146,6 +148,7 @@ public class ControllerAdministrarEquipo implements Serializable {
         bloquearPagAntEquipoTecnologico = true;
         bloquearPagSigEquipoTecnologico = true;
         cantidadRegistros = "N/A";
+        return paginaAnterior;
     }
 
     public String paginaDetalles() {

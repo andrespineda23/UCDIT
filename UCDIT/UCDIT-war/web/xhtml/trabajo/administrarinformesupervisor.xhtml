@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <!-- HEADER SECTION END-->
+                    <!--HOME SECTION START  -->
+                    <section id="trabajo">
+                        <div class="overlay">       
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
+                                        <h2>Informes de Trabajo</h2>
+                                        <h3>Funciones</h3>
+                                        <p>
+                                            Por medio de esta pagina usted puede consultar los informes de trabajo del personal interno de la UCDIT.
+                                        </p>
+                                        <div class="space"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Regresar" action="#{controllerAdministrarInformeSupervisor.paginaInicio()}" class="btn btn-custom btn-two"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-9 col-lg-9 hidden-sm hidden-xs">
+                                    <span></span>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">  
+                                    <div class="form-group">
+                                        <strong><h:outputText value="Personal Interno"/></strong>
+                                        <h:selectOneMenu value="#{controllerAdministrarInformeSupervisor.personalInterno}"
+                                                         class="form-control" 
+                                                         id="proyecto">
+                                            <f:selectItem itemLabel="Seleccione Personal Interno" itemValue="null" />
+                                            <f:selectItems value="#{controllerAdministrarInformeSupervisor.listaPersonalInterno}" var="tipo1"
+                                                           itemLabel="#{tipo1.persona.nombreApellido}" itemValue="#{tipo1}"/>
+                                            <f:converter converterId="ConverterGenerico" />
+                                            <f:ajax event="change" listener="#{controllerAdministrarInformeSupervisor.actualizarPersonalInterno()}" execute="@form" render="form"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div id="resultadosBusqueda">
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>Informes de Trabajo - (Total : #{controllerAdministrarInformeSupervisor.cantidadRegistros})</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTable" var="item" 
+                                                         styleClass="table table-condensed table-responsive" 
+                                                         value="#{controllerAdministrarInformeSupervisor.listaInformePersonalTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Fecha Reporte"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.fechainforme}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    </h:outputText>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Mes"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.mesinforme}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.nombrearchivo}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Descargar"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Descargar" actionListener="#{controllerAdministrarInformeSupervisor.descargarInformePersonal(item.ubicacion)}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerAdministrarInformeSupervisor.cargarPaginaAnteriorInformePersonal()}" disabled="#{controllerAdministrarInformeSupervisor.bloquearPagAntInformePersonal}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarInformeSupervisor.cargarPaginaSiguienteInformePersonal()}" disabled="#{controllerAdministrarInformeSupervisor.bloquearPagSigInformePersonal}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

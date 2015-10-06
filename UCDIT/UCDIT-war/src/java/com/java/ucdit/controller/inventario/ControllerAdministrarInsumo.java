@@ -32,13 +32,14 @@ public class ControllerAdministrarInsumo implements Serializable {
     private int tamTotalInsumo;
     private boolean bloquearPagSigInsumo, bloquearPagAntInsumo;
     private String cantidadRegistros;
+    private String paginaAnterior;
 
     public ControllerAdministrarInsumo() {
     }
 
     @PostConstruct
     public void init() {
-        buscarInsumosRegistrador();
+
     }
 
     private void iniciarDatosTabla() {
@@ -51,7 +52,8 @@ public class ControllerAdministrarInsumo implements Serializable {
         bloquearPagSigInsumo = true;
     }
 
-    public void buscarInsumosRegistrador() {
+    public void buscarInsumosRegistrador(String page) {
+        this.paginaAnterior = page;
         iniciarDatosTabla();
         try {
             listaInsumos = null;
@@ -138,7 +140,7 @@ public class ControllerAdministrarInsumo implements Serializable {
         }
     }
 
-    public void limpiarProcesoBusqueda() {
+    public String limpiarProcesoBusqueda() {
         listaInsumos = null;
         listaInsumosTabla = null;
         posicionInsumoTabla = 0;
@@ -146,6 +148,7 @@ public class ControllerAdministrarInsumo implements Serializable {
         bloquearPagAntInsumo = true;
         bloquearPagSigInsumo = true;
         cantidadRegistros = "N/A";
+        return paginaAnterior;
     }
 
     public String paginaDetalles() {

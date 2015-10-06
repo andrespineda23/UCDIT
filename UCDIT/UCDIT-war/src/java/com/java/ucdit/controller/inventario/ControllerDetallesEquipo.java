@@ -7,6 +7,7 @@ package com.java.ucdit.controller.inventario;
 
 import com.java.ucdit.bo.interfaces.inventario.AdministrarEquipoTecnologicoBOInterface;
 import com.java.ucdit.entidades.EquipoTecnologico;
+import com.java.ucdit.entidades.IngresoEquipo;
 import com.java.ucdit.entidades.Proveedor;
 import com.java.ucdit.entidades.TipoEquipo;
 import com.java.ucdit.utilidades.Utilidades;
@@ -33,7 +34,7 @@ public class ControllerDetallesEquipo implements Serializable {
     AdministrarEquipoTecnologicoBOInterface administrarEquipoTecnologicoBO;
 
     //
-    private EquipoTecnologico equipoTecnologicoDetalles;
+    private IngresoEquipo equipoTecnologicoDetalles;
     private BigInteger idEquipoTecnologico;
     //
     private String editarNombre, editarCodigo, editarDescripcion;
@@ -43,8 +44,9 @@ public class ControllerDetallesEquipo implements Serializable {
     private Proveedor editarProveedor;
     private List<TipoEquipo> listaTipoEquipo;
     private TipoEquipo editarTipoEquipo;
+    private String editarNumeroFactura;
     //
-    private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesFechaCompra;
+    private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesFechaCompra, validacionesNumeroFactura;
     private boolean validacionesValorCompra, validacionesValorUso, validacionesTipoEquipo, validacionesProveedor;
     private String mensajeFormulario;
     private String colorMensaje;
@@ -64,26 +66,28 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void recibirIdEquipoDetalle(BigInteger idEquipo) {
         this.idEquipoTecnologico = idEquipo;
-        equipoTecnologicoDetalles = administrarEquipoTecnologicoBO.obtenerEquipoTecnologicoPorId(this.idEquipoTecnologico);
+        equipoTecnologicoDetalles = administrarEquipoTecnologicoBO.obtenerIngresoEquipoPorIdEquipo(this.idEquipoTecnologico);
         modificacionRegistro = false;
         cargarInformacionRegistro();
     }
 
     private void cargarInformacionRegistro() {
         if (Utilidades.validarNulo(equipoTecnologicoDetalles)) {
-            editarCodigo = equipoTecnologicoDetalles.getCodigoequipo();
-            editarNombre = equipoTecnologicoDetalles.getNombreequipo();
-            editarDescripcion = equipoTecnologicoDetalles.getDescripcion();
-            editarValorUso = String.valueOf(equipoTecnologicoDetalles.getValorhorauso());
-            editarFechaCompra = equipoTecnologicoDetalles.getFechaadquisicion();
-            editarValorCompra = String.valueOf(equipoTecnologicoDetalles.getValorcompra());
-            editarTipoEquipo = equipoTecnologicoDetalles.getTipoequipo();
-            editarProveedor = equipoTecnologicoDetalles.getProveedor();
-            editarEstado = equipoTecnologicoDetalles.getEstadoequipo();
+            editarCodigo = equipoTecnologicoDetalles.getEquipotecnologico().getCodigoequipo();
+            editarNombre = equipoTecnologicoDetalles.getEquipotecnologico().getNombreequipo();
+            editarDescripcion = equipoTecnologicoDetalles.getEquipotecnologico().getDescripcion();
+            editarValorUso = String.valueOf(equipoTecnologicoDetalles.getEquipotecnologico().getValorhorauso());
+            editarFechaCompra = equipoTecnologicoDetalles.getEquipotecnologico().getFechaadquisicion();
+            editarValorCompra = String.valueOf(equipoTecnologicoDetalles.getEquipotecnologico().getValorcompra());
+            editarTipoEquipo = equipoTecnologicoDetalles.getEquipotecnologico().getTipoequipo();
+            editarProveedor = equipoTecnologicoDetalles.getEquipotecnologico().getProveedor();
+            editarEstado = equipoTecnologicoDetalles.getEquipotecnologico().getEstadoequipo();
+            editarNumeroFactura = equipoTecnologicoDetalles.getNumerofactura();
             //
             validacionesFechaCompra = true;
             validacionesDescripcion = true;
             validacionesCodigo = true;
+            validacionesNumeroFactura = true;
             validacionesNombre = true;
             validacionesValorUso = true;
             validacionesValorCompra = true;
@@ -99,8 +103,7 @@ public class ControllerDetallesEquipo implements Serializable {
         mensajeFormulario = "N/A";
         modificacionRegistro = false;
         equipoTecnologicoDetalles = null;
-        equipoTecnologicoDetalles = administrarEquipoTecnologicoBO.obtenerEquipoTecnologicoPorId(this.idEquipoTecnologico);
-        cargarInformacionRegistro();
+        recibirIdEquipoDetalle(this.idEquipoTecnologico);
     }
 
     public void validarNombreEquipoTecnologico() {
@@ -133,7 +136,7 @@ public class ControllerDetallesEquipo implements Serializable {
                     if (registro == null) {
                         validacionesCodigo = true;
                     } else {
-                        if (!equipoTecnologicoDetalles.getIdequipotecnologico().equals(registro.getIdequipotecnologico())) {
+                        if (!equipoTecnologicoDetalles.getEquipotecnologico().getIdequipotecnologico().equals(registro.getIdequipotecnologico())) {
                             validacionesCodigo = false;
                             FacesContext.getCurrentInstance().addMessage("form:editarCodigo", new FacesMessage("El codigo ingresado ya esta registrado."));
                         } else {
@@ -169,6 +172,27 @@ public class ControllerDetallesEquipo implements Serializable {
                 validacionesDescripcion = false;
                 FacesContext.getCurrentInstance().addMessage("form:editarDescripcion", new FacesMessage("La tamaño minimo permitido es 4 caracteres."));
             }
+        }
+        modificacionRegistro = true;
+    }
+
+    public void validarNumeroFacturaEquipoTecnologico() {
+        if (Utilidades.validarNulo(editarNumeroFactura) && (!editarNumeroFactura.isEmpty()) && (editarNumeroFactura.trim().length() > 0)) {
+            int tam = editarNumeroFactura.length();
+            if (tam >= 2) {
+                if (Utilidades.validarCaracteresAlfaNumericos(editarNumeroFactura)) {
+                    validacionesNumeroFactura = true;
+                } else {
+                    validacionesNumeroFactura = false;
+                    FacesContext.getCurrentInstance().addMessage("form:editarNumeroFactura", new FacesMessage("El número factura es incorrecto."));
+                }
+            } else {
+                validacionesNumeroFactura = false;
+                FacesContext.getCurrentInstance().addMessage("form:editarNumeroFactura", new FacesMessage("La tamaño minimo permitido es 2 caracteres."));
+            }
+        } else {
+            validacionesNumeroFactura = false;
+            FacesContext.getCurrentInstance().addMessage("form:editarNumeroFactura", new FacesMessage("El número factura es obligatorio."));
         }
         modificacionRegistro = true;
     }
@@ -278,6 +302,9 @@ public class ControllerDetallesEquipo implements Serializable {
         if (validacionesProveedor == false) {
             retorno = false;
         }
+        if (validacionesNumeroFactura == false) {
+            retorno = false;
+        }
         return retorno;
     }
 
@@ -304,19 +331,23 @@ public class ControllerDetallesEquipo implements Serializable {
 
     private void almacenarModificacionEquipoTecnologicoEnSistema() {
         try {
-            equipoTecnologicoDetalles.setEstadoequipo(editarEstado);
-            equipoTecnologicoDetalles.setCodigoequipo(editarCodigo);
-            equipoTecnologicoDetalles.setNombreequipo(editarNombre);
-            equipoTecnologicoDetalles.setFechaadquisicion(editarFechaCompra);
-            equipoTecnologicoDetalles.setValorhorauso(Integer.valueOf(editarValorUso));
-            equipoTecnologicoDetalles.setValorcompra(Integer.valueOf(editarValorCompra));
+            equipoTecnologicoDetalles.getEquipotecnologico().setEstadoequipo(editarEstado);
+            equipoTecnologicoDetalles.getEquipotecnologico().setCodigoequipo(editarCodigo);
+            equipoTecnologicoDetalles.getEquipotecnologico().setNombreequipo(editarNombre);
+            equipoTecnologicoDetalles.getEquipotecnologico().setFechaadquisicion(editarFechaCompra);
+            equipoTecnologicoDetalles.setFechacompra(editarFechaCompra);
+            equipoTecnologicoDetalles.getEquipotecnologico().setValorhorauso(Integer.valueOf(editarValorUso));
+            equipoTecnologicoDetalles.getEquipotecnologico().setValorcompra(Integer.valueOf(editarValorCompra));
             if (Utilidades.validarNulo(editarDescripcion)) {
+                equipoTecnologicoDetalles.getEquipotecnologico().setDescripcion(editarDescripcion);
                 equipoTecnologicoDetalles.setDescripcion(editarDescripcion);
             } else {
+                equipoTecnologicoDetalles.getEquipotecnologico().setDescripcion("");
                 equipoTecnologicoDetalles.setDescripcion("");
             }
-            equipoTecnologicoDetalles.setProveedor(editarProveedor);
-            equipoTecnologicoDetalles.setTipoequipo(editarTipoEquipo);
+            equipoTecnologicoDetalles.getEquipotecnologico().setProveedor(editarProveedor);
+            equipoTecnologicoDetalles.getEquipotecnologico().setTipoequipo(editarTipoEquipo);
+            equipoTecnologicoDetalles.setNumerofactura(editarNumeroFactura);
             administrarEquipoTecnologicoBO.editarEquipoTecnologico(equipoTecnologicoDetalles);
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarEquipoTecnologico almacenarModificacionEquipoTecnologicoEnSistema : " + e.toString());
@@ -462,6 +493,22 @@ public class ControllerDetallesEquipo implements Serializable {
 
     public void setFechaDiferida(boolean fechaDiferida) {
         this.fechaDiferida = fechaDiferida;
+    }
+
+    public BigInteger getIdEquipoTecnologico() {
+        return idEquipoTecnologico;
+    }
+
+    public void setIdEquipoTecnologico(BigInteger idEquipoTecnologico) {
+        this.idEquipoTecnologico = idEquipoTecnologico;
+    }
+
+    public String getEditarNumeroFactura() {
+        return editarNumeroFactura;
+    }
+
+    public void setEditarNumeroFactura(String editarNumeroFactura) {
+        this.editarNumeroFactura = editarNumeroFactura;
     }
 
 }

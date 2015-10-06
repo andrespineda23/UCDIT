@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <!-- HEADER SECTION END-->
+                    <!--HOME SECTION START  -->
+                    <section id="inventario">
+                        <div class="overlay">       
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
+                                        <h2>Administración de Insumos</h2>
+                                        <h3>Funciones</h3>
+                                        <p>
+                                            Por medio de esta pagina usted podra consultar las facturas de compra realizadas por la UCDIT en el transcurso del tiempo. Podre observar el número de la factura, el proveedor de los insumos, la fecha y el valor total de la compra realizada.
+                                        </p>
+                                        <div class="space"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Regresar" actionListener="#{controllerConsultarFacturasCompra.limpiarProcesoBusqueda()}" action="registrarfactura" class="btn btn-custom btn-two"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div id="resultadosBusqueda" >
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>Facturas Registradas - (Total : #{controllerConsultarFacturasCompra.cantidadRegistros})</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTable" var="item" 
+                                                         styleClass="table table-condensed table-responsive"  
+                                                         value="#{controllerConsultarFacturasCompra.listaIngresoInsumosTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Fecha"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.fechacompra}">
+                                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    </h:outputText>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Proveedor"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.proveedor.nombreproveedor}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="# Factura"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.numerofactura}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Valor Total"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.valortotal}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerConsultarFacturasCompra.cargarPaginaAnteriorIngresoInsumo()}" disabled="#{controllerConsultarFacturasCompra.bloquearPagAntIngresoInsumo}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerConsultarFacturasCompra.cargarPaginaSiguienteIngresoInsumo()}" disabled="#{controllerConsultarFacturasCompra.bloquearPagSigIngresoInsumo}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div><!--/.row-->
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

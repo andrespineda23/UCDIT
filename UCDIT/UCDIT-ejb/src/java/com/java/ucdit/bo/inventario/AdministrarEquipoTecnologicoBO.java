@@ -7,9 +7,11 @@ package com.java.ucdit.bo.inventario;
 
 import com.java.ucdit.bo.interfaces.inventario.AdministrarEquipoTecnologicoBOInterface;
 import com.java.ucdit.entidades.EquipoTecnologico;
+import com.java.ucdit.entidades.IngresoEquipo;
 import com.java.ucdit.entidades.Proveedor;
 import com.java.ucdit.entidades.TipoEquipo;
 import com.java.ucdit.facade.EquipoTecnologicoFacade;
+import com.java.ucdit.facade.IngresoEquipoFacade;
 import com.java.ucdit.facade.ProveedorFacade;
 import com.java.ucdit.facade.TipoEquipoFacade;
 import java.math.BigInteger;
@@ -30,7 +32,9 @@ public class AdministrarEquipoTecnologicoBO implements AdministrarEquipoTecnolog
     ProveedorFacade proveedorFacade;
     @EJB
     TipoEquipoFacade tipoEquipoFacade;
-    
+    @EJB
+    IngresoEquipoFacade ingresoEquipoFacade;
+
     //@Override
     public List<EquipoTecnologico> consultarEquiposTecnologicosRegistrados() {
         try {
@@ -43,18 +47,26 @@ public class AdministrarEquipoTecnologicoBO implements AdministrarEquipoTecnolog
     }
 
     @Override
-    public void crearEquipoTecnologico(EquipoTecnologico equipo) {
+    public void crearEquipoTecnologico(EquipoTecnologico equipo, String factura) {
         try {
             equipoTecnologicoFacade.create(equipo);
+            EquipoTecnologico utimoEquipo = equipoTecnologicoFacade.obtenerUltimoEquipoTecnologicoRegistrado();
+            IngresoEquipo ingreso = new IngresoEquipo();
+            ingreso.setEquipotecnologico(utimoEquipo);
+            ingreso.setNumerofactura(factura);
+            ingreso.setFechacompra(equipo.getFechaadquisicion());
+            ingreso.setDescripcion(equipo.getDescripcion());
+            ingresoEquipoFacade.create(ingreso);
         } catch (Exception e) {
             System.out.println("Error AdministrarEquiposTecnologicosBO crearEquipoTecnologico: " + e.toString());
         }
     }
 
     @Override
-    public void editarEquipoTecnologico(EquipoTecnologico equipo) {
+    public void editarEquipoTecnologico(IngresoEquipo equipo) {
         try {
-            equipoTecnologicoFacade.edit(equipo);
+            ingresoEquipoFacade.edit(equipo);
+            equipoTecnologicoFacade.edit(equipo.getEquipotecnologico());
         } catch (Exception e) {
             System.out.println("Error AdministrarEquiposTecnologicosBO editarEquipoTecnologico: " + e.toString());
         }
@@ -67,6 +79,17 @@ public class AdministrarEquipoTecnologicoBO implements AdministrarEquipoTecnolog
             return registro;
         } catch (Exception e) {
             System.out.println("Error AdministrarEquiposTecnologicosBO obtenerEquipoTecnologicoPorId: " + e.toString());
+            return null;
+        }
+    }
+
+    @Override
+    public IngresoEquipo obtenerIngresoEquipoPorIdEquipo(BigInteger idEquipoTecnologico) {
+        try {
+            IngresoEquipo registro = ingresoEquipoFacade.obtenerIngresoEquipoPorIdEquipo(idEquipoTecnologico);
+            return registro;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarEquiposTecnologicosBO obtenerIngresoEquipoPorIdEquipo: " + e.toString());
             return null;
         }
     }

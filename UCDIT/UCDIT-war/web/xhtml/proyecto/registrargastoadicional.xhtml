@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <!--HOME SECTION START  -->
+                    <section id="proyecto">
+                        <div class="overlay">       
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
+                                        <h2>Registrar Gasto Adicional</h2>
+                                        <h3>Información</h3>
+                                        <p>
+                                            <strong>A continuación se muestra el formato de ingreso de la información:</strong>
+                                            <br></br>
+                                            EVENTO - Longitud (Min. 4 - Max. 200). Ejemplo: <strong><h:outputText value=" Ayuda externa para el proyecto" /></strong>
+                                            <br></br>
+                                            COSTO - Longitud (Min. 4 - Max. 10). Ejemplo: <strong><h:outputText value=" 125000" /></strong>
+                                            <br></br>
+                                            FECHA EVENTO - Formato (dd/mm/yyyy). Ejemplo: <strong><h:outputText value=" 31/08/2015" /></strong>
+                                        </p>
+                                        <div class="space"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Regresar" action="#{controllerRegistrarGastoAdicional.cancelarRegistroGastoAdicional()}" actionListener="#{controllerAdministrarGastoAdicional.buscarGastoAdicionalProyectoRegistrador(controllerRegistrarGastoAdicional.idProyecto)}" immediate="true" class="btn btn-custom btn-two"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Basicos</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Nombre Proyecto*"/></strong>
+                                            <h:inputText value="#{controllerRegistrarGastoAdicional.proyecto.nombreproyecto}" disabled="true" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Detalle Evento*"/></strong>
+                                            <h:inputText maxlength="200" value="#{controllerRegistrarGastoAdicional.nuevoEvento}" disabled="#{controllerRegistrarGastoAdicional.activarCasillas}" required="true" class="form-control" id="nuevoEvento" requiredMessage="El campo Evento es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarGastoAdicional.validarEventoGastoAdicional()}" execute="nuevoEvento" render="nuevoEvento msnEvento" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnEvento" for="nuevoEvento" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="ValorCompra Proyecto*"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerRegistrarGastoAdicional.nuevoValorCompra}" disabled="#{controllerRegistrarGastoAdicional.activarCasillas}" required="true" class="form-control" id="nuevoValorCompra" requiredMessage="El campo Valor Compra es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarGastoAdicional.validarValorCompraGastoAdicional()}" execute="nuevoValorCompra" render="nuevoValorCompra msnValorCompra" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnValorCompra" for="nuevoValorCompra" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Evento*"/></strong>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="10" value="#{controllerRegistrarGastoAdicional.nuevoFechaCompra}" readonly="#{controllerRegistrarGastoAdicional.fechaDiferida}" disabled="#{controllerRegistrarGastoAdicional.activarCasillas}" required="true" class="form-control" id="nuevoFechaCompra" requiredMessage="El campo Fecha Compra es obligatorio.">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarGastoAdicional.validarFechaCompraGastoAdicional()}" execute="nuevoFechaCompra" render="nuevoFechaCompra msnFechaCompra" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">
+                                                    <h:outputText value="Fecha Actual"/>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerRegistrarGastoAdicional.fechaDiferida}">
+                                                        <f:ajax event="change" listener="#{controllerRegistrarGastoAdicional.validarFechaCompraGastoAdicional()}" execute="fechaDiferida" render="@this msnFechaCompra nuevoFechaCompra" />
+                                                    </h:selectBooleanCheckbox>
+                                                </span>
+                                            </div>
+                                            <h6><h:message id="msnFechaEvento" for="nuevoFechaEvento" style="color: red"/></h6>
+                                        </div>
+                                    </fieldset>
+                                    <br></br>  
+                                    <br></br>  
+                                    <br></br>  
+                                    <br></br>  
+                                    <br></br>  
+                                    <br></br>  
+                                    <br></br>  
+                                    <br></br>  
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarGastoAdicional.mensajeFormulario}" style="color: #{controllerRegistrarGastoAdicional.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarGastoAdicional.activarAceptar}" actionListener="#{controllerRegistrarGastoAdicional.registrarNuevoGastoAdicional()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarGastoAdicional.cancelarRegistroGastoAdicional()}" actionListener="#{controllerAdministrarGastoAdicional.buscarGastoAdicionalProyectoRegistrador(controllerRegistrarGastoAdicional.idProyecto)}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarGastoAdicional.activarLimpiar}" actionListener="#{controllerRegistrarGastoAdicional.cambiarActivarCasillas()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- ABOUT SECTION END-->   
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

@@ -51,7 +51,7 @@ and open the template in the editor.
                                         <div class="space hidden-xs"> </div>
                                         <div class="space hidden-xs"> </div>
                                         <div class="space hidden-xs"> </div>
-                                        <h:commandButton value="Regresar" action="#{controllerDetallesProyecto.cancelarRegistroProyecto()}" actionListener="#{controllerAdministrarProyecto.buscarProyectoRegistrador()}" immediate="true" class="btn btn-custom btn-two"/>
+                                        <h:commandButton value="Regresar" action="#{controllerDetallesProyecto.cancelarRegistroProyecto()}"  immediate="true" class="btn btn-custom btn-two"/>
                                     </div>
                                 </div>
                             </div>
@@ -124,6 +124,19 @@ and open the template in the editor.
                                             <h6><h:message id="msnSupervisor" for="editarSupervisor" style="color: red"/></h6>
                                         </div>
                                         <fieldset>
+                                            <legend class="text-info">Estado del Proyecto</legend>
+                                            <div class="form-group">
+                                                <strong><h:outputText value="Estado del Proyecto*"/></strong>
+                                                <h:selectOneMenu value="#{controllerDetallesPersonalInterno.editarEstado}"
+                                                                 class="form-control" disabled="#{controllerDetallesProyecto.activarEstado}"
+                                                                 id="editarEstado">
+                                                    <f:selectItem itemLabel="ACTIVO" itemValue="true" />
+                                                    <f:selectItem itemLabel="INACTIVO" itemValue="false" />
+                                                    <f:ajax event="change" listener="#{controllerDetallesPersonalInterno.validarEstado()}" execute="editarEstado" />
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset>
                                             <legend class="h5 text-info">Datos Opcionales</legend>
                                             <div class="form-group">
                                                 <strong><h:outputText value="Costo Estimado Proyecto"/></strong>
@@ -185,30 +198,33 @@ and open the template in the editor.
                                     </div>
                                     <hr class="intro-divider"/>
                                     <div class="row">
-                                        <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
-                                            <div class="left pull-left">
-                                                <h:commandButton value="Insumos Por Proyecto"  action="#{controllerDetallesProyecto.dirigiarPaginaInsumoProyecto()}" actionListener="#{controllerAdministrarInsumoPorProyecto.recibirIdProyecto(controllerDetallesProyecto.idProyecto)}" class="btn btn-success" immediate="true">
-                                                    <f:ajax execute="@form" render="form" />
-                                                </h:commandButton>
-                                                <span></span>
-                                                <span></span>
-                                                <h:commandButton value="Equipos Por Proyecto" class="btn btn-danger" action="#{controllerDetallesProyecto.dirigiarPaginaEquipoProyecto()}" actionListener="#{controllerAdministrarEquipoPorProyecto.recibirIdProyecto(controllerDetallesProyecto.idProyecto)}" immediate="true">
-                                                    <f:ajax execute="@form" render="form" />
-                                                </h:commandButton>
-                                            </div>
+                                        <div class="left pull-left">
+                                            <h:commandButton value="Insumos Por Proyecto"  action="#{controllerDetallesProyecto.dirigiarPaginaInsumoProyecto()}" actionListener="#{controllerAdministrarInsumoPorProyecto.recibirIdProyecto(controllerDetallesProyecto.idProyecto)}" class="btn btn-success" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                             <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Equipos Por Proyecto" class="btn btn-danger" action="#{controllerDetallesProyecto.dirigiarPaginaEquipoProyecto()}" actionListener="#{controllerAdministrarEquipoPorProyecto.recibirIdProyecto(controllerDetallesProyecto.idProyecto)}" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                             <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Gastos Adicionales" class="btn btn-info" action="#{controllerDetallesProyecto.dirigirGastoAdicional()}" actionListener="#{controllerAdministrarGastoAdicional.buscarGastoAdicionalProyectoRegistrador(controllerDetallesProyecto.idProyecto)}" immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
                                         </div>
-                                        <div class="col-md-1 col-lg-1 hidden-sm hidden-xs"></div>
-                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                            <div class="right pull-right">
-                                                <h:commandButton value="Modificar"  actionListener="#{controllerDetallesProyecto.registrarModificacionProyecto()}" class="btn btn-success" >
-                                                    <f:ajax execute="@form" render="form" />
-                                                </h:commandButton>
-                                                <span></span>
-                                                <span></span>
-                                                <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesProyecto.cancelarRegistroProyecto()}" actionListener="#{controllerAdministrarProyecto.buscarProyectoRegistrador()}" immediate="true">
-                                                    <f:ajax execute="@form" render="form" />
-                                                </h:commandButton>
-                                            </div>
+                                    </div>
+                                    <br></br>
+                                    <div class="row">
+                                        <div class="right pull-right">
+                                            <h:commandButton value="Modificar"  actionListener="#{controllerDetallesProyecto.registrarModificacionProyecto()}" class="btn btn-success" >
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
+                                            <span></span>
+                                            <span></span>
+                                            <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerDetallesProyecto.cancelarRegistroProyecto()}"  immediate="true">
+                                                <f:ajax execute="@form" render="form" />
+                                            </h:commandButton>
                                         </div>
                                     </div>
                                 </div>

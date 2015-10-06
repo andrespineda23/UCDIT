@@ -28,4 +28,6 @@ public interface AdministrarInsumoPorProyectoBOInterface {
     public List<Proyecto> obtenerProyectosRegistrados();
 
     public Proyecto obtenerProyectoPorId(BigInteger idProyecto);
+
+    public InsumoPorProyecto obtenerInsumoPorProyectoPorId(BigInteger idRegistro);
 }

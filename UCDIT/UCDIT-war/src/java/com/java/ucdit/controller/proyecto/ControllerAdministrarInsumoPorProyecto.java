@@ -45,6 +45,7 @@ public class ControllerAdministrarInsumoPorProyecto implements Serializable {
 
     public void recibirIdProyecto(BigInteger idProyecto) {
         this.idProyecto = idProyecto;
+        System.out.println("idProyecto : "+idProyecto);
         buscarInsumoPorProyectoRegistrador();
     }
 
@@ -147,7 +148,6 @@ public class ControllerAdministrarInsumoPorProyecto implements Serializable {
     }
 
     public void limpiarProcesoBusqueda() {
-        listaInsumoPorProyectos = null;
         listaInsumoPorProyectos = null;
         listaInsumoPorProyectosTabla = null;
         posicionInsumoPorProyectoTabla = 0;

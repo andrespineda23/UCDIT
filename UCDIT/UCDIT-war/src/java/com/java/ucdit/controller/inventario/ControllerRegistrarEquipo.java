@@ -39,8 +39,9 @@ public class ControllerRegistrarEquipo implements Serializable {
     private Proveedor nuevoProveedor;
     private List<TipoEquipo> listaTipoEquipo;
     private TipoEquipo nuevoTipoEquipo;
+    private String nuevoNumeroFactura;
     //
-    private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesFechaCompra;
+    private boolean validacionesNombre, validacionesCodigo, validacionesDescripcion, validacionesFechaCompra, validacionesNumeroFactura;
     private boolean validacionesValorCompra, validacionesValorUso, validacionesTipoEquipo, validacionesProveedor;
     private String mensajeFormulario;
     private boolean activarCasillas;
@@ -55,6 +56,7 @@ public class ControllerRegistrarEquipo implements Serializable {
     @PostConstruct
     public void init() {
         nuevoCodigo = null;
+        nuevoNumeroFactura = null;
         nuevoNombre = null;
         nuevoDescripcion = null;
         nuevoValorUso = "0";
@@ -66,10 +68,11 @@ public class ControllerRegistrarEquipo implements Serializable {
         //
         validacionesFechaCompra = true;
         validacionesDescripcion = true;
+        validacionesNumeroFactura = false;
         validacionesCodigo = false;
         validacionesNombre = false;
         validacionesValorUso = false;
-        validacionesValorCompra = false;
+        validacionesValorCompra = true;
         validacionesTipoEquipo = false;
         validacionesProveedor = false;
         activarLimpiar = true;
@@ -139,6 +142,26 @@ public class ControllerRegistrarEquipo implements Serializable {
                 validacionesDescripcion = false;
                 FacesContext.getCurrentInstance().addMessage("form:nuevoDescripcion", new FacesMessage("La tamaño minimo permitido es 4 caracteres."));
             }
+        }
+    }
+
+    public void validarNumeroFacturaEquipoTecnologico() {
+        if (Utilidades.validarNulo(nuevoNumeroFactura) && (!nuevoNumeroFactura.isEmpty()) && (nuevoNumeroFactura.trim().length() > 0)) {
+            int tam = nuevoNumeroFactura.length();
+            if (tam >= 2) {
+                if (Utilidades.validarCaracteresAlfaNumericos(nuevoNumeroFactura)) {
+                    validacionesNumeroFactura = true;
+                } else {
+                    validacionesNumeroFactura = false;
+                    FacesContext.getCurrentInstance().addMessage("form:nuevoNumeroFactura", new FacesMessage("El número factura es incorrecto."));
+                }
+            } else {
+                validacionesNumeroFactura = false;
+                FacesContext.getCurrentInstance().addMessage("form:nuevoNumeroFactura", new FacesMessage("La tamaño minimo permitido es 2 caracteres."));
+            }
+        } else {
+            validacionesNumeroFactura = false;
+            FacesContext.getCurrentInstance().addMessage("form:nuevoNumeroFactura", new FacesMessage("El número factura es obligatorio."));
         }
     }
 
@@ -238,6 +261,9 @@ public class ControllerRegistrarEquipo implements Serializable {
         if (validacionesProveedor == false) {
             retorno = false;
         }
+        if (validacionesNumeroFactura == false) {
+            retorno = false;
+        }
         return retorno;
     }
 
@@ -276,7 +302,7 @@ public class ControllerRegistrarEquipo implements Serializable {
             }
             nuevaEquipoTecnologico.setProveedor(nuevoProveedor);
             nuevaEquipoTecnologico.setTipoequipo(nuevoTipoEquipo);
-            administrarEquipoTecnologicoBO.crearEquipoTecnologico(nuevaEquipoTecnologico);
+            administrarEquipoTecnologicoBO.crearEquipoTecnologico(nuevaEquipoTecnologico, nuevoNumeroFactura);
         } catch (Exception e) {
             System.out.println("Error ControllerRegistrarEquipoTecnologico almacenarNuevoEquipoTecnologicoEnSistema : " + e.toString());
         }
@@ -286,6 +312,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoFechaCompra = new Date();
         nuevoCodigo = null;
         nuevoNombre = null;
+        nuevoNumeroFactura = null;
         nuevoValorUso = "0";
         nuevoDescripcion = null;
         nuevoValorCompra = "0";
@@ -296,9 +323,10 @@ public class ControllerRegistrarEquipo implements Serializable {
         validacionesFechaCompra = true;
         validacionesDescripcion = true;
         validacionesCodigo = false;
+        validacionesNumeroFactura = false;
         validacionesNombre = false;
         validacionesValorUso = false;
-        validacionesValorCompra = false;
+        validacionesValorCompra = true;
         validacionesTipoEquipo = false;
         validacionesProveedor = false;
         mensajeFormulario = "";
@@ -309,6 +337,7 @@ public class ControllerRegistrarEquipo implements Serializable {
         nuevoCodigo = null;
         nuevoNombre = null;
         nuevoValorUso = "0";
+        nuevoNumeroFactura = null;
         nuevoDescripcion = null;
         fechaDiferida = true;
         nuevoValorCompra = "0";
@@ -319,8 +348,9 @@ public class ControllerRegistrarEquipo implements Serializable {
         validacionesDescripcion = true;
         validacionesCodigo = false;
         validacionesNombre = false;
+        validacionesNumeroFactura = false;
         validacionesValorUso = false;
-        validacionesValorCompra = false;
+        validacionesValorCompra = true;
         validacionesTipoEquipo = false;
         validacionesProveedor = false;
         activarAceptar = false;
@@ -475,8 +505,15 @@ public class ControllerRegistrarEquipo implements Serializable {
     }
 
     public void setFechaDiferida(boolean fechaDiferida) {
-        
         this.fechaDiferida = fechaDiferida;
+    }
+
+    public String getNuevoNumeroFactura() {
+        return nuevoNumeroFactura;
+    }
+
+    public void setNuevoNumeroFactura(String nuevoNumeroFactura) {
+        this.nuevoNumeroFactura = nuevoNumeroFactura;
     }
 
 }

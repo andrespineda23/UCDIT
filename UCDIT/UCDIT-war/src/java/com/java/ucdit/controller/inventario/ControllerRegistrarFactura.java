@@ -65,6 +65,7 @@ public class ControllerRegistrarFactura implements Serializable {
     private boolean fechaDiferida;
     private boolean insumoNuevo;
     private boolean activarCasillasNuevo;
+    private String paginaAnterior;
 
     public ControllerRegistrarFactura() {
     }
@@ -98,6 +99,10 @@ public class ControllerRegistrarFactura implements Serializable {
         mensajeFormulario = "N/A";
     }
 
+    public void recibirPaginaAnterior(String page) {
+        this.paginaAnterior = page;
+    }
+
     public void actualizarInformacionInsumoNuevo() {
         nuevoCodigo = null;
         nuevoNombre = null;
@@ -122,7 +127,6 @@ public class ControllerRegistrarFactura implements Serializable {
     }
 
     ///
-    
     public void validarNombreInsumo() {
         if (Utilidades.validarNulo(nuevoNombre) && (!nuevoNombre.isEmpty()) && (nuevoNombre.trim().length() > 0)) {
             int tam = nuevoNombre.length();
@@ -542,7 +546,12 @@ public class ControllerRegistrarFactura implements Serializable {
         colorMensaje = "black";
         activarCasillas = false;
         activarCasillasNuevo = true;
-        return "iniciosupervisor";
+        return paginaAnterior;
+    }
+
+    public String paginaHistorial() {
+        cancelarRegistroIngresoInsumo();
+        return "consultarfacturascompra";
     }
 
     public void cambiarActivarCasillas() {

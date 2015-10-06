@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <!--HOME SECTION START  -->
+                    <section id="inventario">
+                        <div class="overlay">       
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
+                                        <h2>Administración de Componentes de un Equipo</h2>
+                                        <h3>Funciones</h3>
+                                        <p>
+                                            Por medio de esta pagina usted puede administrar la información relacionada con los componentes que hacen parte de un equipo tecnologico de la UCDIT.
+                                            Usted puede ingresar un nuevo componente para un equipo tecnologico del sistema, modificar la información de alguno ya registrado y consultar
+                                            los componentes de un equipo tecnologico.
+                                        </p>
+                                        <div class="space"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Nuevo Componente" action="#{controllerAdministrarComponente.nuevoRegistro()}" actionListener="#{controllerRegistrarComponente.recibirIdEquipoTecnologico(controllerAdministrarComponente.idEquipo)}" class="btn btn-custom btn-success"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Regresar" action="#{controllerAdministrarComponente.detallesEquipo()}" actionListener="#{controllerDetallesEquipo.recibirIdEquipoDetalle(controllerAdministrarComponente.idEquipo)}" class="btn btn-custom btn-two"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div id="resultadosBusqueda" >
+                                    <fieldset style="border: black;border-radius: 10px;">
+                                        <h3><legend style="color: darkblue"><strong>Componentes Registrados - (Total : #{controllerAdministrarComponente.cantidadRegistros})</strong></legend></h3>
+                                        <div class="row">
+                                            <h:dataTable id="dataTable" var="item" 
+                                                         styleClass="table table-condensed table-responsive" 
+                                                         value="#{controllerAdministrarComponente.listaComponentesTabla}">
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Equipo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.equipotecnologico.nombreequipo}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Nombre"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.nombrecomponente}"/>
+                                                </h:column>  
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Codigo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.codigocomponente}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Estado"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.strEstado}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Marca"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.marcacomponente}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Modelo"/>
+                                                    </f:facet>
+                                                    <h:outputText value="#{item.modelocomponente}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="#{controllerAdministrarComponente.paginaDetalles()}" actionListener="#{controllerDetallesComponente.recibirIdComponenteDetalle(item.idcomponente)}"/>
+                                                </h:column>
+                                                <f:facet name="footer">
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <h:commandLink value="Anterior" actionListener="#{controllerAdministrarComponente.cargarPaginaAnteriorComponente()}" disabled="#{controllerAdministrarComponente.bloquearPagAntComponente}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                            <li>
+                                                                <h:commandLink value="Siguiente" actionListener="#{controllerAdministrarComponente.cargarPaginaSiguienteComponente()}" disabled="#{controllerAdministrarComponente.bloquearPagSigComponente}">
+                                                                    <f:ajax execute="@form" render="form" />
+                                                                </h:commandLink>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </f:facet>
+                                            </h:dataTable>
+                                        </div><!--/.row-->
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

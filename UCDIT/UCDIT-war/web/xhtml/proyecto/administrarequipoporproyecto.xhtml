@@ -82,7 +82,6 @@ and open the template in the editor.
                                                     <h:outputText value="#{item.cantidadminutosuso}">
                                                     </h:outputText>
                                                 </h:column>
-                                               
                                                 <h:column>
                                                     <f:facet name="header">
                                                         <h:outputText value="¿Usado para ...?"/>
@@ -90,7 +89,12 @@ and open the template in the editor.
                                                     <h:outputText value="#{item.strPrototipo}">
                                                     </h:outputText>
                                                 </h:column>
-                                               
+                                                <h:column>
+                                                    <f:facet name="header">
+                                                        <h:outputText value="Detalles"/>
+                                                    </f:facet>
+                                                    <h:commandLink value="Ver" action="#{controllerAdministrarEquipoPorProyecto.paginaDetalles()}" actionListener="#{controllerDetallesEquipoPorProyecto.recibirIdEquipoPorProyecto(item.idequipoporproyecto)}"/>
+                                                </h:column>
                                                 <f:facet name="footer">
                                                     <nav>
                                                         <ul class="pager">

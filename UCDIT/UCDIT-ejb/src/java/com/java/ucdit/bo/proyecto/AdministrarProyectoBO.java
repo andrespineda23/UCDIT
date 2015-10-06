@@ -8,6 +8,7 @@ package com.java.ucdit.bo.proyecto;
 import com.java.ucdit.bo.interfaces.proyecto.AdministrarProyectoBOInterface;
 import com.java.ucdit.entidades.Cliente;
 import com.java.ucdit.entidades.EquipoPorProyecto;
+import com.java.ucdit.entidades.GastoAdicional;
 import com.java.ucdit.entidades.InsumoPorProyecto;
 import com.java.ucdit.entidades.PersonalInterno;
 import com.java.ucdit.entidades.PersonalPorProyecto;
@@ -221,6 +222,33 @@ public class AdministrarProyectoBO implements AdministrarProyectoBOInterface {
 
     @Override
     public void asociarPersonalAProyecto(Proyecto proyecto, List<PersonalPorProyecto> personalPorProyecto, List<PersonalInterno> personalInterno) {
+        try {
+            for (int i = 0; i < personalPorProyecto.size(); i++) {
+                personalPorProyectoFacade.edit(personalPorProyecto.get(i));
+            }
+            if (null != personalInterno) {
+                for (int i = 0; i < personalInterno.size(); i++) {
+                    PersonalPorProyecto registro = new PersonalPorProyecto();
+                    registro.setEstado(true);
+                    registro.setProyecto(proyecto);
+                    registro.setPersonalinterno(personalInterno.get(i));
+                    personalPorProyectoFacade.create(registro);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error AdministrarProyectoBO asociarPersonalAProyecto: " + e.toString());
+        }
+    }
+
+    @Override
+    public List<GastoAdicional> consultarGastoAdicionalProyecto(BigInteger idProyecto) {
+        try {
+            List<GastoAdicional> lista = gastoAdicionalFacade.consultarGastoAdicionalPorIdProyecto(idProyecto);
+            return lista;
+        } catch (Exception e) {
+            System.out.println("Error AdministrarProyectoBO consultarGastoAdicionalProyecto: " + e.toString());
+            return null;
+        }
     }
 
 }

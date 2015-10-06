@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>        
+    </h:head>
+    <h:body>
+        <ui:composition template="/xhtml/templatepaginas.xhtml">
+            <ui:define name="body">
+                <h:form id="form">
+                    <!--HOME SECTION START  -->
+                    <section id="trabajo">
+                        <div class="overlay">       
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  contact-cover2" >
+                                        <h2>Nuevo Objetivo Trabajo</h2>
+                                        <h3>Información</h3>
+                                        <p>
+                                            <strong>A continuación se muestra el formato de ingreso de la información:</strong>
+                                            <br></br>
+                                            NOMBRE - Longitud (Min. 4 - Max. 300). Ejemplo: <strong><h:outputText value=" Objetivo de prueba" /></strong>
+                                            <br></br>
+                                            FECHA - Formato (dd/mm/yyyy). Ejemplo: <strong><h:outputText value=" 11/11/2011" /></strong>
+                                        </p>
+                                        <div class="space"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12  contact-cover2" >
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <div class="space hidden-xs"> </div>
+                                        <h:commandButton value="Regresar" action="#{controllerRegistrarObjetivoTrabajo.cancelarRegistroObjetivoTrabajo()}" actionListener="#{controllerAdministrarObjetivoTrabajo.buscarObjetivoTrabajoRegistrador()}" immediate="true" class="btn btn-custom btn-two"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--HOME SECTION END  -->
+                    <!-- ABOUT SECTION START-->
+                    <section id="about">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <fieldset>
+                                        <legend class="text-info">Datos Basicos</legend>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Nombre Objetivo*"/></strong>
+                                            <h:inputTextarea a:maxlength="300" value="#{controllerRegistrarObjetivoTrabajo.nuevoNombre}" disabled="#{controllerRegistrarObjetivoTrabajo.activarCasillas}" required="true" class="form-control" id="nuevoNombre" requiredMessage="El campo Nombre es obligatorio.">
+                                                <f:ajax event="blur" listener="#{controllerRegistrarObjetivoTrabajo.validarNombreObjetivoTrabajo()}" execute="nuevoNombre" render="nuevoNombre msnNombre" />
+                                            </h:inputTextarea>
+                                            <h6><h:message id="msnNombre" for="nuevoNombre" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Inicio*"/></strong>
+                                            <div class="input-group">
+                                                <h:inputText maxlength="10" value="#{controllerRegistrarObjetivoTrabajo.nuevoFechaInicio}" readonly="#{controllerRegistrarObjetivoTrabajo.fechaDiferida}" disabled="#{controllerRegistrarObjetivoTrabajo.activarCasillas}" required="true" class="form-control" id="nuevoFechaInicio" requiredMessage="El campo Fecha Inicio es obligatorio.">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                    <f:ajax event="blur" listener="#{controllerRegistrarObjetivoTrabajo.validarFechaInicioObjetivoTrabajo()}" execute="nuevoFechaInicio" render="nuevoFechaInicio msnFechaInicio" />
+                                                </h:inputText>
+                                                <span class="input-group-addon">
+                                                    <h:outputText value="Fecha Actual"/>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <span></span>
+                                                    <h:selectBooleanCheckbox id="fechaDiferida" value="#{controllerRegistrarObjetivoTrabajo.fechaDiferida}">
+                                                        <f:ajax event="change" listener="#{controllerRegistrarObjetivoTrabajo.validarFechaInicioObjetivoTrabajo()}" execute="fechaDiferida" render="@this msnFechaInicio nuevoFechaInicio" />
+                                                    </h:selectBooleanCheckbox>
+                                                </span>
+                                            </div>
+                                            <h6><h:message id="msnFechaInicio" for="nuevoFechaInicio" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Fecha Deseada*"/></strong>
+                                            <h:inputText maxlength="10" value="#{controllerRegistrarObjetivoTrabajo.nuevoFechaDeseada}" disabled="#{controllerRegistrarObjetivoTrabajo.activarCasillas}" required="true" class="form-control" id="nuevoFechaDeseada" requiredMessage="El campo Fecha Deseada es obligatorio.">
+                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Bogota" locale="es" />
+                                                <f:ajax event="blur" listener="#{controllerRegistrarObjetivoTrabajo.validarFechaDeseadaObjetivoTrabajo()}" execute="nuevoFechaDeseada" render="nuevoFechaDeseada msnFechaDeseada" />
+                                            </h:inputText>
+                                            <h6><h:message id="msnFechaDeseada" for="nuevoFechaDeseada" style="color: red"/></h6>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Personal Interno*"/></strong>
+                                            <h:selectOneMenu value="#{controllerRegistrarObjetivoTrabajo.personalInterno}"
+                                                             class="form-control" disabled="#{controllerRegistrarObjetivoTrabajo.activarCasillas}"
+                                                             id="personalInterno">
+                                                <f:selectItem itemLabel="Seleccione Personal Interno" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarObjetivoTrabajo.listaPersonalInterno}" var="tipo"
+                                                               itemLabel="#{tipo.persona.nombreApellido}" itemValue="#{tipo}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarObjetivoTrabajo.actualizarPersonalInterno()}" execute="personalInterno" render="personalPorProyecto"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="form-group">
+                                            <strong><h:outputText value="Proyecto*"/></strong>
+                                            <h:selectOneMenu value="#{controllerRegistrarObjetivoTrabajo.personalPorProyecto}"
+                                                             class="form-control" disabled="#{controllerRegistrarObjetivoTrabajo.activarPersonalPorProyecto}"
+                                                             id="personalPorProyecto">
+                                                <f:selectItem itemLabel="Seleccione Proyecto" itemValue="null" />
+                                                <f:selectItems value="#{controllerRegistrarObjetivoTrabajo.listaPersonalPorProyecto}" var="tipo2"
+                                                               itemLabel="#{tipo2.proyecto.nombreproyecto}" itemValue="#{tipo2}"/>
+                                                <f:converter converterId="ConverterGenerico" />
+                                                <f:ajax event="change" listener="#{controllerRegistrarObjetivoTrabajo.actualizarProyecto()}" execute="personalPorProyecto"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </fieldset>
+
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    <hr class="intro-divider"/>
+                                    <div class="row col-md-12">
+                                        <div class="text-center">
+                                            <h5>
+                                                Resultados del Formulario
+                                            </h5>
+                                            <strong>
+                                                <h:outputText id="mensajeFormulario" class="text-uppercase" value="#{controllerRegistrarObjetivoTrabajo.mensajeFormulario}" style="color: #{controllerRegistrarObjetivoTrabajo.colorMensaje}}"/>
+                                            </strong>
+                                        </div>
+                                        <br></br>
+                                    </div>
+                                    <hr class="intro-divider"/>
+                                    <div class="right pull-right">
+                                        <h:commandButton value="Registrar" disabled="#{controllerRegistrarObjetivoTrabajo.activarAceptar}" actionListener="#{controllerRegistrarObjetivoTrabajo.registrarNuevoObjetivoTrabajo()}" class="btn btn-success" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Cancelar" class="btn btn-danger" action="#{controllerRegistrarObjetivoTrabajo.cancelarRegistroObjetivoTrabajo()}" actionListener="#{controllerAdministrarObjetivoTrabajo.buscarObjetivoTrabajoRegistrador()}" immediate="true">
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                        <span></span>
+                                        <span></span>
+                                        <h:commandButton value="Limpiar" class="btn btn-info" disabled="#{controllerRegistrarObjetivoTrabajo.activarLimpiar}" actionListener="#{controllerRegistrarObjetivoTrabajo.cambiarActivarCasillas()}" >
+                                            <f:ajax execute="@form" render="form" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </h:form>
+            </ui:define>  
+        </ui:composition>
+    </h:body>
+</html>

@@ -40,6 +40,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ActaReunion.findByResultadoreunion", query = "SELECT a FROM ActaReunion a WHERE a.resultadoreunion = :resultadoreunion"),
     @NamedQuery(name = "ActaReunion.findByPersonalinvolucrado", query = "SELECT a FROM ActaReunion a WHERE a.personalinvolucrado = :personalinvolucrado")})
 public class ActaReunion implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 256)
+    @Column(name = "ubicacionarchivo")
+    private String ubicacionarchivo;
 
     private static final Long serialVersionUID = 1L;
     @Id
@@ -163,6 +168,14 @@ public class ActaReunion implements Serializable {
     @Override
     public String toString() {
         return "com.java.ucdit.entidades.ActaReunion[ idactareunion=" + idactareunion + " ]";
+    }
+
+    public String getUbicacionarchivo() {
+        return ubicacionarchivo;
+    }
+
+    public void setUbicacionarchivo(String ubicacionarchivo) {
+        this.ubicacionarchivo = ubicacionarchivo;
     }
 
 }

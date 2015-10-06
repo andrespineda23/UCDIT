@@ -28,4 +28,6 @@ public interface AdministrarEquipoPorProyectoBOInterface {
     public List<Proyecto> obtenerProyectosRegistrados();
 
     public Proyecto obtenerProyectoPorId(BigInteger idProyecto);
+
+    public EquipoPorProyecto obtenerEquipoPorProyectoPorId(BigInteger idRegistro);
 }
